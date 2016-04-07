@@ -51,7 +51,7 @@ function Api (baseUrl) {
 
 			if (response.data.participants && response.data.participants.length) {
 				response.data.participants.forEach((participant) => {
-					normalizedResponse.participants.push({
+					normalizedResponse.data.participants.push({
 						userId: participant.user_id,
 						displayName: participant.display_name,
 						email: participant.email,
