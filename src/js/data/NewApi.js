@@ -126,8 +126,8 @@ function Api (baseUrl) {
 
 		const translatedPostData = {
 			msg: postData.message,
-			keytext: postData.keyText,
-			isblockquote: postData.isBlockquote
+			keytext: postData.keyText || '',
+			isblockquote: postData.isBlockquote === true ? 1 : 0
 		}
 
 		return httpRequest.post({
@@ -166,7 +166,7 @@ function Api (baseUrl) {
 			messageid: postData.messageId,
 			newtext: postData.message,
 			keytext: postData.keyText,
-			isblockquote: postData.isBlockquote
+			isblockquote: postData.isBlockquote === true ? 1 : 0
 		}
 
 		return httpRequest.post({
