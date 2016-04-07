@@ -26,31 +26,31 @@ function Api (baseUrl) {
 				format: 'json'
 			}),
 			dataType: 'json'
-		}).then((data) => {
-			const normalizedResponse = merge({}, data);
-			delete normalizedResponse.response;
+		}).then((response) => {
+			const normalizedResponse = merge({}, response);
+			delete normalizedResponse.data;
 
-			normalizedResponse.respose = {
-				allowEditAndDeletePreviousMessages: data.response.alloweditanddeletepreviousmessages,
-				authorNameStyle: data.response.authornamestyle,
-				channel: data.response.channel,
-				connectionNotification: data.response.connection_notification,
-				contentOrder: data.response.content_order,
-				fixedHeight: data.response.fixed_height === true ? true : false,
-				isParticipant: data.response.isparticipant === true ? true : false,
-				isEditor: data.response.iseditor === true ? true : false,
+			normalizedResponse.data = {
+				allowEditAndDeletePreviousMessages: response.data.alloweditanddeletepreviousmessages,
+				authorNameStyle: response.data.authornamestyle,
+				channel: response.data.channel,
+				connectionNotification: response.data.connection_notification,
+				contentOrder: response.data.content_order,
+				fixedHeight: response.data.fixed_height === true ? true : false,
+				isParticipant: response.data.isparticipant === true ? true : false,
+				isEditor: response.data.iseditor === true ? true : false,
 				participants: [],
-				sessionStatus: data.response.status,
-				pusherKey: data.response.pusherkey,
+				sessionStatus: response.data.status,
+				pusherKey: response.data.pusherkey,
 
-				initialPollingWaitTime: data.response.initial_polling_wait_time,
-				pollInterval: data.response.pollInterval,
+				initialPollingWaitTime: response.data.initial_polling_wait_time,
+				pollInterval: response.data.pollInterval,
 
-				time: data.response.time
+				time: response.data.time
 			};
 
-			if (data.response.participants && data.response.participants.length) {
-				data.response.participants.forEach((participant) => {
+			if (response.data.participants && response.data.participants.length) {
+				response.data.participants.forEach((participant) => {
 					normalizedResponse.participants.push({
 						userId: participant.user_id,
 						displayName: participant.display_name,
