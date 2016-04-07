@@ -117,10 +117,11 @@ function ContentContainer (webchat, actions) {
 		}
 
 		if (isEditor) {
-			addParticipantOptions(messageEl);
+			addEditDeleteOptions(messageEl);
 		}
 
 		if (isParticipant && details.blockable) {
+			addBlockOption(messageEl);
 			new BlockOption(webchat, messageEl);
 		}
 
@@ -151,7 +152,7 @@ function ContentContainer (webchat, actions) {
 		}
 	};
 
-	function addParticipantOptions (el) {
+	function addEditDeleteOptions (el) {
 		const messageHeaders = el.querySelectorAll('.messageheader');
 		for (let i = 0; i < messageHeaders.length; i++) {
 			const messageHeader = messageHeaders[i];
@@ -167,6 +168,13 @@ function ContentContainer (webchat, actions) {
 					messageHeader.firstChild
 				);
 			}
+		}
+	}
+
+	function addBlockOption (el) {
+		const messageHeaders = el.querySelectorAll('.messageheader');
+		for (let i = 0; i < messageHeaders.length; i++) {
+			const messageHeader = messageHeaders[i];
 
 			messageHeader.insertBefore(
 				domUtils.toDOM(`<span class="block">Block</span>`),
