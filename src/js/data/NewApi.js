@@ -26,28 +26,31 @@ function Api (baseUrl) {
 				format: 'json'
 			}),
 			dataType: 'json'
-		}).then((response) => {
-			const normalizedResponse = {
-				allowEditAndDeletePreviousMessages: response.alloweditanddeletepreviousmessages,
-				authorNameStyle: response.authornamestyle,
-				channel: response.channel,
-				connectionNotification: response.connection_notification,
-				contentOrder: response.content_order,
-				fixedHeight: response.fixed_height === true ? true : false,
-				isParticipant: response.isparticipant === true ? true : false,
-				isEditor: response.iseditor === true ? true : false,
+		}).then((data) => {
+			const normalizedResponse = merge({}, data);
+			delete normalizedResponse.response;
+
+			normalizedResponse.respose = {
+				allowEditAndDeletePreviousMessages: data.response.alloweditanddeletepreviousmessages,
+				authorNameStyle: data.response.authornamestyle,
+				channel: data.response.channel,
+				connectionNotification: data.response.connection_notification,
+				contentOrder: data.response.content_order,
+				fixedHeight: data.response.fixed_height === true ? true : false,
+				isParticipant: data.response.isparticipant === true ? true : false,
+				isEditor: data.response.iseditor === true ? true : false,
 				participants: [],
-				sessionStatus: response.status,
-				pusherKey: response.pusherkey,
+				sessionStatus: data.response.status,
+				pusherKey: data.response.pusherkey,
 
-				initialPollingWaitTime: response.initial_polling_wait_time,
-				pollInterval: response.pollInterval,
+				initialPollingWaitTime: data.response.initial_polling_wait_time,
+				pollInterval: data.response.pollInterval,
 
-				time: response.time
+				time: data.response.time
 			};
 
-			if (response.participants && response.participants.length) {
-				response.participants.forEach((participant) => {
+			if (data.response.participants && data.response.participants.length) {
+				data.response.participants.forEach((participant) => {
 					normalizedResponse.participants.push({
 						userId: participant.user_id,
 						displayName: participant.display_name,

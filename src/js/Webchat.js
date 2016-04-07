@@ -3,7 +3,6 @@ const Api = require('./data/NewApi');
 const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
-const merge = require('./utils/merge');
 
 const EditorContainer = require('./ui/EditorContainer');
 const ContentContainer = require('./ui/ContentContainer');
@@ -87,26 +86,28 @@ function Webchat (rootEl, config) {
 
 	function failedResponse (err) {
 		console.log('An error occured, error:', err);
+		self.showAlert('Request failed.');
 
 		throw err;
 	}
 
 	function unsuccessfulActionRequest (response) {
 		if (response && typeof response === 'object') {
-			if ((response.reason) === 'permission') {
-				console.log('action failed, permission');
-			} else {
-				console.log('action failed,', response.reason);
-			}
+			self.showAlert(response.reason);
 		} else {
-			console.log('action failed, unknown');
+			self.showAlert('Action failed, unknown reason.');
 		}
 	}
 
 
 	this.init = function () {
-		api.init().catch(failedResponse).then((initData) => {
-			sessionConfig = initData;
+		api.init().catch(failedResponse).then((initResponse) => {
+			if (initResponse.success !== true) {
+				unsuccessfulActionRequest(initResponse);
+				return;
+			}
+
+			sessionConfig = initResponse.data;
 
 			self.headerContainer.setLozenge(sessionConfig.sessionStatus);
 
@@ -134,9 +135,13 @@ function Webchat (rootEl, config) {
 
 			api.catchup({
 				direction: (sessionConfig.contentOrder === "descending" ? "reverse" : "") + "chronological"
-			}).catch(failedResponse).then((events) => {
-				if (events && events.length) {
-					events.forEach((evt) => {
+			}).catch(failedResponse).then((catchupResponse) => {
+				if (catchupResponse.success !== true) {
+					unsuccessfulActionRequest(catchupResponse);
+				}
+
+				if (catchupResponse.data && catchupResponse.data.length) {
+					catchupResponse.data.forEach((evt) => {
 						switch (evt.event) {
 							case 'msg':
 							case 'editmsg':
