@@ -1,0 +1,196 @@
+.webchat-content {
+	background: white;
+	position: relative;
+	border: 1px solid #cccccc;
+	height: 320px;
+
+	&.fixed-height {
+		overflow: hidden;
+	}
+
+	&.fixed-height {
+		overflow-y: auto;
+	}
+
+
+	.webchat-closed-content {
+		border: 0;
+	}
+
+	.msg {
+		position: relative;
+		background-color: #eaeaea;
+		border-bottom: 1px solid #f3f3f3;
+		font-size: 12px;
+		line-height: 1.4;
+		overflow: hidden;
+		transition: opacity 0.5s ease-out;
+
+		&.delete-progress {
+			opacity: 0.5;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		blockquote {
+			border: 1px solid #dddddd;
+			border-radius: 3px;
+			background-image: none;
+			background-color: #f0f0f0;
+			padding: 12px 12px 4px;
+			margin: 10px;
+			font-style: italic;
+
+			p {
+				margin-bottom: 0.7em;
+			}
+		}
+
+		> .par {
+			float: left;
+			width: 40px;
+			text-align: right;
+			font-weight: bold;
+			line-height: 2;
+			padding: 0px 5px;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		> div {
+			background-position: 20px 5px;
+			background-repeat: no-repeat;
+			background-color: #f3f3f3;
+			padding: 5px 5px 5px 55px;
+		}
+
+		&.normal > div,
+		&.blockquote > div {
+			background-color: #ffffff;
+			padding: 5px;
+			margin-left: 50px;
+		}
+
+		&.blocked {
+			background-color: #ebdfdf;
+			border-top: 1px dotted #db908e;
+			border-bottom: 1px dotted #db908e;
+			margin-top: -1px;
+
+			> div {
+				background-color: #ebdfdf;
+			}
+		}
+
+		[alt="Emoticon"],
+		.emoticon {
+			margin: -3px 5px;
+		}
+
+		.picture {
+			max-width: 95%;
+			border: 1px solid #888888;
+			padding: 2px;
+			background-color: white;
+		}
+
+		.price > div {
+			background-position: 25px 3px;
+			background-image: url(/images/charticon.png);
+		}
+
+		&.sysmsg > div {
+			background-image: url(/images/loudhailer.png);
+		}
+
+		.block {
+			display: none;
+
+			background-color: #ffffff;
+			border: 1px solid #aaaaaa;
+			padding: 0px 3px;
+			border-radius: 3px;
+			cursor: pointer;
+			color: #888888;
+			font-size: 80%;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+
+			&:hover {
+				border-color: red;
+				color: red;
+			}
+		}
+
+		&.prepub .block {
+			display: block;
+		}
+
+		.participant-options {
+			display: none;
+			position: absolute;
+			right: 1px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12px;
+			background: #eeeeee;
+			padding: 0px 5px;
+		}
+
+		.participant-option-delete {
+			margin: 0 0 0 2px;
+			padding: 0 0 0 4px;
+			border-left: 1px solid #a7a59b;
+		}
+	}
+
+	&.show-participant-options .msg:hover .participant-options {
+		display: block;
+	}
+
+	&.show-participant-options .msg.prepub:hover .participant-options {
+		display: none;
+	}
+
+	.blocknotice {
+		padding: 5px 10px;
+		display: block;
+		text-align: right;
+		margin-top: -24px;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 10px;
+		color: red;
+	}
+
+
+	.video-container-vine {
+		margin-left: 56px;
+		width: 430px;
+		padding-bottom: 430px;
+	}
+
+	.video-container-youtube {
+		padding-top: 92px;
+	}
+
+	.video-container {
+		position: relative;
+		padding-bottom: 56.25%;
+		margin: 0px 10px 20px 0px;
+		height: 0;
+		overflow: hidden;
+	}
+
+	.video-container div,
+	.video-container iframe,
+	.video-container object,
+	.video-container embed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}

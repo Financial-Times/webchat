@@ -1,0 +1,24 @@
+{
+  "name": "webchat",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Roland Vachter <roland.vachter@iquestgroup.com>"
+  ],
+  "homepage": "https://github.com/Financial-Times/alphaville-marketslive",
+  "moduleType": [
+    "globals"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dom-delegate": "^2.0.3",
+    "hogan.js": "hogan#^3.0.2"
+  }
+}
