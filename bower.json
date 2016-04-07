@@ -1,7 +1,10 @@
 {
   "name": "webchat",
   "description": "",
-  "main": "",
+  "main": [
+    "main.js",
+    "main.scss"
+  ],
   "authors": [
     "Roland Vachter <roland.vachter@iquestgroup.com>"
   ],
