@@ -1,6 +1,7 @@
 const Delegate = require('dom-delegate');
 const domUtils = require('../utils/dom');
 const templates = require('./templates');
+const oAssets = require('o-assets');
 
 function EditorContainer (webchat, actions) {
 	const editorDomContainer = webchat.getDomContainer().querySelector('.webchat-editor');
@@ -17,6 +18,14 @@ function EditorContainer (webchat, actions) {
 	let sessionControlButton;
 	let sessionStatus;
 
+	const emoticonList = ['thumbs_down','thumbs_up','teeth_smile','cry_smile','omg_smile','embarassed_smile','censored','angry_smile','devil_smile','wink_smile','lightbulb','bandit1','bandit2','bandit3','bandit4','bandit5','bandit6','bandit7','bandit8','bandit9','bandit10','bear','bull','buy','sell','cash','danger','deadcat','feltcollaredsource','financier','rocket','scorchedfingers','swag','tinhat','separator','breaking_news'];
+	const emoticons = [];
+	emoticonList.forEach((emoticon) => {
+		emoticons.push({
+			url: oAssets.resolve(emoticon + '.gif', 'webchat')
+		});
+	});
+
 
 	this.init = function (sessionConf) {
 		sessionConfig = sessionConf;
@@ -27,7 +36,8 @@ function EditorContainer (webchat, actions) {
 			isEditor: sessionConfig.isEditor,
 			sessionInProgress: sessionStatus === 'inprogress' ? true : false,
 			keyTextEnabled: sessionConfig.insertKeyText ? true : false,
-			insertKeyText: sessionConfig.insertKeyText
+			insertKeyText: sessionConfig.insertKeyText,
+			emoticons: emoticons
 		})));
 
 		messageField = editorDomContainer.querySelector('textarea.new-msg');

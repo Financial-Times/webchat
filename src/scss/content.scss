@@ -97,11 +97,11 @@
 
 		.price > div {
 			background-position: 25px 3px;
-			background-image: url(/images/charticon.png);
+			background-image: url(oAssetsResolve("src/images/icons/charticon.png", webchat));
 		}
 
 		&.sysmsg > div {
-			background-image: url(/images/loudhailer.png);
+			background-image: url(oAssetsResolve("src/images/icons/loudhailer.png", webchat));
 		}
 
 		.block {
