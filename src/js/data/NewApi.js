@@ -124,9 +124,15 @@ function Api (baseUrl) {
 	this.message.send = function (postData) {
 		const queryStr = parseQuery(document.location.search);
 
+		const translatedPostData = {
+			msg: postData.message,
+			keytext: postData.keyText,
+			isblockquote: postData.isBlockquote
+		}
+
 		return httpRequest.post({
 			url: baseUrl,
-			body: postData,
+			body: translatedPostData,
 			dataType: 'json',
 			query: merge(queryStr, {
 				action: 'sendmsg',
@@ -138,9 +144,13 @@ function Api (baseUrl) {
 	this.message.block = function (postData) {
 		const queryStr = parseQuery(document.location.search);
 
+		const translatedPostData = {
+			messageid: postData.messageId
+		}
+
 		return httpRequest.post({
 			url: baseUrl,
-			body: postData,
+			body: translatedPostData,
 			dataType: 'json',
 			query: merge(queryStr, {
 				action: 'block',
@@ -152,9 +162,16 @@ function Api (baseUrl) {
 	this.message.edit = function (postData) {
 		const queryStr = parseQuery(document.location.search);
 
+		const translatedPostData = {
+			messageid: postData.messageId,
+			newtext: postData.message,
+			keytext: postData.keyText,
+			isblockquote: postData.isBlockquote
+		}
+
 		return httpRequest.post({
 			url: baseUrl,
-			body: postData,
+			body: translatedPostData,
 			dataType: 'json',
 			query: merge(queryStr, {
 				action: 'editmsg',
@@ -166,9 +183,13 @@ function Api (baseUrl) {
 	this.message.delete = function (postData) {
 		const queryStr = parseQuery(document.location.search);
 
+		const translatedPostData = {
+			messageid: postData.messageId
+		}
+
 		return httpRequest.post({
 			url: baseUrl,
-			body: postData,
+			body: translatedPostData,
 			dataType: 'json',
 			query: merge(queryStr, {
 				action: 'deletemsg',
