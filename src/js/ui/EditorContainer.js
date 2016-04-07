@@ -22,7 +22,7 @@ function EditorContainer (webchat, actions) {
 	const emoticons = [];
 	emoticonList.forEach((emoticon) => {
 		emoticons.push({
-			url: oAssets.resolve(emoticon + '.gif', 'webchat')
+			imgUrl: oAssets.resolve(emoticon + '.gif', 'webchat')
 		});
 	});
 
