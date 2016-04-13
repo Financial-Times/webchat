@@ -24,7 +24,8 @@
     "dom-delegate": "^2.0.3",
     "hogan.js": "hogan#^3.0.2",
     "o-assets": "^3.0.0",
-    "n-video": "^4.0.3"
+    "n-video": "^4.0.3",
+    "o-grid": "^4.0.0",
   },
   "resolutions": {
     "o-assets": "^3.0.0"
