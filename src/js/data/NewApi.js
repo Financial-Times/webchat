@@ -15,13 +15,17 @@ function parseQuery (qstr) {
 	return query;
 }
 
+const commonQueryParams = {
+	v: 2
+};
+
 function Api (baseUrl) {
 	this.init = function () {
 		const queryStr = parseQuery(document.location.search);
 
 		return httpRequest.get({
 			url: baseUrl,
-			query: merge({}, queryStr, {
+			query: merge({}, queryStr, commonQueryParams, {
 				action: 'init',
 				format: 'json'
 			}),
@@ -73,7 +77,7 @@ function Api (baseUrl) {
 		return httpRequest.get({
 			url: baseUrl,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'poll',
 				format: 'json'
 			})
@@ -85,7 +89,7 @@ function Api (baseUrl) {
 
 		return httpRequest.get({
 			url: baseUrl,
-			query: merge(queryStr, query, {
+			query: merge(queryStr, commonQueryParams, query, {
 				action: 'catchup',
 				format: 'json'
 			}),
@@ -100,7 +104,7 @@ function Api (baseUrl) {
 		return httpRequest.post({
 			url: baseUrl,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'startSession',
 				format: 'json'
 			})
@@ -113,7 +117,7 @@ function Api (baseUrl) {
 		return httpRequest.post({
 			url: baseUrl,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'end',
 				format: 'json'
 			})
@@ -134,7 +138,7 @@ function Api (baseUrl) {
 			url: baseUrl,
 			body: translatedPostData,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'sendmsg',
 				format: 'json'
 			})
@@ -152,7 +156,7 @@ function Api (baseUrl) {
 			url: baseUrl,
 			body: translatedPostData,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'block',
 				format: 'json'
 			})
@@ -173,7 +177,7 @@ function Api (baseUrl) {
 			url: baseUrl,
 			body: translatedPostData,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'editmsg',
 				format: 'json'
 			})
@@ -191,7 +195,7 @@ function Api (baseUrl) {
 			url: baseUrl,
 			body: translatedPostData,
 			dataType: 'json',
-			query: merge(queryStr, {
+			query: merge(queryStr, commonQueryParams, {
 				action: 'deletemsg',
 				format: 'json'
 			})
