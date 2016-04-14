@@ -3,15 +3,8 @@
 	font-size: 12px;
 
 	textarea {
-		float: left;
-		width: 60%;
-		height: 75px;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 12px;
-		outline: none;
-		resize: vertical;
-		padding: 0;
-		margin: 0;
+		font-size: 14px;
+		min-height: 70px;
 	}
 
 	.button {
@@ -31,15 +24,10 @@
 		color: #2e6e9e;
 		border-bottom: 1px solid #e9decf;
 		padding-bottom: 2px;
+		font-size: 14px;
 	}
 
 	.btn-cancel:hover {
 		color: black;
-	}
-
-	.options {
-		overflow: hidden;
-		float: right;
-		width: 38%;
 	}
 }

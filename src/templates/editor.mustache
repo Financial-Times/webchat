@@ -1,9 +1,10 @@
 <form accept-charset="utf-8">
 	<div class="o-grid-row">
 		<div data-o-grid-colspan="8">
-			<textarea class="new-msg"></textarea>
+			<textarea class="new-msg o-forms-textarea"></textarea>
+
 			{{#keyTextEnabled}}
-				<input type="text" class="key-text webchat-hidden" placeholder="{{insertKeyText}}" value="" />
+				<input type="text" class="key-text webchat-hidden o-forms-text" placeholder="{{insertKeyText}}" value="" />
 			{{/keyTextEnabled}}
 
 			<div class="emoticons">
@@ -15,55 +16,51 @@
 			</div>
 		</div>
 		<div data-o-grid-colspan="4">
-			<div class="options">
-				{{#isEditor}}
-					<div class="session-options">
-						<a href="#" class="session-control">
-							{{#sessionInProgress}}
-								End
-							{{/sessionInProgress}}
-							{{^sessionInProgress}}
-								Start
-							{{/sessionInProgress}}
-							session now
-						</a>
-					</div>
-				{{/isEditor}}
-				
-				<label>
-					<input type="checkbox" class="check opt-send-on-enter" /> Send on [enter]
-				</label>
-				
-				<br />
-				
-				<label>
-					<input type="checkbox" class="check opt-quote" /> Send as quote
-				</label>
-				
-				{{#keyTextEnabled}}
-					<br />
+			<div class="o-forms-group">
+				<div class="options">
+					{{#isEditor}}
+						<div class="session-options">
+							<a href="#" class="session-control">
+								{{#sessionInProgress}}
+									End
+								{{/sessionInProgress}}
+								{{^sessionInProgress}}
+									Start
+								{{/sessionInProgress}}
+								session now
+							</a>
+						</div>
+					{{/isEditor}}
 
-					<label class="key-label">
-						<input type="checkbox" class="check key-event-check"> Key event
+					<input type="checkbox" class="check opt-send-on-enter o-forms-checkbox o-forms-checkbox--small" id="opt-send-on-enter" />
+					<label for="opt-send-on-enter" class="o-forms-label">
+						Send on [enter]
 					</label>
-				{{/keyTextEnabled}}
+				
+					<input type="checkbox" class="check opt-quote o-forms-checkbox o-forms-checkbox--small" id="opt-quote" />
+					<label for="opt-quote" class="o-forms-label">
+						Send as quote
+					</label>
+				
+					{{#keyTextEnabled}}
+							<input type="checkbox" class="check key-event-check o-forms-checkbox o-forms-checkbox--small" id="key-event-check" />
+							<label for="key-event-check" class="o-forms-label">
+								Key event
+							</label>
+					{{/keyTextEnabled}}
 
-				<br />
-				<br />
+					<button type="button" class="o-buttons o-buttons--uncolored submit button">Send</button>
 
-				<button type="button" class="submit button">Send</button>
-
-				<br />
-
-				<div class="wiki-key">
-					<span class="highlight">*</span>bold<span class="highlight">*</span>
-					<br/>
-					<span class="highlight">/</span>italics<span class="highlight">/</span>
-					<br/>
-					<span class="highlight">&gt;</span>block quote
-					<br/>
-					<span class="highlight">[</span>http://url.com Link<span class="highlight">]</span>
-					<br/>
+					<div class="wiki-key">
+						<span class="highlight">*</span>bold<span class="highlight">*</span>
+						<br/>
+						<span class="highlight">/</span>italics<span class="highlight">/</span>
+						<br/>
+						<span class="highlight">&gt;</span>block quote
+						<br/>
+						<span class="highlight">[</span>http://url.com Link<span class="highlight">]</span>
+						<br/>
+					</div>
 				</div>
 			</div>
 		</div>
