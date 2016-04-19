@@ -7,10 +7,10 @@
 				<input type="text" class="key-text webchat-hidden o-forms-text" placeholder="{{insertKeyText}}" value="" />
 			{{/keyTextEnabled}}
 
-			<div class="emoticons">
+			<div class="webchat-emoticons">
 				<ul>
 					{{#emoticons}}
-						<li><img alt="Emoticon" src="{{imgUrl}}" /></li>
+						<li class="webchat-emoticon-list-item"><span class="webchat-emoticon webchat-emoticon--{{code}}" data-code="{{code}}">Alt text</span></li>
 					{{/emoticons}}
 				</ul>
 			</div>

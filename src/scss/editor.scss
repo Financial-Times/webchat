@@ -1,19 +1,20 @@
 .webchat-editor {
-	.emoticons {
+	.webchat-emoticons {
 		padding: 10px 0;
 
 		ul {
 			margin: 0;
 			padding: 0;
 		}
+	}
 
-		li {
-			list-style-type: none;
-			display: inline;
+	.webchat-emoticon-list-item {
+		padding-bottom: 3px;
+		list-style-type: none;
+		display: inline-block;
 
-			img {
-				cursor: pointer;
-			}
+		.webchat-emoticon {
+			cursor: pointer;
 		}
 	}
 

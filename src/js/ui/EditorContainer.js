@@ -1,7 +1,6 @@
 const Delegate = require('dom-delegate');
 const domUtils = require('../utils/dom');
 const templates = require('./templates');
-const oAssets = require('o-assets');
 
 function EditorContainer (webchat, actions) {
 	const editorDomContainer = webchat.getDomContainer().querySelector('.webchat-editor');
@@ -20,9 +19,9 @@ function EditorContainer (webchat, actions) {
 
 	const emoticonList = ['thumbs_down','thumbs_up','teeth_smile','cry_smile','omg_smile','embarassed_smile','censored','angry_smile','devil_smile','wink_smile','lightbulb','bandit1','bandit2','bandit3','bandit4','bandit5','bandit6','bandit7','bandit8','bandit9','bandit10','bear','bull','buy','sell','cash','danger','deadcat','feltcollaredsource','financier','rocket','scorchedfingers','swag','tinhat','separator','breaking_news'];
 	const emoticons = [];
-	emoticonList.forEach((emoticon) => {
+	emoticonList.forEach((emoticonClass) => {
 		emoticons.push({
-			imgUrl: oAssets.resolve(`src/images/emoticons/${emoticon}.gif`, 'webchat')
+			code: emoticonClass
 		});
 	});
 
@@ -54,14 +53,10 @@ function EditorContainer (webchat, actions) {
 		});
 		sendButton.addEventListener('click', onSend);
 
-		editorDelegate.on('click', '.emoticons img', (evt) => {
-			const img = evt.srcElement;
+		editorDelegate.on('click', '.webchat-emoticons .webchat-emoticon', (evt) => {
+			const emoticon = evt.srcElement;
 
-			if (img.title) {
-				messageField.value += img.title;
-			} else {
-				messageField.value += "{" + img.src.substring((img.src.lastIndexOf("/") + 1), img.src.lastIndexOf(".")) + "}";
-			}
+			messageField.value += "{" + emoticon.getAttribute('data-code') + "}";
 			messageField.focus();
 		});
 
