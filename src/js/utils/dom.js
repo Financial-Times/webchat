@@ -160,24 +160,46 @@ exports.sanitizeHtml = function (str) {
 }
 
 exports.addScript = function (baseurl, params) {
-	let fullUrl;
-	let script;
-	let key;
+	return new Promise((resolve) => {
+		let fullUrl;
+		let script;
+		let key;
 
-	script = document.createElement("script");
+		script = document.createElement("script");
+		script.async = true;
 
-	let queryString = "";
-	if (typeof params !== "undefined") {
-		for (key in params) {
-			if (params.hasOwnProperty(key)) {
-				queryString += ((queryString === "") ? "?" : "&");
-				queryString += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+
+		script.onload = script.onreadystatechange = function() {
+			if (!script.readyState || /loaded|complete/.test( script.readyState )) {
+
+				// Handle memory leak in IE
+				script.onload = script.onreadystatechange = null;
+
+				// Remove the script
+				if (script.parentNode) {
+					script.parentNode.removeChild( script );
+				}
+
+				// Dereference the script
+				script = null;
+
+				resolve();
+			}
+		};
+
+		let queryString = "";
+		if (typeof params !== "undefined") {
+			for (key in params) {
+				if (params.hasOwnProperty(key)) {
+					queryString += ((queryString === "") ? "?" : "&");
+					queryString += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+				}
 			}
 		}
-	}
 
-	fullUrl = baseurl + queryString;
+		fullUrl = baseurl + queryString;
 
-	script.src = fullUrl;
-	document.getElementsByTagName('head')[0].appendChild(script);
+		script.src = fullUrl;
+		document.getElementsByTagName('head')[0].appendChild(script);
+	});
 };
