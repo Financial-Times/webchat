@@ -1,7 +1,8 @@
+/* global twttr */
+
 const nVideo = require('n-video');
 
 const domUtils = require('../utils/dom');
-const base64 = require('../utils/base64');
 
 function convertTweet (embeddedTweetElement) {
 	return new Promise((resolve) => {
@@ -11,19 +12,24 @@ function convertTweet (embeddedTweetElement) {
 
 		let callbackName;
 		do {
-			callbackName = "embeddedTweetCallback"+Math.floor(Math.random() * 100000000000);
+			callbackName = "embeddedTweetCallback" + Math.floor(Math.random() * 100000000000);
 		} while (typeof window[callbackName] !== "undefined");
 
 		window[callbackName] = function(resp) {
 			embeddedTweetElement.innerHTML = resp.html;
-			domUtils.addScript('https://platform.twitter.com/widgets.js');
+			domUtils.addScript('https://platform.twitter.com/widgets.js').then(() => {
+				twttr.events.bind('rendered', (evt) => {
+					const containerElements = domUtils.getParents(evt.target, 'p.embeddedtweet');
 
-			setTimeout(resolve, 100);
+					if (containerElements && containerElements.length && containerElements[0] === embeddedTweetElement) {
+						resolve();
+					}
+				});
+			});
 		};
 
 		domUtils.addScript('https://api.twitter.com/1/statuses/oembed.json', {
 			"url": tweetUrl,
-			"omit_script": 1,
 			"callback": callbackName
 		});
 	});
@@ -41,7 +47,7 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 
 		brightcoveEmbed.innerHTML = replacementHtml;
 
-		setTimeout(resolve, 100);
+		resolve();
 	});
 }
 
@@ -65,7 +71,7 @@ function convertEmbeds(container, selector, fn) {
 	return Promise.all(promises);
 }
 
-function convertEmbeddedVideos(container) {
+function convertEmbeddedMedia(container) {
 	return Promise.all([
 		convertEmbeds(container, "p.embeddedtweet", convertTweet),
 		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo)
@@ -77,4 +83,4 @@ function convertEmbeddedVideos(container) {
 	});
 }
 
-exports.convert = convertEmbeddedVideos;
+exports.convert = convertEmbeddedMedia;
