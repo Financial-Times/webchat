@@ -29,26 +29,6 @@ function convertTweet (embeddedTweetElement) {
 	});
 }
 
-function convertFTVideo (embeddedFtVideoElement) {
-	return new Promise((resolve) => {
-		let videoId;
-		let replacementHtml;
-
-		embeddedFtVideoElement.setAttribute("data-converted", 1);
-
-		videoId = embeddedFtVideoElement.className.match(/ftvideovideoid([0-9]+)/)[1];
-
-		replacementHtml = `<div data-n-component="n-video"
-			data-n-video-source="brightcove"
-			data-n-video-id="${videoId}"></div>`;
-
-		embeddedFtVideoElement.innerHTML = replacementHtml;
-
-		setTimeout(resolve, 100);
-	});
-}
-
-
 function convertYoutubeVideo (embeddedYoutubeVideoElement) {
 	return new Promise((resolve) => {
 		let encodedReplacementHtml;
@@ -66,6 +46,41 @@ function convertYoutubeVideo (embeddedYoutubeVideoElement) {
 		replacementHtml = base64.decode(encodedReplacementHtml);
 
 		embeddedYoutubeVideoElement.innerHTML = replacementHtml;
+
+		setTimeout(resolve, 100);
+	});
+}
+
+function convertFTVideo (embeddedFtVideoElement) {
+	return new Promise((resolve) => {
+		let videoId;
+		let replacementHtml;
+
+		embeddedFtVideoElement.setAttribute("data-converted", 1);
+
+		videoId = embeddedFtVideoElement.className.match(/ftvideovideoid([0-9]+)/)[1];
+
+		replacementHtml = `<div class="webchat-video-brightcove" data-n-component="n-video"
+			data-n-video-source="brightcove"
+			data-n-video-id="${videoId}"></div>`;
+
+		embeddedFtVideoElement.innerHTML = replacementHtml;
+
+		setTimeout(resolve, 100);
+	});
+}
+
+function convertBrightcoveVideo (brightcoveEmbed) {
+	return new Promise((resolve) => {
+		brightcoveEmbed.setAttribute("data-converted", 1);
+
+		const videoId = brightcoveEmbed.getAttribute('data-asset-ref');
+
+		const replacementHtml = `<div class="webchat-video-brightcove" data-n-component="n-video"
+			data-n-video-source="brightcove"
+			data-n-video-id="${videoId}"></div>`;
+
+		brightcoveEmbed.innerHTML = replacementHtml;
 
 		setTimeout(resolve, 100);
 	});
@@ -95,13 +110,11 @@ function convertEmbeddedVideos(container) {
 	return Promise.all([
 		convertEmbeds(container, "p.embeddedtweet", convertTweet),
 		convertEmbeds(container, "p.embeddedftvideo", convertFTVideo),
-		convertEmbeds(container, "p.embeddedyoutubevideo", convertYoutubeVideo)
+		convertEmbeds(container, "p.embeddedyoutubevideo", convertYoutubeVideo),
+		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo)
 	]).then(() => {
 		const opts = {
-			optimumWidth: 600,
-			placeholder: true,
-			classes: [],
-			selector: '.video-container-ftvideo .BrightcoveExperience'
+			selector: '.webchat-video-brightcove'
 		};
 		nVideo.init(opts);
 	});
