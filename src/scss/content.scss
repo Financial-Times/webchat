@@ -171,16 +171,16 @@
 		color: red;
 	}
 
-	.video-container-vine {
-		padding-bottom: 100%;
-	}
-
 	.video-container {
 		position: relative;
 		padding-bottom: 56.25%;
 		margin: 0px 10px 20px 0px;
 		height: 0;
 		overflow: hidden;
+	}
+
+	.video-container-vine {
+		padding-bottom: 100%;
 	}
 
 	.video-container div,
