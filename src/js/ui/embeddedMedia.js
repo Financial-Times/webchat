@@ -29,47 +29,6 @@ function convertTweet (embeddedTweetElement) {
 	});
 }
 
-function convertYoutubeVideo (embeddedYoutubeVideoElement) {
-	return new Promise((resolve) => {
-		let encodedReplacementHtml;
-		let replacementHtml;
-
-		embeddedYoutubeVideoElement.setAttribute("data-converted", 1);
-
-		encodedReplacementHtml = embeddedYoutubeVideoElement.className.match(/youtubeembedcode([ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\+\/=]+)/);
-		if (encodedReplacementHtml && encodedReplacementHtml.length >= 2 && encodedReplacementHtml[1]) {
-			encodedReplacementHtml = encodedReplacementHtml[1];
-		} else {
-			resolve();
-			return;
-		}
-		replacementHtml = base64.decode(encodedReplacementHtml);
-
-		embeddedYoutubeVideoElement.innerHTML = replacementHtml;
-
-		setTimeout(resolve, 100);
-	});
-}
-
-function convertFTVideo (embeddedFtVideoElement) {
-	return new Promise((resolve) => {
-		let videoId;
-		let replacementHtml;
-
-		embeddedFtVideoElement.setAttribute("data-converted", 1);
-
-		videoId = embeddedFtVideoElement.className.match(/ftvideovideoid([0-9]+)/)[1];
-
-		replacementHtml = `<div class="webchat-video-brightcove" data-n-component="n-video"
-			data-n-video-source="brightcove"
-			data-n-video-id="${videoId}"></div>`;
-
-		embeddedFtVideoElement.innerHTML = replacementHtml;
-
-		setTimeout(resolve, 100);
-	});
-}
-
 function convertBrightcoveVideo (brightcoveEmbed) {
 	return new Promise((resolve) => {
 		brightcoveEmbed.setAttribute("data-converted", 1);
@@ -109,8 +68,6 @@ function convertEmbeds(container, selector, fn) {
 function convertEmbeddedVideos(container) {
 	return Promise.all([
 		convertEmbeds(container, "p.embeddedtweet", convertTweet),
-		convertEmbeds(container, "p.embeddedftvideo", convertFTVideo),
-		convertEmbeds(container, "p.embeddedyoutubevideo", convertYoutubeVideo),
 		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo)
 	]).then(() => {
 		const opts = {
