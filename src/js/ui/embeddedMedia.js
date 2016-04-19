@@ -25,6 +25,10 @@ function convertTweet (embeddedTweetElement) {
 						resolve();
 					}
 				});
+
+				setTimeout(() => {
+					resolve();
+				}, 2000);
 			});
 		};
 
@@ -46,6 +50,11 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 			data-n-video-id="${videoId}"></div>`;
 
 		brightcoveEmbed.innerHTML = replacementHtml;
+
+		const opts = {
+			selector: '.webchat-video-brightcove'
+		};
+		nVideo.init(opts);
 
 		resolve();
 	});
@@ -75,12 +84,7 @@ function convertEmbeddedMedia(container) {
 	return Promise.all([
 		convertEmbeds(container, "p.embeddedtweet", convertTweet),
 		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo)
-	]).then(() => {
-		const opts = {
-			selector: '.webchat-video-brightcove'
-		};
-		nVideo.init(opts);
-	});
+	]);
 }
 
 exports.convert = convertEmbeddedMedia;
