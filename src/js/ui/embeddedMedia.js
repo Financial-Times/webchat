@@ -1,5 +1,3 @@
-/* global BrightcoveFT, brightcove */
-
 const nVideo = require('n-video');
 
 const domUtils = require('../utils/dom');
@@ -18,7 +16,7 @@ function convertTweet (embeddedTweetElement) {
 
 		window[callbackName] = function(resp) {
 			embeddedTweetElement.innerHTML = resp.html;
-			domUtils.addScript('http://platform.twitter.com/widgets.js');
+			domUtils.addScript('https://platform.twitter.com/widgets.js');
 
 			setTimeout(resolve, 100);
 		};
