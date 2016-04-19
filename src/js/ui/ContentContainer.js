@@ -138,7 +138,7 @@ function ContentContainer (webchat, actions) {
 			}
 		}
 
-		embeddedMedia.convert(contentDomContainer).then(() => {
+		embeddedMedia.convert(messageEl).then(() => {
 			if (scrollAtTheEnd || details.forceScrollToTheEnd) {
 				scrollToLast();
 			}
