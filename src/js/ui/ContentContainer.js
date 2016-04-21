@@ -121,7 +121,6 @@ function ContentContainer (webchat, actions) {
 		}
 
 		if (isParticipant && details.blockable) {
-			addBlockOption(messageEl);
 			new BlockOption(webchat, messageEl);
 		}
 
@@ -168,18 +167,6 @@ function ContentContainer (webchat, actions) {
 					messageHeader.firstChild
 				);
 			}
-		}
-	}
-
-	function addBlockOption (el) {
-		const messageHeaders = el.querySelectorAll('.messageheader');
-		for (let i = 0; i < messageHeaders.length; i++) {
-			const messageHeader = messageHeaders[i];
-
-			messageHeader.insertBefore(
-				domUtils.toDOM(`<span class="block">Block</span>`),
-				messageHeader.firstChild
-			);
 		}
 	}
 

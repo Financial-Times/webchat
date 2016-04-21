@@ -1,5 +1,9 @@
+const domUtils = require('../utils/dom');
+
 function BlockOption (webchat, messageEl) {
 	const blockGrace = 5;
+
+	messageEl.appendChild(domUtils.toDOM(`<span class="block">Block</span>`));
 
 	function tick () {
 		if (!messageEl.classList.contains("blocked")) {
