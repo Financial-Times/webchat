@@ -52,9 +52,9 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 		brightcoveEmbed.innerHTML = replacementHtml;
 
 		const opts = {
-			selector: '.webchat-video-brightcove'
+			selector: '.webchat-video-brightcove',
+			placeholder: true
 		};
-		nVideo.init(opts);
 
 		resolve();
 	});
