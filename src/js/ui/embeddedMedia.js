@@ -51,10 +51,10 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 
 		brightcoveEmbed.innerHTML = replacementHtml;
 
-		const opts = {
+		nVideo.init({
 			selector: '.webchat-video-brightcove',
 			placeholder: true
-		};
+		});
 
 		resolve();
 	});
