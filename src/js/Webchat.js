@@ -145,7 +145,7 @@ function Webchat (rootEl, config) {
 						switch (evt.event) {
 							case 'msg':
 							case 'editmsg':
-								onMessage(evt.data);
+								onMessage(evt.data, true);
 								break;
 
 							case 'delete':
@@ -269,7 +269,7 @@ function Webchat (rootEl, config) {
 
 
 
-	function onMessage (data) {
+	function onMessage (data, catchup) {
 		if (data.author) {
 			if (!self.participantContainer.containsParticipant(data.author)) {
 				self.participantContainer.addParticipant({
@@ -285,8 +285,8 @@ function Webchat (rootEl, config) {
 			html: data.html,
 			messageId: data.mid,
 			dateModified: data.datemodified,
-			blockable: true,
-			forceScrollToTheEnd: true
+			blockable: catchup === true ? false : true,
+			forceScrollToTheEnd: catchup === true ? true : false
 		});
 
 		if (sessionConfig.insertKeyText && data.keytext) {
