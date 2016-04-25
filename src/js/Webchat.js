@@ -167,7 +167,7 @@ function Webchat (rootEl, config) {
 								break;
 
 							case 'delete':
-								messageIndex = findMessageIndex(evt.data.mid);
+								messageIndex = findMessageIndex(evt.data.messageid);
 								if (messageIndex) {
 									messages.splice(messageIndex, 1);
 								}
