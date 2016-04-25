@@ -41,8 +41,6 @@ function ContentContainer (webchat, actions) {
 	this.blockMessage = function (messageId, blockedBy) {
 		const messageEl = self.findMessage(messageId);
 
-		//doKeypoints({"mid":data.msgblocked, "event":"delete"});  //remove key point from list
-
 		if (messageEl && !messageEl.classList.contains("blocked")) {
 			messageEl.classList.add("blocked");
 			messageEl.appendChild(domUtils.toDOM(`<span class="blocknotice">(blocked by ${blockedBy})</span>`));
