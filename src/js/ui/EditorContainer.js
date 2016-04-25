@@ -31,54 +31,56 @@ function EditorContainer (webchat, actions) {
 
 		sessionStatus = sessionConfig.sessionStatus;
 
-		editorDomContainer.appendChild(domUtils.toDOM(templates.editor.render({
-			isEditor: sessionConfig.isEditor,
-			sessionInProgress: sessionStatus === 'inprogress' ? true : false,
-			keyTextEnabled: sessionConfig.insertKeyText ? true : false,
-			insertKeyText: sessionConfig.insertKeyText,
-			emoticons: emoticons
-		})));
+		if (sessionStatus !== 'closed') {
+			editorDomContainer.appendChild(domUtils.toDOM(templates.editor.render({
+				isEditor: sessionConfig.isEditor,
+				sessionInProgress: sessionStatus === 'inprogress' ? true : false,
+				keyTextEnabled: sessionConfig.insertKeyText ? true : false,
+				insertKeyText: sessionConfig.insertKeyText,
+				emoticons: emoticons
+			})));
 
-		messageField = editorDomContainer.querySelector('textarea.new-msg');
-		sendButton = editorDomContainer.querySelector('button.submit');
-		sendOnEnterOpt = editorDomContainer.querySelector(".opt-send-on-enter");
-		blockquoteCheck = editorDomContainer.querySelector('.opt-quote');
-		sessionControlButton = editorDomContainer.querySelector('.session-control');
+			messageField = editorDomContainer.querySelector('textarea.new-msg');
+			sendButton = editorDomContainer.querySelector('button.submit');
+			sendOnEnterOpt = editorDomContainer.querySelector(".opt-send-on-enter");
+			blockquoteCheck = editorDomContainer.querySelector('.opt-quote');
+			sessionControlButton = editorDomContainer.querySelector('.session-control');
 
-		// Send message on keypress or button click, disable default form submit
-		messageField.addEventListener('keypress', (e) => {
-			if (sendOnEnterOpt.checked && e.keyCode === 13) {
-				onSend();
-			}
-		});
-		sendButton.addEventListener('click', onSend);
-
-		editorDelegate.on('click', '.webchat-emoticons .webchat-emoticon', (evt) => {
-			const emoticon = evt.srcElement;
-
-			messageField.value += "{" + emoticon.getAttribute('data-code') + "}";
-			messageField.focus();
-		});
-
-		if (sessionConfig.isEditor) {
-			sessionControlButton.addEventListener('click', (evt) => {
-				evt.preventDefault();
-
-				if (sessionStatus === 'comingsoon') {
-					actions.startSession();
-				} else if (sessionStatus === 'inprogress') {
-					actions.endSession();
+			// Send message on keypress or button click, disable default form submit
+			messageField.addEventListener('keypress', (e) => {
+				if (sendOnEnterOpt.checked && e.keyCode === 13) {
+					onSend();
 				}
 			});
-		}
+			sendButton.addEventListener('click', onSend);
 
-		if (sessionConfig.insertKeyText) {
-			keyCheck = editorDomContainer.querySelector('.key-event-check');
-			keyTextField = editorDomContainer.querySelector("input.key-text");
+			editorDelegate.on('click', '.webchat-emoticons .webchat-emoticon', (evt) => {
+				const emoticon = evt.srcElement;
 
-			keyCheck.addEventListener('change', () => {
-				keyTextField.classList.toggle('webchat-hidden');
+				messageField.value += "{" + emoticon.getAttribute('data-code') + "}";
+				messageField.focus();
 			});
+
+			if (sessionConfig.isEditor) {
+				sessionControlButton.addEventListener('click', (evt) => {
+					evt.preventDefault();
+
+					if (sessionStatus === 'comingsoon') {
+						actions.startSession();
+					} else if (sessionStatus === 'inprogress') {
+						actions.endSession();
+					}
+				});
+			}
+
+			if (sessionConfig.insertKeyText) {
+				keyCheck = editorDomContainer.querySelector('.key-event-check');
+				keyTextField = editorDomContainer.querySelector("input.key-text");
+
+				keyCheck.addEventListener('change', () => {
+					keyTextField.classList.toggle('webchat-hidden');
+				});
+			}
 		}
 	}
 
