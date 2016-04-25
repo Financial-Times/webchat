@@ -140,16 +140,37 @@ function Webchat (rootEl, config) {
 					unsuccessfulActionRequest(catchupResponse);
 				}
 
+				const messages = [];
+				const findMessageIndex = function (id) {
+					for (let i = 0; i < messages.length; i++) {
+						if (messages[i].mid === id) {
+							return i;
+						}
+					}
+
+					return null;
+				};
+				let messageIndex;
+
 				if (catchupResponse.data && catchupResponse.data.length) {
 					catchupResponse.data.forEach((evt) => {
 						switch (evt.event) {
 							case 'msg':
+								messages.push(evt.data);
+								break;
+
 							case 'editmsg':
-								onMessage(evt.data, true);
+								messageIndex = findMessageIndex(evt.data.mid);
+								if (messageIndex) {
+									messages[messageIndex] = evt.data;
+								}
 								break;
 
 							case 'delete':
-								onDeleteMessage(evt.data);
+								messageIndex = findMessageIndex(evt.data.mid);
+								if (messageIndex) {
+									messages.splice(messageIndex, 1);
+								}
 								break;
 
 							case 'postSaved':
@@ -161,6 +182,10 @@ function Webchat (rootEl, config) {
 								onEndSession();
 								break;
 						}
+					});
+
+					messages.forEach((message) => {
+						onMessage(message, true);
 					});
 				}
 
