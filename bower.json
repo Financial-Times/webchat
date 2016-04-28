@@ -27,7 +27,6 @@
 		"n-video": "git+https://github.com/roland-vachter/n-video.git#master",
 		"o-grid": "^4.0.0",
 		"o-forms": "^2.0.0",
-		"o-buttons": "^3.0.0",
-		"pusher": "pusher/pusher-js#2.0.5"
+		"o-buttons": "^3.0.0"
 	}
 }
