@@ -32,11 +32,11 @@ function execute (config) {
 		}
 
 		if (xhr instanceof XMLHttpRequest) {
+			xhr.open(config.type, config.url, true);
+
 			if (typeof xhr.withCredentials !== 'undefined') {
 				xhr.withCredentials = true;
 			}
-
-			xhr.open(config.type, config.url, true);
 		} else {
 			xhr.open(config.type, config.url);
 			if (typeof xhr.hasOwnProperty !== 'function') {
