@@ -21,7 +21,7 @@ function ContentContainer (webchat, actions) {
 	const scroller = new Scroller(contentDomContainer, function () {});
 
 	contentDelegate.on('click', '.msg span.block', (evt) => {
-		const blockElement = evt.originalTarget;
+		const blockElement = evt.target || evt.originalTarget || evt.srcElement;
 		const messageEl = domUtils.getParents(blockElement, '.msg')[0];
 		const messageId = messageEl.getAttribute('data-mid');
 
@@ -29,10 +29,7 @@ function ContentContainer (webchat, actions) {
 			messageId: messageId
 		}).then((success) => {
 			if (success === true) {
-				blockElement.parentNode.removeChild(blockElement);
 				webchat.populateMessageField(messageEl.getAttribute("data-rawmessage"));
-				messageEl.classList.add("blocked");
-				messageEl.innerHTML += "<span class='blocknotice'>(blocked by me)</span>";
 			}
 		});
 	});
