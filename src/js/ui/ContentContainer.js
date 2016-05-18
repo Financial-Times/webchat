@@ -21,7 +21,7 @@ function ContentContainer (webchat, actions) {
 	const scroller = new Scroller(contentDomContainer, function () {});
 
 	contentDelegate.on('click', '.msg span.block', (evt) => {
-		const blockElement = evt.srcElement;
+		const blockElement = evt.originalTarget;
 		const messageEl = domUtils.getParents(blockElement, '.msg')[0];
 		const messageId = messageEl.getAttribute('data-mid');
 
@@ -50,7 +50,7 @@ function ContentContainer (webchat, actions) {
 				blockElement.parentNode.removeChild(blockElement);
 			}
 		}
-	}
+	};
 
 
 	function isScrollAtTheEnd () {
