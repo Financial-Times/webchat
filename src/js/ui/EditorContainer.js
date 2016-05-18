@@ -55,7 +55,7 @@ function EditorContainer (webchat, actions) {
 			sendButton.addEventListener('click', onSend);
 
 			editorDelegate.on('click', '.webchat-emoticons .webchat-emoticon', (evt) => {
-				const emoticon = evt.srcElement;
+				const emoticon = evt.target || evt.originalTarget || evt.srcElement;
 
 				messageField.value += "{" + emoticon.getAttribute('data-code') + "}";
 				messageField.focus();

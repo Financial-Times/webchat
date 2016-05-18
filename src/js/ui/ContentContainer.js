@@ -167,7 +167,7 @@ function ContentContainer (webchat, actions) {
 
 
 	function onEdit (evt) {
-		const clickedButton = evt.srcElement;
+		const clickedButton = evt.target || evt.originalTarget || evt.srcElement;
 		const messageEl = domUtils.getParents(clickedButton, '.msg')[0];
 		const messageId = messageEl.getAttribute('data-mid');
 
@@ -198,7 +198,7 @@ function ContentContainer (webchat, actions) {
 			return;
 		}
 
-		const clickedButton = evt.srcElement;
+		const clickedButton = evt.target || evt.originalTarget || evt.srcElement;
 
 		const messageEl = domUtils.getParents(clickedButton, '.msg')[0];
 		const messageId = messageEl.getAttribute('data-mid');
