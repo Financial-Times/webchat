@@ -103,7 +103,7 @@
 			background-color: white;
 		}
 
-		.price > div {
+		&.price > div {
 			background-position: 25px 3px;
 			background-image: url(oAssetsResolve("src/images/icons/charticon.png", webchat));
 		}
