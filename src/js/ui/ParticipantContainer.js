@@ -25,16 +25,16 @@ function ParticipantContainer (webchat) {
 			displayName: (details.displayStyle === "initials" ? details.shortName : details.fullName),
 			fullName: (details.displayStyle === "initials" ? details.fullName : "")
 		})));
-	}
+	};
 
 	this.containsParticipant = function (key) {
 		const participantId = getParticipantElementId(key);
 		return (participantDomContainer.querySelectorAll('#'+participantId).length !== 0);
-	}
+	};
 
 	this.getDomContainer = function () {
 		return participantDomContainer;
-	}
+	};
 
 	function getParticipantElementId (key) {
 		return "webchat-par-" + domUtils.sanitizeHtml(key);
