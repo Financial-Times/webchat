@@ -193,6 +193,8 @@ function Webchat (rootEl, config) {
 					setTimeout(function () {
 						resize();
 					}, 100);
+
+					window.addEventListener('resize', resize);
 				}
 
 				if (sessionConfig.sessionStatus !== 'closed') {
