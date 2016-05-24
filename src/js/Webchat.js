@@ -3,6 +3,7 @@ const Api = require('./data/NewApi');
 const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
+const oGrid = require('o-grid');
 
 const EditorContainer = require('./ui/EditorContainer');
 const ContentContainer = require('./ui/ContentContainer');
@@ -64,21 +65,6 @@ function Webchat (rootEl, config) {
 
 	const api = new Api(config.apiUrl);
 
-	widgetEl.appendChild(domUtils.toDOM(templates.container.render()));
-
-	this.headerContainer = new HeaderContainer(self);
-	this.contentContainer = new ContentContainer(self, {
-		blockMessage: blockMessage,
-		deleteMessage: deleteMessage,
-		editMessage: editMessage
-	});
-	this.editorContainer = new EditorContainer(self, {
-		sendMessage: sendMessage,
-		startSession: startSession,
-		endSession: endSession
-	});
-	this.participantContainer = new ParticipantContainer(self);
-
 	let time;
 	let stream;
 	let sessionConfig = {};
@@ -109,13 +95,29 @@ function Webchat (rootEl, config) {
 
 			sessionConfig = initResponse.data;
 
+			if (!sessionConfig.contentOrder || ['ascending', 'descending'].indexOf(sessionConfig.contentOrder) === -1) {
+				sessionConfig.contentOrder = 'descending';
+			}
+
+			widgetEl.appendChild(domUtils.toDOM(templates[`container_${sessionConfig.contentOrder}`].render()));
+
+			self.headerContainer = new HeaderContainer(self);
+			self.contentContainer = new ContentContainer(self, {
+				blockMessage: blockMessage,
+				deleteMessage: deleteMessage,
+				editMessage: editMessage
+			});
+			self.editorContainer = new EditorContainer(self, {
+				sendMessage: sendMessage,
+				startSession: startSession,
+				endSession: endSession
+			});
+			self.participantContainer = new ParticipantContainer(self);
+
+
 			self.headerContainer.setLozenge(sessionConfig.sessionStatus);
 
 			time = new Time(sessionConfig.time);
-
-			if (!sessionConfig.contentOrder) {
-				sessionConfig.contentOrder = 'descending';
-			}
 
 			if (sessionConfig.isParticipant === true) {
 				self.editorContainer.init(sessionConfig);
@@ -193,9 +195,8 @@ function Webchat (rootEl, config) {
 					setTimeout(function () {
 						resize();
 					}, 100);
-
-					window.addEventListener('resize', resize);
 				}
+				window.addEventListener('resize', resize);
 
 				if (sessionConfig.sessionStatus !== 'closed') {
 					initStream(sessionConfig);
@@ -208,15 +209,33 @@ function Webchat (rootEl, config) {
 		return time.serverTime();
 	};
 
-
-	function resize () {
+	function setFixedHeight () {
+		const bodyHeight = document.body.scrollHeight;
 		const viewportHeight = domUtils.windowSize().height;
-		const chatPadding = 10;
-		const nonChatHeight = domUtils.offset(widgetEl).top + chatPadding;
+		const chatHeight = widgetEl.scrollHeight;
+		const nonChatHeight = bodyHeight - chatHeight;
+
 		const editorHeight = self.editorContainer.getDomContainer().scrollHeight;
 		const participantHeight = self.participantContainer.getDomContainer().scrollHeight;
+		const headerHeight = self.headerContainer.getDomContainer().scrollHeight;
 
-		self.contentContainer.setFixedHeight(viewportHeight - nonChatHeight - editorHeight - participantHeight - nonChatHeight);
+		self.contentContainer.setFixedHeight(viewportHeight - nonChatHeight - editorHeight - participantHeight - headerHeight);
+	}
+
+	function removeFixedHeight () {
+		self.contentContainer.removeFixedHeight();
+	}
+
+	function resize () {
+		if (sessionConfig.fixedHeight) {
+			if (['default', 'S'].indexOf(oGrid.getCurrentLayout()) !== -1) {
+				removeFixedHeight();
+			} else {
+				setFixedHeight();
+			}
+		} else {
+			removeFixedHeight();
+		}
 	}
 
 

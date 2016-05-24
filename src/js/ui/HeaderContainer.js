@@ -56,6 +56,10 @@ function HeaderContainer (webchat) {
 			keypoint.parentNode.removeChild(keypoint);
 		}
 	};
+
+	this.getDomContainer = function () {
+		return headerDomContainer;
+	};
 }
 
 module.exports = HeaderContainer;

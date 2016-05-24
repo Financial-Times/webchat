@@ -88,7 +88,7 @@ function ContentContainer (webchat, actions) {
 		}
 
 		return self.findMessage(details.messageId);
-	}
+	};
 
 
 	this.addMessage = function (details) {
@@ -137,7 +137,7 @@ function ContentContainer (webchat, actions) {
 				scrollToLast();
 			}
 		});
-	}
+	};
 
 	this.deleteMessage = function (messageId) {
 		const messageEl = self.findMessage(messageId);
@@ -228,7 +228,7 @@ function ContentContainer (webchat, actions) {
 
 		contentDelegate.off('click', '.participant-option-edit', onEdit);
 		contentDelegate.off('click', '.participant-option-delete', onDelete);
-	}
+	};
 
 
 	this.init = function (sessionConfig) {
@@ -250,12 +250,13 @@ function ContentContainer (webchat, actions) {
 	};
 
 	this.setFixedHeight = function (heightPx) {
-		if (!contentDomContainer.classList.contains('fixed-height')) {
-			contentDomContainer.classList.add('fixed-height');
-		}
-
 		contentDomContainer.classList.add('fixed-height');
 		contentDomContainer.style.height = heightPx + 'px';
+	};
+
+	this.removeFixedHeight = function () {
+		contentDomContainer.classList.remove('fixed-height');
+		contentDomContainer.style.height = 'auto';
 	};
 
 	this.findMessage = function (messageId) {
