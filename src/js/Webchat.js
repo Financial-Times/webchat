@@ -210,7 +210,13 @@ function Webchat (rootEl, config) {
 	};
 
 	function setFixedHeight () {
-		const bodyHeight = document.body.scrollHeight;
+		let bodyHeight = document.body.clientHeight;
+
+		self.contentContainer.getDomContainer().style.overflow = "visible";
+		self.contentContainer.setFixedHeight(bodyHeight);
+
+		bodyHeight = document.body.clientHeight;
+
 		const viewportHeight = domUtils.windowSize().height;
 		const chatHeight = widgetEl.scrollHeight;
 		const nonChatHeight = bodyHeight - chatHeight;
@@ -219,6 +225,7 @@ function Webchat (rootEl, config) {
 		const participantHeight = self.participantContainer.getDomContainer().scrollHeight;
 		const headerHeight = self.headerContainer.getDomContainer().scrollHeight;
 
+		self.contentContainer.getDomContainer().style.overflow = "auto";
 		self.contentContainer.setFixedHeight(viewportHeight - nonChatHeight - editorHeight - participantHeight - headerHeight);
 	}
 

@@ -4,13 +4,6 @@
 	position: relative;
 	border: 1px solid #cccccc;
 
-	.webchat-order-ascending {
-		@include oGridRespondTo($until: M) {
-			display: flex;
-			flex-direction: column-reverse;
-		}
-	}
-
 	&.fixed-height {
 		overflow: hidden;
 	}
