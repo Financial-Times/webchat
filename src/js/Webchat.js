@@ -209,6 +209,7 @@ function Webchat (rootEl, config) {
 		return time.serverTime();
 	};
 
+	const minimumHeight = 250;
 	function setFixedHeight () {
 		let bodyHeight = document.body.clientHeight;
 
@@ -225,8 +226,11 @@ function Webchat (rootEl, config) {
 		const participantHeight = self.participantContainer.getDomContainer().scrollHeight;
 		const headerHeight = self.headerContainer.getDomContainer().scrollHeight;
 
+		let calculatedHeight = viewportHeight - nonChatHeight - editorHeight - participantHeight - headerHeight;
+		calculatedHeight = Math.max(calculatedHeight, minimumHeight);
+
 		self.contentContainer.getDomContainer().style.overflow = "auto";
-		self.contentContainer.setFixedHeight(viewportHeight - nonChatHeight - editorHeight - participantHeight - headerHeight);
+		self.contentContainer.setFixedHeight(calculatedHeight);
 	}
 
 	function removeFixedHeight () {
