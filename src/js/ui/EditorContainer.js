@@ -68,7 +68,11 @@ function EditorContainer (webchat, actions) {
 					if (sessionStatus === 'comingsoon') {
 						actions.startSession();
 					} else if (sessionStatus === 'inprogress') {
-						actions.endSession();
+						actions.endSession().then((success) => {
+							if (success) {
+								document.location.reload();
+							}
+						});
 					}
 				});
 			}
@@ -82,7 +86,7 @@ function EditorContainer (webchat, actions) {
 				});
 			}
 		}
-	}
+	};
 
 
 	function onSend () {
