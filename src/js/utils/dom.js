@@ -157,7 +157,13 @@ exports.sanitizeHtml = function (str) {
 	const div = document.createElement("div");
 	div.textContent = str;
 	return div.innerHTML;
-}
+};
+
+exports.sanitizeHtmlId = function (str) {
+	let strSanitized = exports.sanitizeHtml(str);
+	strSanitized = strSanitized.replace(/[^a-zA-Z0-9_-]/g, '');
+	return strSanitized;
+};
 
 exports.addScript = function (baseurl, params) {
 	return new Promise((resolve) => {
