@@ -63,7 +63,7 @@ function ParticipantContainer (webchat) {
 			sanitizedKey = makeid();
 		}
 
-		if (participantDomContainer.querySelector(sanitizedKey)) {
+		if (participantDomContainer.querySelector('#webchat-par-' + sanitizedKey)) {
 			sanitizedKey += makeid();
 		}
 
