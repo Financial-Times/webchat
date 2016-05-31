@@ -29,15 +29,46 @@ function ParticipantContainer (webchat) {
 
 	this.containsParticipant = function (key) {
 		const participantId = getParticipantElementId(key);
-		return (participantDomContainer.querySelectorAll('#'+participantId).length !== 0);
+		try {
+			return (participantDomContainer.querySelectorAll('#' + participantId).length !== 0);
+		} catch (e) {
+			return false;
+		}
 	};
 
 	this.getDomContainer = function () {
 		return participantDomContainer;
 	};
 
+
+	function makeid () {
+		let text = "";
+		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (let i = 0; i < 5; i++) {
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+
+		return text;
+	}
+
+	const participantKeys = {};
 	function getParticipantElementId (key) {
-		return "webchat-par-" + domUtils.sanitizeHtml(key);
+		if (participantKeys[key]) {
+			return participantKeys[key];
+		}
+
+		let sanitizedKey = domUtils.sanitizeHtmlId(key);
+		if (!sanitizedKey) {
+			sanitizedKey = makeid();
+		}
+
+		if (participantDomContainer.querySelector(sanitizedKey)) {
+			sanitizedKey += makeid();
+		}
+
+		participantKeys[key] = sanitizedKey;
+		return "webchat-par-" + sanitizedKey;
 	}
 }
 
