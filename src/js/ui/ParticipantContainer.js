@@ -55,7 +55,7 @@ function ParticipantContainer (webchat) {
 	const participantKeys = {};
 	function getParticipantElementId (key) {
 		if (participantKeys[key]) {
-			return participantKeys[key];
+			return "webchat-par-" + participantKeys[key];
 		}
 
 		let sanitizedKey = domUtils.sanitizeHtmlId(key);
