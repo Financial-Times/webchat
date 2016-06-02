@@ -1,5 +1,4 @@
-const Api = require('./data/NewApi');
-//const Api = require('./data/Api');
+const Api = require('./data/Api');
 const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
