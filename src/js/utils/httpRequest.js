@@ -27,7 +27,7 @@ function execute (config) {
 					config.url += '?';
 				}
 
-				config.url += key + '=' + config.query[key];
+				config.url += encodeURIComponent(key) + '=' + encodeURIComponent(config.query[key]);
 			});
 		}
 
@@ -109,7 +109,7 @@ function execute (config) {
 						body += '&';
 					}
 
-					body += key + '=' + config.body[key];
+					body += encodeURIComponent(key) + '=' + encodeURIComponent(config.body[key]);
 				});
 
 				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

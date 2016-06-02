@@ -1,14 +1,17 @@
 const httpRequest = require('../utils/httpRequest');
 const merge = require('../utils/merge');
 
-function parseQuery (qstr) {
+const consideredQueryParams = ['participant_token'];
+function getPageQueryString (qstr) {
 	const query = {};
 	const a = qstr.substr(1).split('&');
 
 	for (let i = 0; i < a.length; i++) {
 		if (a[i] !== "") {
 			const b = a[i].split('=');
-			query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+			if (consideredQueryParams.indexOf(b[0]) !== -1) {
+				query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+			}
 		}
 	}
 
@@ -21,7 +24,7 @@ const commonQueryParams = {
 
 function Api (baseUrl) {
 	this.init = function () {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.get({
 			url: baseUrl,
@@ -72,7 +75,7 @@ function Api (baseUrl) {
 	};
 
 	this.poll = function () {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.get({
 			url: baseUrl,
@@ -85,7 +88,7 @@ function Api (baseUrl) {
 	};
 
 	this.catchup = function (query) {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.get({
 			url: baseUrl,
@@ -99,7 +102,7 @@ function Api (baseUrl) {
 
 	this.session = {};
 	this.session.start = function () {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.post({
 			url: baseUrl,
@@ -112,7 +115,7 @@ function Api (baseUrl) {
 	};
 
 	this.session.end = function () {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.post({
 			url: baseUrl,
@@ -126,13 +129,13 @@ function Api (baseUrl) {
 
 	this.message = {};
 	this.message.send = function (postData) {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		const translatedPostData = {
 			msg: postData.message,
 			keytext: postData.keyText || '',
 			isblockquote: postData.isBlockquote === true ? 1 : 0
-		}
+		};
 
 		return httpRequest.post({
 			url: baseUrl,
@@ -146,11 +149,11 @@ function Api (baseUrl) {
 	};
 
 	this.message.block = function (postData) {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		const translatedPostData = {
 			messageid: postData.messageId
-		}
+		};
 
 		return httpRequest.post({
 			url: baseUrl,
@@ -164,14 +167,14 @@ function Api (baseUrl) {
 	};
 
 	this.message.edit = function (postData) {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		const translatedPostData = {
 			messageid: postData.messageId,
 			newtext: postData.message,
 			keytext: postData.keyText,
 			isblockquote: postData.isBlockquote === true ? 1 : 0
-		}
+		};
 
 		return httpRequest.post({
 			url: baseUrl,
@@ -185,11 +188,11 @@ function Api (baseUrl) {
 	};
 
 	this.message.delete = function (postData) {
-		const queryStr = parseQuery(document.location.search);
+		const queryStr = getPageQueryString(document.location.search);
 
 		const translatedPostData = {
 			messageid: postData.messageId
-		}
+		};
 
 		return httpRequest.post({
 			url: baseUrl,
