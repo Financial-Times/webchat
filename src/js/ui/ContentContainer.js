@@ -252,6 +252,7 @@ function ContentContainer (webchat, actions) {
 	this.setFixedHeight = function (heightPx) {
 		contentDomContainer.classList.add('fixed-height');
 		contentDomContainer.style.height = heightPx + 'px';
+		scrollToLast();
 	};
 
 	this.removeFixedHeight = function () {
