@@ -191,11 +191,11 @@ function Webchat (rootEl, config) {
 				}
 
 				if (sessionConfig.fixedHeight) {
-					setTimeout(function () {
-						resize();
-					}, 100);
+					resize();
 				}
 				window.addEventListener('resize', resize);
+				document.addEventListener('o.DOMContentLoaded', resize);
+				window.addEventListener('load', resize);
 
 				if (sessionConfig.sessionStatus !== 'closed') {
 					initStream(sessionConfig);
@@ -208,29 +208,38 @@ function Webchat (rootEl, config) {
 		return time.serverTime();
 	};
 
-	const minimumHeight = 250;
 	function setFixedHeight () {
-		let bodyHeight = document.body.clientHeight;
+		const viewportHeight = domUtils.windowSize().height;
+		console.log('webchat viewportHeight', viewportHeight);
+
+		const bodyHeightBefore = document.body.clientHeight;
+		console.log('webchat bodyHeightBefore', bodyHeightBefore);
+
+		const temporaryContentHeight = Math.max(viewportHeight, bodyHeightBefore);
+		console.log('webchat temporaryContentHeight', temporaryContentHeight);
 
 		self.contentContainer.getDomContainer().style.overflow = "visible";
-		self.contentContainer.setFixedHeight(bodyHeight);
+		self.contentContainer.getDomContainer().style.height = temporaryContentHeight + 'px';
 
-		bodyHeight = document.body.clientHeight;
+		const bodyHeightAfter = document.body.clientHeight;
+		console.log('webchat bodyHeightAfter', bodyHeightAfter);
 
-		const viewportHeight = domUtils.windowSize().height;
 		const chatHeight = widgetEl.scrollHeight;
-		const nonChatHeight = bodyHeight - chatHeight;
+		console.log('webchat chatHeight', chatHeight);
 
-		const editorHeight = self.editorContainer.getDomContainer().scrollHeight;
-		const participantHeight = self.participantContainer.getDomContainer().scrollHeight;
-		const headerHeight = self.headerContainer.getDomContainer().scrollHeight;
+		const nonChatHeight = bodyHeightAfter - chatHeight;
+		console.log('webchat nonChatHeight', nonChatHeight);
 
-		let calculatedHeight = viewportHeight - nonChatHeight - editorHeight - participantHeight - headerHeight;
-		calculatedHeight = Math.max(calculatedHeight, minimumHeight);
+		const nonContentHeight = chatHeight - temporaryContentHeight;
+		console.log('webchat nonContentHeight', nonContentHeight);
 
-		self.contentContainer.getDomContainer().style.overflow = "auto";
-		self.contentContainer.setFixedHeight(calculatedHeight);
+		const targetHeight = viewportHeight - nonChatHeight - nonContentHeight;
+		console.log('webchat targetHeight', targetHeight);
+
+		self.contentContainer.setFixedHeight(targetHeight);
 	}
+	this.setFixedHeight = setFixedHeight;
+
 
 	function removeFixedHeight () {
 		self.contentContainer.removeFixedHeight();
@@ -238,11 +247,7 @@ function Webchat (rootEl, config) {
 
 	function resize () {
 		if (sessionConfig.fixedHeight) {
-			if (['default', 'S'].indexOf(oGrid.getCurrentLayout()) !== -1) {
-				removeFixedHeight();
-			} else {
-				setFixedHeight();
-			}
+			setFixedHeight();
 		} else {
 			removeFixedHeight();
 		}

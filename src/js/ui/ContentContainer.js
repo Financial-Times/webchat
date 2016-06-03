@@ -250,14 +250,15 @@ function ContentContainer (webchat, actions) {
 	};
 
 	this.setFixedHeight = function (heightPx) {
-		contentDomContainer.classList.add('fixed-height');
 		contentDomContainer.style.height = heightPx + 'px';
+		contentDomContainer.style.overflow = "auto";
 		scrollToLast();
 	};
 
 	this.removeFixedHeight = function () {
 		contentDomContainer.classList.remove('fixed-height');
 		contentDomContainer.style.height = 'auto';
+		contentDomContainer.style.overflow = "hidden";
 	};
 
 	this.findMessage = function (messageId) {

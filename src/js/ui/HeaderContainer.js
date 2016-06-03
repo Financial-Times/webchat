@@ -8,7 +8,8 @@ function HeaderContainer (webchat) {
 	const excerptContainer = headerDomContainer.querySelector('.webchat-excerpt');
 	const titleContainer = headerDomContainer.querySelector('.webchat-title');
 	const lozengeContainer = headerDomContainer.querySelector('.webchat-lozenge');
-	const keyPointsContainer = headerDomContainer.querySelector('.webchat-keypoints ul');
+	const keyPointsContainer = headerDomContainer.querySelector('.webchat-keypoints');
+	let keyPointsContainerList;
 
 	this.setExcerpt = function (excerpt) {
 		excerptContainer.innerHTML = '<h2>'+ excerpt +'</h2>';
@@ -47,11 +48,15 @@ function HeaderContainer (webchat) {
 	};
 
 	this.addKeypoint = function (details) {
-		keyPointsContainer.appendChild(domUtils.toDOM(`<li data-msg-id="${details.id}"><a href="#webchat-msg-${details.id}">${details.keyText}</a></li>`));
+		if (!keyPointsContainerList) {
+			keyPointsContainer.appendChild(document.createElement('ul'));
+			keyPointsContainerList = keyPointsContainer.querySelector('ul');
+		}
+		keyPointsContainerList.appendChild(domUtils.toDOM(`<li data-msg-id="${details.id}"><a href="#webchat-msg-${details.id}">${details.keyText}</a></li>`));
 	};
 
 	this.removeKeypoint = function (id) {
-		const keypoint = keyPointsContainer.querySelector(`[data-msg-id="${id}"]`);
+		const keypoint = keyPointsContainerList.querySelector(`[data-msg-id="${id}"]`);
 		if (keypoint) {
 			keypoint.parentNode.removeChild(keypoint);
 		}

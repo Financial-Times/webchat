@@ -1,4 +1,8 @@
 .webchat-header {
+	@include oGridRespondTo($until: M) {
+		display: none;
+	}
+
 	.webchat-title {
 		display: none;
 	}
