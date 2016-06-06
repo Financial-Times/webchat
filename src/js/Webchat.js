@@ -2,7 +2,6 @@ const Api = require('./data/Api');
 const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
-const oGrid = require('o-grid');
 
 const EditorContainer = require('./ui/EditorContainer');
 const ContentContainer = require('./ui/ContentContainer');
