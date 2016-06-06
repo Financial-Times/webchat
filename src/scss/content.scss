@@ -4,11 +4,18 @@
 	position: relative;
 	border: 1px solid #cccccc;
 
-	&.fixed-height {
-		overflow: hidden;
+	&.webchat-order-ascending {
+		display: flex;
+		flex-direction: column;
+
+		&:before {
+			flex: 1 1 auto;
+			content: '';
+		}
 	}
 
 	&.fixed-height {
+		overflow: hidden;
 		overflow-y: auto;
 	}
 
