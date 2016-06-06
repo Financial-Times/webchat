@@ -32,7 +32,9 @@ function RealTimeStream (config) {
 				poll();
 			}, 5000);
 
-			pusher = new Pusher(config.pusherKey);
+			pusher = new Pusher(config.pusherKey, {
+				disableStats: true
+			});
 			const channel = pusher.subscribe(config.channel);
 
 			channel.bind('msg', (data) => {
