@@ -4,21 +4,6 @@
 	position: relative;
 	border: 1px solid #cccccc;
 
-	&.webchat-order-ascending.fixed-height {
-		display: flex;
-		flex-direction: column;
-
-		&:before {
-			flex: 1 1 auto;
-			content: '';
-		}
-	}
-
-	&.fixed-height {
-		overflow: hidden;
-		overflow-y: auto;
-	}
-
 
 	.webchat-closed-content {
 		border: 0;
@@ -214,5 +199,17 @@
 
 	.morevideo {
 		display: none;
+	}
+}
+
+
+.webchat-order-ascending {
+	display: flex;
+	flex-direction: column;
+
+	.webchat-content:before,
+	.webchat-closed-content:before {
+		flex: 1 1 auto;
+		content: '';
 	}
 }

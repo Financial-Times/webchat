@@ -256,9 +256,8 @@ function ContentContainer (webchat, actions) {
 	};
 
 	this.removeFixedHeight = function () {
-		contentDomContainer.classList.remove('fixed-height');
 		contentDomContainer.style.height = 'auto';
-		contentDomContainer.style.overflow = "hidden";
+		contentDomContainer.style.overflow = "visible";
 	};
 
 	this.findMessage = function (messageId) {
