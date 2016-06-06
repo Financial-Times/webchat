@@ -1,6 +1,6 @@
 /* global twttr */
 
-const nVideo = require('n-video');
+const oVideo = require('o-video');
 
 const domUtils = require('../utils/dom');
 
@@ -45,14 +45,14 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 
 		const videoId = brightcoveEmbed.getAttribute('data-asset-ref');
 
-		const replacementHtml = `<div class="webchat-video-brightcove" data-n-component="n-video"
-			data-n-video-source="brightcove"
-			data-n-video-id="${videoId}"></div>`;
+		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video"
+			data-o-video-source="brightcove"
+			data-o-video-id="${videoId}"></div>`;
 
 		brightcoveEmbed.innerHTML = replacementHtml;
 
 		setTimeout(() => {
-			nVideo.init({
+			oVideo.init({
 				selector: '.webchat-video-brightcove',
 				placeholder: true
 			});
