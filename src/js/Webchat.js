@@ -2,6 +2,7 @@ const Api = require('./data/Api');
 const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
+const httpRequest = require('./utils/httpRequest');
 
 const EditorContainer = require('./ui/EditorContainer');
 const ContentContainer = require('./ui/ContentContainer');
@@ -66,6 +67,11 @@ function Webchat (rootEl, config) {
 	let time;
 	let stream;
 	let sessionConfig = {};
+
+
+	if (!httpRequest.hasSupportForCors()) {
+		widgetEl.classList.add('webchat-no-cors-support');
+	}
 
 
 	function failedResponse (err) {

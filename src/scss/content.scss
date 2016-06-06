@@ -215,3 +215,14 @@
 		}
 	}
 }
+
+
+.webchat-no-cors-support {
+	.block {
+		display: none !important;
+	}
+
+	.participant-options {
+		display: none !important;
+	}
+}

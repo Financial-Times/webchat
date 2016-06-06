@@ -133,6 +133,17 @@ exports.post = function (config) {
 	return execute(config);
 };
 
+
+exports.hasSupportForCors = function () {
+	const xhr = getXhrForUrl('http://example.com');
+
+	if (xhr instanceof XMLHttpRequest) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
 /**
  * Determine XHR.
  */
