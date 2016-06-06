@@ -204,12 +204,14 @@
 
 
 .webchat-order-ascending {
-	display: flex;
-	flex-direction: column;
+	.webchat-content,
+	.webchat-closed-content {
+		display: flex;
+		flex-direction: column;
 
-	.webchat-content:before,
-	.webchat-closed-content:before {
-		flex: 1 1 auto;
-		content: '';
+		&:before {
+			flex: 1 1 auto;
+			content: '';
+		}
 	}
 }
