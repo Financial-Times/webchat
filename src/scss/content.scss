@@ -209,6 +209,7 @@
 		flex-direction: column;
 
 		&:before {
+			display: flex;
 			flex: 1 1 auto;
 			content: '';
 		}
