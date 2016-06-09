@@ -417,7 +417,7 @@ function Webchat (rootEl, config) {
 		connectMessageContainer.innerHTML = "Connecting to the stream &hellip;";
 
 		stream.on('connected', () => {
-			connectMessageContainer.innerHTML = sessionConfig.connectionNotification;
+			connectMessageContainer.innerHTML = "New messages will appear here";
 		});
 
 		stream.on('msg', onMessage);

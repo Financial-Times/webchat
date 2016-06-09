@@ -12,6 +12,8 @@
 	}
 
 	.webchat-excerpt {
+		display: none;
+
 		h2 {
 			padding-bottom: 10px;
 			font-size: 15px;
@@ -21,6 +23,8 @@
 	}
 
 	.webchat-keypoints {
+		display: none;
+
 		ul {
 			margin-top: 0;
 		}

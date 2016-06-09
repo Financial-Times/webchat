@@ -1,21 +1,40 @@
 .webchat-content,
 .webchat-closed-content {
-	background: white;
-	position: relative;
-	border: 1px solid #cccccc;
-
-
 	.webchat-closed-content {
 		border: 0;
 	}
 
 	.msg {
 		position: relative;
-		background-color: #eaeaea;
-		border-bottom: 1px solid #f3f3f3;
-		font-size: 12px;
+		font-size: 13px;
 		line-height: 1.4;
 		transition: opacity 0.5s ease-out;
+		padding: 5px 8px;
+		box-sizing: border-box;
+
+		> div {
+			background-repeat: no-repeat;
+			padding: 5px 5px 5px 20px;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		&.normal:not(.prepub):last-child {
+			font-size: 14px;
+			font-weight: bold;
+			background-color: #fde7da;
+			border-top: 1px solid #a02d4f;
+
+			&:before {
+				content: 'LIVE';
+				position: absolute;
+				top: 10px;
+				right: 20px;
+				color: #9e0026;
+			}
+		}
 
 		&:after {
 			visibility: hidden;
@@ -28,10 +47,6 @@
 
 		&.delete-progress {
 			opacity: 0.5;
-		}
-
-		p {
-			margin: 0;
 		}
 
 		blockquote {
@@ -49,34 +64,20 @@
 		}
 
 		> .par {
-			float: left;
-			width: 40px;
-			text-align: right;
+			text-align: left;
 			font-weight: bold;
 			line-height: 2;
-			padding: 0px 5px;
-			font-family: Arial, Helvetica, sans-serif;
-		}
-
-		> div {
-			background-position: 20px 5px;
-			background-repeat: no-repeat;
-			background-color: #f3f3f3;
-			padding: 5px 5px 5px 55px;
-		}
-
-		&.normal > div,
-		&.blockquote > div {
-			background-color: #ffffff;
-			padding: 5px;
-			margin-left: 50px;
+			color: oColorsGetPaletteColor('pink');
+			padding: 6px 5px;
+			border-radius: 30px;
+			background-color: oColorsGetPaletteColor('black');
 		}
 
 		&.blocked {
 			background-color: #ebdfdf;
 			border-top: 1px dotted #db908e;
 			border-bottom: 1px dotted #db908e;
-			margin-top: -1px;
+			margin-top: -2px;
 
 			> div {
 				background-color: #ebdfdf;
@@ -95,11 +96,14 @@
 		}
 
 		&.price > div {
-			background-position: 25px 3px;
+			padding-left: 40px;
+			background-position: 0 3px;
 			background-image: url(oAssetsResolve("src/images/icons/charticon.png", webchat));
 		}
 
 		&.sysmsg > div {
+			padding-left: 40px;
+			background-position: 0 5px;
 			background-image: url(oAssetsResolve("src/images/icons/loudhailer.png", webchat));
 		}
 
@@ -153,14 +157,14 @@
 	}
 
 	.blocknotice {
-		padding: 5px 10px;
-		display: block;
-		text-align: right;
-		margin-top: -24px;
+		position: absolute;
+		top: 10px;
+		right: 20px;
+
 		text-transform: uppercase;
 		font-weight: bold;
 		font-size: 10px;
-		color: red;
+		color: oColorsGetPaletteColor('red');
 	}
 
 	.video-container {

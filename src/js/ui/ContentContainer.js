@@ -116,7 +116,11 @@ function ContentContainer (webchat, actions) {
 		}
 
 		if (isParticipant && details.blockable) {
-			new BlockOption(webchat, messageEl);
+			new BlockOption(webchat, messageEl, function () {
+				if (scrollAtTheEnd || details.forceScrollToTheEnd) {
+					scrollToLast();
+				}
+			});
 		}
 
 		if (scrollAtTheEnd || details.forceScrollToTheEnd) {
