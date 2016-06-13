@@ -15,10 +15,33 @@ function ContentContainer (webchat, actions) {
 	let insertKeyText;
 
 
-	const contentDomContainer = webchat.getDomContainer().querySelector('.webchat-content');
-	const contentDelegate = new Delegate(contentDomContainer);
+	const contentContainerEl = webchat.getDomContainer().querySelector('.webchat-content-container');
+	const fadeTopEl = contentContainerEl.querySelector('.webchat-fade-top');
+	const fadeBottomEl = contentContainerEl.querySelector('.webchat-fade-bottom');
 
-	const scroller = new Scroller(contentDomContainer, function () {});
+	const contentEl = contentContainerEl.querySelector('.webchat-content');
+	const contentDelegate = new Delegate(contentEl);
+
+
+	const handleFade = function () {
+		if (fixedHeight && contentEl.scrollHeight > contentEl.clientHeight) {
+			if (scroller.getPosition() === 'top') {
+				fadeTopEl.style.display = 'none';
+				fadeBottomEl.style.display = 'block';
+			} else if (scroller.getPosition() === 'bottom') {
+				fadeTopEl.style.display = 'block';
+				fadeBottomEl.style.display = 'none';
+			} else {
+				fadeTopEl.style.display = 'block';
+				fadeBottomEl.style.display = 'block';
+			}
+		}
+	};
+
+	let fixedHeight = false;
+	const scroller = new Scroller(contentEl, function () {
+		handleFade();
+	});
 
 	contentDelegate.on('click', '.msg span.block', (evt) => {
 		const blockElement = evt.target || evt.originalTarget || evt.srcElement;
@@ -78,9 +101,9 @@ function ContentContainer (webchat, actions) {
 		const messageHtml = `<div class="msg sysmsg ${details.customClass}" data-mid="${details.messageId}" id="webchat-msg-${details.messageId}"><div>${details.html}</div></div>`;
 
 		if (contentOrder === 'descending') {
-			contentDomContainer.insertBefore(domUtils.toDOM(messageHtml), contentDomContainer.firstChild);
+			contentEl.insertBefore(domUtils.toDOM(messageHtml), contentEl.firstChild);
 		} else {
-			contentDomContainer.appendChild(domUtils.toDOM(messageHtml));
+			contentEl.appendChild(domUtils.toDOM(messageHtml));
 		}
 
 		if (scrollAtTheEnd || details.forceScrollToTheEnd) {
@@ -104,9 +127,9 @@ function ContentContainer (webchat, actions) {
 			messageEl = self.findMessage(details.messageId);
 		} else {
 			if (contentOrder === 'descending') {
-				contentDomContainer.insertBefore(domUtils.toDOM(details.html), contentDomContainer.firstChild);
+				contentEl.insertBefore(domUtils.toDOM(details.html), contentEl.firstChild);
 			} else {
-				contentDomContainer.appendChild(domUtils.toDOM(details.html));
+				contentEl.appendChild(domUtils.toDOM(details.html));
 			}
 			messageEl = self.findMessage(details.messageId);
 		}
@@ -221,14 +244,14 @@ function ContentContainer (webchat, actions) {
 	}
 
 	function enableParticipantOptions () {
-		contentDomContainer.classList.add('show-participant-options');
+		contentEl.classList.add('show-participant-options');
 
 		contentDelegate.on('click', '.participant-option-edit', onEdit);
 		contentDelegate.on('click', '.participant-option-delete', onDelete);
 	};
 
 	this.disableParticipantOptions = function () {
-		contentDomContainer.classList.remove('show-participant-options');
+		contentEl.classList.remove('show-participant-options');
 
 		contentDelegate.off('click', '.participant-option-edit', onEdit);
 		contentDelegate.off('click', '.participant-option-delete', onDelete);
@@ -250,22 +273,26 @@ function ContentContainer (webchat, actions) {
 	};
 
 	this.getDomContainer = function () {
-		return contentDomContainer;
+		return contentEl;
 	};
 
 	this.setFixedHeight = function (heightPx) {
-		contentDomContainer.style.height = heightPx + 'px';
-		contentDomContainer.style.overflow = "auto";
+		fixedHeight = true;
+
+		contentEl.style.height = heightPx + 'px';
+		contentEl.style.overflow = "auto";
 		scrollToLast();
+		handleFade();
 	};
 
 	this.removeFixedHeight = function () {
-		contentDomContainer.style.height = 'auto';
-		contentDomContainer.style.overflow = "visible";
+		fixedHeight = false;
+		contentEl.style.height = 'auto';
+		contentEl.style.overflow = "visible";
 	};
 
 	this.findMessage = function (messageId) {
-		return contentDomContainer.querySelector('#webchat-msg-' + messageId);
+		return contentEl.querySelector('#webchat-msg-' + messageId);
 	};
 }
 

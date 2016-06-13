@@ -49,7 +49,7 @@ function ScrollMonitor (el, callback) {
 
 
 	function onValidScroll (force) {
-		let scrollPosition = getAttributeValue('scrollTop');
+		const scrollPosition = getAttributeValue('scrollTop');
 
 		if (force || lastScrollPosition !== scrollPosition) {
 			lastScrollPosition = scrollPosition;
@@ -98,23 +98,11 @@ function ScrollMonitor (el, callback) {
 	};
 
 	this.scrollToTop = function () {
-		self.stop();
-		setTimeout(function () {
-			setScrollTop(0);
-			setTimeout(function () {
-				self.start();
-			}, throttle + 10);
-		}, throttle + 10);
+		setScrollTop(0);
 	};
 
 	this.scrollToBottom = function () {
-		self.stop();
-		setTimeout(function () {
-			setScrollTop(getAttributeValue('scrollHeight'));
-			setTimeout(function () {
-				self.start();
-			}, throttle + 10);
-		}, throttle + 10);
+		setScrollTop(getAttributeValue('scrollHeight'));
 	};
 
 	this.destroy = function () {
