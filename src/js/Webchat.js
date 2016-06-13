@@ -409,17 +409,6 @@ function Webchat (rootEl, config) {
 			api: api
 		});
 
-		const connectMessage = self.contentContainer.addSysMessage({
-			html: "Connecting to stream &hellip;",
-			messageId: 'stream-connect'
-		});
-		const connectMessageContainer = connectMessage.querySelector('div');
-		connectMessageContainer.innerHTML = "Connecting to the stream &hellip;";
-
-		stream.on('connected', () => {
-			connectMessageContainer.innerHTML = "New messages will appear here";
-		});
-
 		stream.on('msg', onMessage);
 		stream.on('editmsg', onMessage);
 		stream.on('block', onBlockMessage);
