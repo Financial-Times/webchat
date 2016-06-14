@@ -9,6 +9,8 @@ const ContentContainer = require('./ui/ContentContainer');
 const ParticipantContainer = require('./ui/ParticipantContainer');
 const HeaderContainer = require('./ui/HeaderContainer');
 const templates = require('./ui/templates');
+const AlertOverlay = require('./ui/AlertOverlay');
+const ConfirmOverlay = require('./ui/ConfirmOverlay');
 
 function Webchat (rootEl, config) {
 	let widgetEl;
@@ -77,8 +79,6 @@ function Webchat (rootEl, config) {
 	function failedResponse (err) {
 		console.log('An error occured, error:', err);
 		self.showAlert('An error occured.');
-
-		throw err;
 	}
 
 	function unsuccessfulActionRequest (response) {
@@ -291,33 +291,39 @@ function Webchat (rootEl, config) {
 	}
 
 	function startSession () {
-		if (!confirm('START SESSION NOW?\n\nThe session will be started immediately (there will be no delay). Once started, there is no way to go back to the "Coming soon" state.\n\nAre you sure you want to start the session now?')) {
-			return Promise.resolve(false);
-		}
-
-		return api.session.start().catch(failedResponse).then((response) => {
-			if (response.success === true) {
-				return true;
-			} else {
-				unsuccessfulActionRequest(response);
-				return false;
-			}
-		});
+		return new ConfirmOverlay('START SESSION NOW?\n\nThe session will be started immediately (there will be no delay). Once started, there is no way to go back to the "Coming soon" state.\n\nAre you sure you want to start the session now?')
+			.then((answer) => {
+				if (answer === true) {
+					return api.session.start().catch(failedResponse).then((response) => {
+						if (response.success === true) {
+							return true;
+						} else {
+							unsuccessfulActionRequest(response);
+							return false;
+						}
+					});
+				} else {
+					return false;
+				}
+			});
     }
 
     function endSession() {
-		if (!confirm('End session now?')) {
-			return Promise.resolve(false);
-		}
-
-		return api.session.end().catch(failedResponse).then((response) => {
-			if (response.success === true) {
-				return true;
-			} else {
-				unsuccessfulActionRequest(response);
-				return false;
-			}
-		});
+		return new ConfirmOverlay('End session now?')
+			.then((answer) => {
+				if (answer === true) {
+					return api.session.end().catch(failedResponse).then((response) => {
+						if (response.success === true) {
+							return true;
+						} else {
+							unsuccessfulActionRequest(response);
+							return false;
+						}
+					});
+				} else {
+					return false;
+				}
+			});
 	}
 
 
@@ -398,7 +404,7 @@ function Webchat (rootEl, config) {
 
 
 	this.showAlert = function (message) {
-		window.alert(message);
+		new AlertOverlay(message);
 	};
 
 	function initStream () {
