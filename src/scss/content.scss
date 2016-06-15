@@ -25,9 +25,8 @@
 			margin: 0;
 		}
 
-		&.normal:not(.prepub):last-child {
+		&:not(.prepub):not(.separator):last-child {
 			font-size: 14px;
-			font-weight: bold;
 			background-color: #fde7da;
 			border-top: 1px solid #a02d4f;
 
