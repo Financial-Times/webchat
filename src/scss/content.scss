@@ -243,3 +243,13 @@
 		display: none !important;
 	}
 }
+
+@include oGridRespondTo($until: M) {
+	.block {
+		display: none !important;
+	}
+
+	.participant-options {
+		display: none !important;
+	}
+}
