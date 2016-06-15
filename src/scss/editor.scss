@@ -1,4 +1,8 @@
 .webchat-editor {
+	@include oGridRespondTo($until: M) {
+		display: none;
+	}
+
 	.webchat-emoticons {
 		padding: 10px 0;
 
