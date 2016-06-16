@@ -78,7 +78,11 @@ function Webchat (rootEl, config) {
 
 	function failedResponse (err) {
 		console.log('An error occured, error:', err);
-		self.showAlert('An error occured.');
+
+		return {
+			success: false,
+			reason: 'System is temporarily unavailable. Please try again later.'
+		};
 	}
 
 	function unsuccessfulActionRequest (response) {
