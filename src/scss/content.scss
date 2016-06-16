@@ -41,6 +41,10 @@
 			&.price .messagebody {
 				margin-top: 20px;
 			}
+
+			.messageheader .timestamp {
+				display: none;
+			}
 		}
 
 		&:after {
@@ -70,14 +74,21 @@
 			}
 		}
 
-		> .par {
-			text-align: left;
-			font-weight: bold;
-			line-height: 2;
-			color: oColorsGetPaletteColor('pink');
-			padding: 6px 5px;
-			border-radius: 30px;
-			background-color: oColorsGetPaletteColor('black');
+		.messageheader {
+			.participant {
+				font-weight: bold;
+				line-height: 2;
+				color: oColorsGetPaletteColor('pink');
+				padding: 6px 5px;
+				border-radius: 30px;
+				background-color: oColorsGetPaletteColor('black');
+			}
+
+			.timestamp {
+				float: right;
+				color: #a16b78;
+				font-weight: bold;
+			}
 		}
 
 		&.blocked {
