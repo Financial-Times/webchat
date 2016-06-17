@@ -17,6 +17,8 @@ function EditorContainer (webchat, actions) {
 	let sessionControlButton;
 	let sessionStatus;
 
+	let editorStatus = true; // enabled
+
 	const emoticonList = ['thumbs_down','thumbs_up','teeth_smile','cry_smile','omg_smile','embarassed_smile','censored','angry_smile','devil_smile','wink_smile','lightbulb','bandit1','bandit2','bandit3','bandit4','bandit5','bandit6','bandit7','bandit8','bandit9','bandit10','bear','bull','buy','sell','cash','danger','deadcat','feltcollaredsource','financier','rocket','scorchedfingers','swag','tinhat','separator','breaking_news'];
 	const emoticons = [];
 	emoticonList.forEach((emoticonClass) => {
@@ -65,14 +67,16 @@ function EditorContainer (webchat, actions) {
 				sessionControlButton.addEventListener('click', (evt) => {
 					evt.preventDefault();
 
-					if (sessionStatus === 'comingsoon') {
-						actions.startSession();
-					} else if (sessionStatus === 'inprogress') {
-						actions.endSession().then((success) => {
-							if (success) {
-								document.location.reload();
-							}
-						});
+					if (editorStatus) {
+						if (sessionStatus === 'comingsoon') {
+							actions.startSession();
+						} else if (sessionStatus === 'inprogress') {
+							actions.endSession().then((success) => {
+								if (success) {
+									document.location.reload();
+								}
+							});
+						}
 					}
 				});
 			}
@@ -122,23 +126,14 @@ function EditorContainer (webchat, actions) {
 			isBlockquote = false;
 		}
 
-		messageField.blur();
-		messageField.disabled = true;
-		sendButton.disabled = true;
-		if (keyTextField) {
-			keyTextField.disabled = true;
-		}
+		self.disable();
 
 		actions.sendMessage({
 			message: message,
 			keyText: keyText ? keyText : '',
 			isBlockquote: isBlockquote
 		}).then((success) => {
-			messageField.disabled = false;
-			sendButton.disabled = false;
-			if (keyTextField) {
-				keyTextField.disabled = false;
-			}
+			self.enable();
 
 			if (success === true) {
 				messageField.value = '';
@@ -169,6 +164,30 @@ function EditorContainer (webchat, actions) {
 	this.sessionEnded = function () {
 		editorDomContainer.classList.add('webchat-hidden');
 		sessionStatus = 'closed';
+	};
+
+
+	this.disable = function () {
+		editorStatus = false;
+
+		messageField.blur();
+		messageField.disabled = true;
+		sendButton.disabled = true;
+		sessionControlButton.classList.add('disabled');
+		if (keyTextField) {
+			keyTextField.disabled = true;
+		}
+	};
+
+	this.enable = function () {
+		editorStatus = true;
+
+		messageField.disabled = false;
+		sendButton.disabled = false;
+		sessionControlButton.classList.remove('disabled');
+		if (keyTextField) {
+			keyTextField.disabled = false;
+		}
 	};
 
 

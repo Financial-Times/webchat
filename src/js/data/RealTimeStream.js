@@ -126,7 +126,8 @@ function RealTimeStream (config) {
 	}
 
 
-	let retryTimeout = 5500;
+	const retryBasicTimeout = 6000;
+	let retryTimeout = retryBasicTimeout;
 	function connectionFailed (connNumber) {
 		console.log('connectionFailed', connNumber, connectionNumber);
 		if (connNumber === connectionNumber) {
@@ -137,7 +138,7 @@ function RealTimeStream (config) {
 				retryTimeout: retryTimeout
 			});
 
-			if (retryTimeout === 5500) {
+			if (retryTimeout === retryBasicTimeout) {
 				connect(connectionNumber);
 			} else {
 				setTimeout(() => {
@@ -157,13 +158,13 @@ function RealTimeStream (config) {
 
 			addPusherEvents(connNumber, channel);
 
-			retryTimeout = 5500;
+			retryTimeout = retryBasicTimeout;
 		}).catch(() => {
 			connectToPolling(connNumber).then(() => {
 				triggerEvent('connected');
 				console.log(connNumber, 'Connected with Polling');
 
-				retryTimeout = 5500;
+				retryTimeout = retryBasicTimeout;
 			}).catch(() => {
 				console.log(connNumber, 'Connection failed');
 
