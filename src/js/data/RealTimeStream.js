@@ -23,7 +23,7 @@ function RealTimeStream (config) {
 	let connectionNumber = 1;
 
 
-	function connectToPusher (connNumber) {
+	function connectToPusher () {
 		return new Promise((resolve, reject) => {
 			if (!config.pusherKey || !window.Pusher) {
 				reject();
@@ -36,11 +36,8 @@ function RealTimeStream (config) {
 				};
 
 				const pusherConnectionFailed = function () {
-					console.log(connNumber, 'Pusher failed');
-
 					unsubscribeConnectionEvents();
 
-					console.log(connNumber, 'manually disconnect pusher');
 					pusher.unsubscribe(config.channel);
 					pusher.disconnect();
 
@@ -49,8 +46,6 @@ function RealTimeStream (config) {
 				};
 
 				const pusherConnected = function () {
-					console.log(connNumber, 'Pusher connected');
-
 					unsubscribeConnectionEvents();
 
 					clearTimeout(pusherTimeout);
@@ -60,7 +55,6 @@ function RealTimeStream (config) {
 				// Connect to pusher
 				const pusherTimeout = setTimeout(pusherConnectionFailed, 5000);
 
-				console.log(connNumber, 'pusher obj created');
 				pusher = new Pusher(config.pusherKey, {
 					disableStats: true,
 					activity_timeout: 30000,
@@ -102,13 +96,10 @@ function RealTimeStream (config) {
 
 
 		const pusherConnectionFailed = function () {
-			console.log(connNumber, 'Pusher failed');
-
 			pusher.connection.unbind('failed', pusherConnectionFailed);
 			pusher.connection.unbind('unavailable', pusherConnectionFailed);
 			pusher.connection.unbind('disconnected', pusherConnectionFailed);
 
-			console.log(connNumber, 'manually disconnect pusher');
 			pusher.unsubscribe(config.channel);
 			pusher.disconnect();
 
@@ -121,7 +112,6 @@ function RealTimeStream (config) {
 	}
 
 	function connectToPolling (connNumber) {
-		console.log(connNumber, 'poll fallback');
 		return poll(connNumber);
 	}
 
@@ -129,11 +119,8 @@ function RealTimeStream (config) {
 	const retryBasicTimeout = 6000;
 	let retryTimeout = retryBasicTimeout;
 	function connectionFailed (connNumber) {
-		console.log('connectionFailed', connNumber, connectionNumber);
 		if (connNumber === connectionNumber) {
 			connectionNumber++;
-			console.log(connNumber, 'connection failed, retry in ' + (retryTimeout/1000) + ' seconds');
-
 			triggerEvent('reconnecting', {
 				retryTimeout: retryTimeout
 			});
@@ -154,20 +141,15 @@ function RealTimeStream (config) {
 
 		connectToPusher(connNumber).then((channel) => {
 			triggerEvent('connected');
-			console.log(connNumber, 'Connected with Pusher');
-
 			addPusherEvents(connNumber, channel);
 
 			retryTimeout = retryBasicTimeout;
 		}).catch(() => {
 			connectToPolling(connNumber).then(() => {
 				triggerEvent('connected');
-				console.log(connNumber, 'Connected with Polling');
 
 				retryTimeout = retryBasicTimeout;
 			}).catch(() => {
-				console.log(connNumber, 'Connection failed');
-
 				if (retryTimeout < 30000) {
 					retryTimeout += retryTimeout;
 
@@ -202,7 +184,6 @@ function RealTimeStream (config) {
 				poll(connNumber);
 			}, (config.pollInterval || 10) * 1000);
 		}).catch((e) => {
-			console.log(connNumber, "Poll failed");
 			connectionFailed(connNumber);
 
 			throw e;
@@ -215,12 +196,9 @@ function RealTimeStream (config) {
 
 
 	this.stop = function () {
-		console.log('stop polling');
 		stopPolling();
 
 		if (pusher) {
-			console.log('pusher unsubscribe and disconnect');
-
 			pusher.unsubscribe(config.channel);
 			pusher.disconnect();
 		}
