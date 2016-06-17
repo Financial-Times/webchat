@@ -102,6 +102,7 @@
 				font-weight: bold;
 
 				@include oGridRespondTo($until: M) {
+					float: none;
 					display: inline-block;
 					margin-left: 10px;
 				}
