@@ -100,7 +100,7 @@
 				color: #a16b78;
 				font-weight: bold;
 
-				@include oGridRespondTo(M) {
+				@include oGridRespondTo($until: M) {
 					display: inline-block;
 					margin-left: 10px;
 				}
