@@ -99,6 +99,11 @@
 				float: right;
 				color: #a16b78;
 				font-weight: bold;
+
+				@include oGridRespondTo(M) {
+					display: inline-block;
+					margin-left: 10px;
+				}
 			}
 		}
 
