@@ -33,6 +33,15 @@
 
 	.session-control {
 		font-size: 14px;
+
+		&.disabled {
+			color: grey;
+
+			&:hover {
+				color: grey;
+				text-decoration: none;
+			}
+		}
 	}
 
 	textarea {

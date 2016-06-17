@@ -11,6 +11,7 @@ const HeaderContainer = require('./ui/HeaderContainer');
 const templates = require('./ui/templates');
 const AlertOverlay = require('./ui/AlertOverlay');
 const ConfirmOverlay = require('./ui/ConfirmOverlay');
+const ConnectionStatusNotification = require('./ui/ConnectionStatusNotification');
 
 function Webchat (rootEl, config) {
 	let widgetEl;
@@ -412,11 +413,25 @@ function Webchat (rootEl, config) {
 	};
 
 	function initStream () {
+		const connectionStatusNotification = new ConnectionStatusNotification(self);
+
 		stream = new RealTimeStream({
 			channel: sessionConfig.channel,
 			pusherKey: sessionConfig.pusherKey,
 			articleId: config.articleId,
 			api: api
+		});
+
+		stream.on('connecting', connectionStatusNotification.onConnecting);
+		stream.on('connected', () => {
+			widgetEl.classList.remove('webchat-no-connection');
+			connectionStatusNotification.onConnected();
+			self.editorContainer.enable();
+		});
+		stream.on('reconnecting', (data) => {
+			widgetEl.classList.add('webchat-no-connection');
+			connectionStatusNotification.onReconnecting(data);
+			self.editorContainer.disable();
 		});
 
 		stream.on('msg', onMessage);

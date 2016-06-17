@@ -1,12 +1,23 @@
 .webchat-content-container {
 	position: relative;
+
+	.webchat-connection-status {
+		display: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		text-align: center;
+		background-color: oColorsGetPaletteColor('orange');
+		color: oColorsGetPaletteColor('white');
+		z-index: 1;
+		padding: 5px;
+	}
 }
 
 .webchat-content,
 .webchat-closed-content {
-	.webchat-closed-content {
-		border: 0;
-	}
+	position: relative;
+	border: 0;
 
 	.msg {
 		position: relative;
