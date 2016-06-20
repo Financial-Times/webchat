@@ -3,6 +3,8 @@ const domUtils = require('../utils/dom');
 const templates = require('./templates');
 
 function EditorContainer (webchat, actions) {
+	const self = this;
+
 	const editorDomContainer = webchat.getDomContainer().querySelector('.webchat-editor');
 	const editorDelegate = new Delegate(editorDomContainer);
 
