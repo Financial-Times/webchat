@@ -209,6 +209,8 @@ function Webchat (rootEl, config) {
 
 				if (sessionConfig.sessionStatus !== 'closed') {
 					initStream(sessionConfig);
+
+					widgetEl.classList.add('webchat-live');
 				}
 			});
 		});
