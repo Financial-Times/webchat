@@ -397,7 +397,7 @@ function Webchat (rootEl, config) {
 
         self.contentContainer.addSysMessage({
         	messageId: 'webchat-msg-session-ended',
-        	html: `This session has now closed and <a href="${document.location.href.replace(document.location.hash, "")}">is available here</a>.`,
+        	html: `This session has now closed and <a href="${document.location.href.replace(document.location.hash, "").replace('/marketslive/', '/content/')}">is available here</a>.`,
         	forceScrollToTheEnd: true
         });
 

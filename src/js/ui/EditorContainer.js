@@ -75,7 +75,7 @@ function EditorContainer (webchat, actions) {
 						} else if (sessionStatus === 'inprogress') {
 							actions.endSession().then((success) => {
 								if (success) {
-									document.location.reload();
+									document.location.href = document.location.href.replace(document.location.hash, "").replace('/marketslive/', '/content/');
 								}
 							});
 						}
