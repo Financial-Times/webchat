@@ -50,6 +50,11 @@ function Api (baseUrl) {
 				sessionStatus: response.data.status,
 				pusherKey: response.data.pusherkey,
 
+				post: {
+					excerpt: response.post_excerpt,
+					title: response.post_title
+				},
+
 				initialPollingWaitTime: response.data.initial_polling_wait_time,
 				pollInterval: response.data.pollInterval,
 

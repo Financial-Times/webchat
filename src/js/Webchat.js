@@ -111,6 +111,21 @@ function Webchat (rootEl, config) {
 			widgetEl.appendChild(domUtils.toDOM(templates[`container_${sessionConfig.contentOrder}`].render()));
 
 			self.headerContainer = new HeaderContainer(self);
+			self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+
+			if (sessionConfig.post.excerpt) {
+				self.headerContainer.setExcerpt(sessionConfig.post.excerpt);
+			} else {
+				self.headerContainer.setExcerpt('Live markets commentary from FT.com');
+			}
+
+			if (sessionConfig.post.title) {
+				self.headerContainer.setTitle(sessionConfig.post.title);
+			} else {
+				self.headerContainer.setTitle('Markets live');
+			}
+
+
 			self.contentContainer = new ContentContainer(self, {
 				blockMessage: blockMessage,
 				deleteMessage: deleteMessage,
@@ -122,9 +137,6 @@ function Webchat (rootEl, config) {
 				endSession: endSession
 			});
 			self.participantContainer = new ParticipantContainer(self);
-
-
-			self.headerContainer.setLozenge(sessionConfig.sessionStatus);
 
 			time = new Time(sessionConfig.time);
 
@@ -182,11 +194,6 @@ function Webchat (rootEl, config) {
 								if (messageIndex) {
 									messages.splice(messageIndex, 1);
 								}
-								break;
-
-							case 'postSaved':
-								self.headerContainer.setExcerpt(evt.data.excerpt);
-								self.headerContainer.setTitle(evt.data.title);
 								break;
 
 							case 'end':
