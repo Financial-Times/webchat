@@ -51,8 +51,8 @@ function Api (baseUrl) {
 				pusherKey: response.data.pusherkey,
 
 				post: {
-					excerpt: response.post_excerpt,
-					title: response.post_title
+					excerpt: response.data.post_excerpt,
+					title: response.data.post_title
 				},
 
 				initialPollingWaitTime: response.data.initial_polling_wait_time,
