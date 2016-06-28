@@ -179,13 +179,19 @@ function Events () {
 		let i;
 
 		if (events[evt]) {
-			if (!(customData instanceof Array)) {
-				customData = [customData];
+			if (customData) {
+				if (!(customData instanceof Array)) {
+					customData = [customData];
+				}
 			}
 
 			i=0;
 			while (i < events[evt].length) {
-				events[evt][i].callback.apply(this, customData);
+				if (customData) {
+					events[evt][i].callback.apply(this, customData);
+				} else {
+					events[evt][i].callback.apply(this);
+				}
 
 				if (events[evt][i].once === true) {
 					events[evt].splice(i, 1);

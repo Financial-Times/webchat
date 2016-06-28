@@ -172,23 +172,27 @@ function EditorContainer (webchat, actions) {
 	this.disable = function () {
 		editorStatus = false;
 
-		messageField.blur();
-		messageField.disabled = true;
-		sendButton.disabled = true;
-		sessionControlButton.classList.add('disabled');
-		if (keyTextField) {
-			keyTextField.disabled = true;
+		if (messageField) {
+			messageField.blur();
+			messageField.disabled = true;
+			sendButton.disabled = true;
+			sessionControlButton.classList.add('disabled');
+			if (keyTextField) {
+				keyTextField.disabled = true;
+			}
 		}
 	};
 
 	this.enable = function () {
 		editorStatus = true;
 
-		messageField.disabled = false;
-		sendButton.disabled = false;
-		sessionControlButton.classList.remove('disabled');
-		if (keyTextField) {
-			keyTextField.disabled = false;
+		if (messageField) {
+			messageField.disabled = false;
+			sendButton.disabled = false;
+			sessionControlButton.classList.remove('disabled');
+			if (keyTextField) {
+				keyTextField.disabled = false;
+			}
 		}
 	};
 
