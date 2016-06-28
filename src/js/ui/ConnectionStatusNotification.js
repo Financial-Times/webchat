@@ -47,7 +47,9 @@ function ConnectionStatusNotification (webchat) {
 
 					ticker = setTimeout(tickerFunction, 1000);
 				} else {
-					connectionStatusEl.innerHTML = `Reconnecting ...`;
+					ticker = setTimeout(() => {
+						connectionStatusEl.innerHTML = `An error occurred while reconnecting. Please try to refresh the page.`;
+					}, 2000);
 				}
 			}
 		};
