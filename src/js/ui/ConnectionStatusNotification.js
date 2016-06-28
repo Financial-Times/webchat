@@ -41,10 +41,14 @@ function ConnectionStatusNotification (webchat) {
 
 		const tickerFunction = () => {
 			if (connectionStatus === 'reconnecting') {
-				timeout--;
-				connectionStatusEl.innerHTML = `Connection lost. Reconnecting in ${timeout} seconds.`;
+				if (timeout > 0) {
+					timeout--;
+					connectionStatusEl.innerHTML = `Connection lost. Reconnecting in ${timeout} seconds.`;
 
-				ticker = setTimeout(tickerFunction, 1000);
+					ticker = setTimeout(tickerFunction, 1000);
+				} else {
+					connectionStatusEl.innerHTML = `Reconnecting ...`;
+				}
 			}
 		};
 
