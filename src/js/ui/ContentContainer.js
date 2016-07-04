@@ -81,11 +81,13 @@ function ContentContainer (webchat, actions) {
 		}
 	}
 	function scrollToLast () {
-		if (contentOrder === 'descending') {
-			scroller.scrollToTop();
-		} else {
-			scroller.scrollToBottom();
-		}
+		setTimeout(() => {
+			if (contentOrder === 'descending') {
+				scroller.scrollToTop();
+			} else {
+				scroller.scrollToBottom();
+			}
+		}, 50);
 	}
 
 	this.addSysMessage = function (details) {
