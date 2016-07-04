@@ -165,7 +165,12 @@ function RealTimeStream (config) {
 	function poll (connNumber) {
 		return config.api.poll({
 			channels: config.channel
-		}).then((events) => {
+		}).then((response) => {
+			if (response.success !== true) {
+				throw new Error("Poll failed");
+			}
+
+			const events = response.data;
 			for (let i = 0, s = events.length; i < s; i++) {
 				if (events[i].channel === config.channel) {
 					if (events[i].event === 'msg') {
