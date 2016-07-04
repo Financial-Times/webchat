@@ -97,6 +97,14 @@
 			}
 		}
 
+		&.prepub {
+			.messageheader {
+				.timestamp {
+					display: none;
+				}
+			}
+		}
+
 		.webchat-emoticon {
 			margin: -2px 5px;
 		}
