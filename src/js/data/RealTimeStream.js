@@ -163,7 +163,9 @@ function RealTimeStream (config) {
 
 	let pollTimer;
 	function poll (connNumber) {
-		return config.api.poll(config.articleId).then((events) => {
+		return config.api.poll({
+			channels: config.channel
+		}).then((events) => {
 			for (let i = 0, s = events.length; i < s; i++) {
 				if (events[i].channel === config.channel) {
 					if (events[i].event === 'msg') {

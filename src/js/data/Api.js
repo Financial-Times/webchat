@@ -79,13 +79,13 @@ function Api (baseUrl) {
 		});
 	};
 
-	this.poll = function () {
+	this.poll = function (query) {
 		const queryStr = getPageQueryString(document.location.search);
 
 		return httpRequest.get({
 			url: baseUrl,
 			dataType: 'json',
-			query: merge(queryStr, commonQueryParams, {
+			query: merge(queryStr, commonQueryParams, query, {
 				action: 'poll',
 				format: 'json'
 			})
