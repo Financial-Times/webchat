@@ -176,7 +176,11 @@ function EditorContainer (webchat, actions) {
 			messageField.blur();
 			messageField.disabled = true;
 			sendButton.disabled = true;
-			sessionControlButton.classList.add('disabled');
+
+			if (sessionControlButton) {
+				sessionControlButton.classList.add('disabled');
+			}
+
 			if (keyTextField) {
 				keyTextField.disabled = true;
 			}
@@ -189,7 +193,11 @@ function EditorContainer (webchat, actions) {
 		if (messageField) {
 			messageField.disabled = false;
 			sendButton.disabled = false;
-			sessionControlButton.classList.remove('disabled');
+
+			if (sessionControlButton) {
+				sessionControlButton.classList.remove('disabled');
+			}
+
 			if (keyTextField) {
 				keyTextField.disabled = false;
 			}
