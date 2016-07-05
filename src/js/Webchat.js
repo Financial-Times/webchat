@@ -260,7 +260,9 @@ function Webchat (rootEl, config) {
 
 		self.contentContainer.setFixedHeight(targetHeight);
 
-		lastDocumentHeight = document.body.clientHeight;
+		setTimeout(() => {
+			lastDocumentHeight = document.body.clientHeight;
+		}, 50);
 
 		if (!documentHeightPollingActive) {
 			documentHeightPollingActive = true;
