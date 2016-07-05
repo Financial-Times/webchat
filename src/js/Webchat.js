@@ -237,7 +237,6 @@ function Webchat (rootEl, config) {
 		const documentHeight = document.body.clientHeight;
 
 		if (documentHeight !== lastDocumentHeight) {
-			console.log('webchat document height changed, resize');
 			setFixedHeight();
 		}
 	}
