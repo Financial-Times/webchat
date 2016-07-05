@@ -227,8 +227,23 @@ function Webchat (rootEl, config) {
 		return time.serverTime();
 	};
 
+
+	let viewportHeightPollingInterval;
+	let viewportHeightPollingActive = false;
+	let lastViewportHeight;
+
+
+	function viewportHeightPolling () {
+		const viewportHeight = domUtils.windowSize().height;
+
+		if (viewportHeight !== lastViewportHeight) {
+			setFixedHeight();
+		}
+	}
+
 	function setFixedHeight () {
 		const viewportHeight = domUtils.windowSize().height;
+
 		const bodyHeightBefore = document.body.clientHeight;
 		const temporaryContentHeight = Math.max(viewportHeight, bodyHeightBefore);
 
@@ -243,12 +258,21 @@ function Webchat (rootEl, config) {
 		const targetHeight = viewportHeight - nonChatHeight - nonContentHeight;
 
 		self.contentContainer.setFixedHeight(targetHeight);
+
+		lastViewportHeight = viewportHeight;
+
+		if (!viewportHeightPollingActive) {
+			viewportHeightPollingActive = true;
+			viewportHeightPollingInterval = setInterval(viewportHeightPolling, 1000);
+		}
 	}
 	this.setFixedHeight = setFixedHeight;
 
 
 	function removeFixedHeight () {
 		self.contentContainer.removeFixedHeight();
+		clearInterval(viewportHeightPollingInterval);
+		viewportHeightPollingActive = false;
 	}
 
 	function resize () {
