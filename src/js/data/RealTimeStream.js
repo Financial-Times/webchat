@@ -22,6 +22,8 @@ function RealTimeStream (config) {
 
 	let connectionNumber = 1;
 
+	let active = true;
+
 
 	function connectToPusher () {
 		return new Promise((resolve, reject) => {
@@ -119,7 +121,7 @@ function RealTimeStream (config) {
 	const retryBasicTimeout = 6000;
 	let retryTimeout = retryBasicTimeout;
 	function connectionFailed (connNumber) {
-		if (connNumber === connectionNumber) {
+		if (connNumber === connectionNumber && active) {
 			connectionNumber++;
 			triggerEvent('reconnecting', {
 				retryTimeout: retryTimeout
@@ -203,6 +205,8 @@ function RealTimeStream (config) {
 
 
 	this.stop = function () {
+		active = false;
+
 		stopPolling();
 
 		if (pusher) {
