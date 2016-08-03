@@ -84,6 +84,15 @@
 					margin-left: 10px;
 				}
 			}
+
+			&.par {
+				font-weight: bold;
+				line-height: 2;
+				color: oColorsGetPaletteColor('pink');
+				padding: 6px 5px;
+				border-radius: 30px;
+				background-color: oColorsGetPaletteColor('black');
+			}
 		}
 
 		&.blocked {
