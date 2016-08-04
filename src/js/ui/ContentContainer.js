@@ -136,36 +136,42 @@ function ContentContainer (webchat, actions) {
 			messageEl = self.findMessage(details.messageId);
 		}
 
-		if (isEditor) {
-			addEditDeleteOptions(messageEl);
-		}
+		if (messageEl) {
+			if (isEditor) {
+				addEditDeleteOptions(messageEl);
+			}
 
-		if (isParticipant && details.blockable) {
-			new BlockOption(webchat, messageEl, function () {
-				if (scrollAtTheEnd || details.forceScrollToTheEnd) {
-					scrollToLast();
-				}
-			});
+			if (isParticipant && details.blockable) {
+				new BlockOption(webchat, messageEl, function () {
+					if (scrollAtTheEnd || details.forceScrollToTheEnd) {
+						scrollToLast();
+					}
+				});
+			}
 		}
 
 		if (scrollAtTheEnd || details.forceScrollToTheEnd) {
 			scrollToLast();
 
-			const images = messageEl.querySelectorAll('img');
+			if (messageEl) {
+				const images = messageEl.querySelectorAll('img');
 
-			for (let i = 0; i < images.length; i++) {
-				const image = images[i];
-				image.addEventListener('load', function () {
-					scrollToLast();
-				});
+				for (let i = 0; i < images.length; i++) {
+					const image = images[i];
+					image.addEventListener('load', function () {
+						scrollToLast();
+					});
+				}
 			}
 		}
 
-		embeddedMedia.convert(messageEl).then(() => {
-			if (scrollAtTheEnd || details.forceScrollToTheEnd) {
-				scrollToLast();
-			}
-		});
+		if (messageEl) {
+			embeddedMedia.convert(messageEl).then(() => {
+				if (scrollAtTheEnd || details.forceScrollToTheEnd) {
+					scrollToLast();
+				}
+			});
+		}
 	};
 
 	this.deleteMessage = function (messageId) {
