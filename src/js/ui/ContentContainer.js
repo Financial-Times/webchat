@@ -137,6 +137,20 @@ function ContentContainer (webchat, actions) {
 		}
 
 		if (messageEl) {
+			const images = messageEl.querySelectorAll('img');
+
+			for (let i = 0; i < images.length; i++) {
+				const image = images[i];
+				const srcMatch = image.src.match(/\/wp-content(.*)\/emoticons\/([^.]+)/);
+				if (image.classList.contains('emoticon') && srcMatch) {
+					image.parentNode.replaceChild(domUtils.toDOM(`
+						<span class="webchat-emoticon webchat-emoticon--${srcMatch[2]}" data-code="${srcMatch[2]}">
+							${srcMatch[2].replace('-', ' ').replace('_', ' ')}
+						</span>
+					`), image);
+				}
+			}
+
 			if (isEditor) {
 				addEditDeleteOptions(messageEl);
 			}
