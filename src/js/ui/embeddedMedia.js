@@ -1,6 +1,6 @@
 /* global twttr */
 
-const oVideo = require('o-video');
+const OVideo = require('o-video');
 
 const domUtils = require('../utils/dom');
 
@@ -52,8 +52,7 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 		brightcoveEmbed.innerHTML = replacementHtml;
 
 		setTimeout(() => {
-			oVideo.init({
-				selector: '.webchat-video-brightcove',
+			new OVideo(brightcoveEmbed, {
 				placeholder: true
 			});
 
