@@ -47,14 +47,13 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 
 		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video"
 			data-o-video-source="brightcove"
+			data-o-video-placeholder="true"
 			data-o-video-id="${videoId}"></div>`;
 
 		brightcoveEmbed.innerHTML = replacementHtml;
 
 		setTimeout(() => {
-			oVideo.init(brightcoveEmbed, {
-				placeholder: true
-			});
+			oVideo.init(brightcoveEmbed);
 
 			resolve();
 		}, 100);
