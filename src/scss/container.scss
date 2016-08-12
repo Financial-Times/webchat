@@ -51,6 +51,16 @@
 	.webchat-hidden {
 		display: none;
 	}
+
+	a {
+		color: oColorsGetPaletteColor('blue');
+		-webkit-font-smoothing: antialiased;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .webchat-fade {
