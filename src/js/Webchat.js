@@ -350,9 +350,9 @@ function Webchat (rootEl, config) {
 					return false;
 				}
 			});
-    }
+	}
 
-    function endSession() {
+	function endSession() {
 		return new ConfirmOverlay('End session now?')
 			.then((answer) => {
 				if (answer === true) {
@@ -423,27 +423,36 @@ function Webchat (rootEl, config) {
 
 		self.editorContainer.sessionStarted();
 		self.headerContainer.setLozenge(sessionConfig.sessionStatus);
-    }
+	}
 
-    function onEndSession () {
-    	sessionConfig.sessionStatus = 'closed';
+	function onEndSession () {
+		sessionConfig.sessionStatus = 'closed';
 
-    	if (stream) {
-    		stream.stop();
-    	}
+		if (stream) {
+			stream.stop();
+		}
 
-        self.contentContainer.addSysMessage({
-        	messageId: 'webchat-msg-session-ended',
-        	html: `This session has now closed and <a href="${document.location.href.replace(document.location.hash, "")}">is available here</a>.`,
-        	forceScrollToTheEnd: true
-        });
+		let participants = "";
+		sessionConfig.participants.forEach((participant, index) => {
+			if (index === 0) {
+				participants += participant.displayName;
+			} else if (index === sessionConfig.participants.length - 1) {
+				participants += ` and ${participant.displayName}`;
+			} else {
+				participants += `, ${participant.displayName}`;
+			}
+		});
 
-        self.contentContainer.disableParticipantOptions();
-        self.editorContainer.sessionEnded();
-        self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+		self.contentContainer.addEndSessionMessage(
+			`This Market Live Session with ${participants} has finished.`
+		);
 
-        resize();
-    }
+		self.contentContainer.disableParticipantOptions();
+		self.editorContainer.sessionEnded();
+		self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+
+		resize();
+	}
 
 
 

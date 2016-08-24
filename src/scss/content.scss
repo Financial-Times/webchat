@@ -12,6 +12,17 @@
 		z-index: 1;
 		padding: 5px;
 	}
+
+	.webchat-session-ended-message {
+		position: absolute;
+		top: 0;
+		padding: 10px 10%;
+		background: #ffe9d7;
+		left: 0;
+		font-weight: 500;
+		width: 80%;
+		z-index: 1;
+	}
 }
 
 .webchat-content {
@@ -248,7 +259,7 @@
 
 .webchat-live {
 	.msg:not(.prepub):not(.separator):not(.sysmsg):last-child {
-		font-size: 14px;
+		font-size: 16px;
 		background-color: #fde7da;
 		border-top: 1px solid #a02d4f;
 

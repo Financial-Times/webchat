@@ -115,6 +115,12 @@ function ContentContainer (webchat, actions) {
 		return self.findMessage(details.messageId);
 	};
 
+	this.addEndSessionMessage = function (message) {
+		contentContainerEl.appendChild(domUtils.toDOM(
+			`<div class="webchat-session-ended-message">${message}</div>`
+		));
+	};
+
 
 	this.addMessage = function (details) {
 		let scrollAtTheEnd = false;
