@@ -374,14 +374,12 @@ function Webchat (rootEl, config) {
 
 	function onMessage (data, catchup) {
 		if (data.author) {
-			if (!self.participantContainer.containsParticipant(data.author)) {
-				self.participantContainer.addParticipant({
-					color: data.authorcolour,
-					fullName: data.authordisplayname,
-					shortName: data.author,
-					displayStyle: sessionConfig.authorNameStyle
-				});
-			}
+			self.participantContainer.addParticipant({
+				color: data.authorcolour,
+				fullName: data.authordisplayname,
+				shortName: data.author,
+				displayStyle: sessionConfig.authorNameStyle
+			});
 		}
 
 		self.contentContainer.addMessage({
@@ -433,13 +431,13 @@ function Webchat (rootEl, config) {
 		}
 
 		let participants = "";
-		sessionConfig.participants.forEach((participant, index) => {
+		self.participantContainer.getParticipants().forEach((participant, index) => {
 			if (index === 0) {
-				participants += participant.displayName;
+				participants += participant.fullName;
 			} else if (index === sessionConfig.participants.length - 1) {
-				participants += ` and ${participant.displayName}`;
+				participants += ` and ${participant.fullName}`;
 			} else {
-				participants += `, ${participant.displayName}`;
+				participants += `, ${participant.fullName}`;
 			}
 		});
 

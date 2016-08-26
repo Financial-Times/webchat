@@ -2,6 +2,8 @@ const domUtils = require('../utils/dom');
 const templates = require('./templates');
 
 function ParticipantContainer (webchat) {
+	const self = this;
+
 	const participantDomContainer = webchat.getDomContainer().querySelector('.webchat-participants');
 
 	const participantListTemplate = templates.participantList;
@@ -9,31 +11,42 @@ function ParticipantContainer (webchat) {
 
 	participantDomContainer.appendChild(domUtils.toDOM(participantListTemplate.render()));
 
+	const participants = [];
+
 	this.addParticipant = function (details) {
-		const noParticipants = participantDomContainer.querySelector(".no-participants");
-		if (noParticipants) {
-			noParticipants.parentNode.removeChild(noParticipants);
-		}
+		if (!self.containsParticipant(details.shortName)) {
+			participants.push(details);
 
-		if (!details.color && details.color !== 0) {
-			details.color = participantDomContainer.querySelectorAll(".webchat-participant-list li").length + 1;
-		}
+			const noParticipants = participantDomContainer.querySelector(".no-participants");
+			if (noParticipants) {
+				noParticipants.parentNode.removeChild(noParticipants);
+			}
 
-		participantDomContainer.querySelector(".webchat-participant-list").appendChild(domUtils.toDOM(participantTemplate.render({
-			id: getParticipantElementId(details.shortName),
-			color: details.color,
-			displayName: (details.displayStyle === "initials" ? details.shortName : details.fullName),
-			fullName: (details.displayStyle === "initials" ? details.fullName : "")
-		})));
+			if (!details.color && details.color !== 0) {
+				details.color = participantDomContainer.querySelectorAll(".webchat-participant-list li").length + 1;
+			}
+
+			participantDomContainer.querySelector(".webchat-participant-list").appendChild(domUtils.toDOM(participantTemplate.render({
+				id: getParticipantElementId(details.shortName),
+				color: details.color,
+				displayName: (details.displayStyle === "initials" ? details.shortName : details.fullName),
+				fullName: (details.displayStyle === "initials" ? details.fullName : "")
+			})));
+		}
 	};
 
 	this.containsParticipant = function (key) {
-		const participantId = getParticipantElementId(key);
-		try {
-			return (participantDomContainer.querySelectorAll('#' + participantId).length !== 0);
-		} catch (e) {
-			return false;
+		for (let i = 0; i < participants.length; i++) {
+			if (participants[i].shortName === key) {
+				return true;
+			}
 		}
+
+		return false;
+	};
+
+	this.getParticipants = function () {
+		return participants;
 	};
 
 	this.getDomContainer = function () {
