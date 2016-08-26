@@ -261,7 +261,7 @@ function Webchat (rootEl, config) {
 			targetHeight = 150;
 		}
 
-		self.contentContainer.setFixedHeight(targetHeight);
+		self.contentContainer.setFixedHeight(targetHeight - 5); // to avoid the scrollbar to appear/disappear
 
 		setTimeout(() => {
 			lastDocumentHeight = document.body.clientHeight;
