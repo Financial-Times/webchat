@@ -442,7 +442,7 @@ function Webchat (rootEl, config) {
 		});
 
 		self.contentContainer.addEndSessionMessage(
-			`This Market Live Session with ${participants} has finished.`
+			`This Market Live Session with ${participants} has finished`
 		);
 
 		self.contentContainer.disableParticipantOptions();
