@@ -6,11 +6,13 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		text-align: center;
-		background-color: oColorsGetPaletteColor('orange');
-		color: oColorsGetPaletteColor('white');
-		z-index: 1;
 		padding: 5px;
+		text-align: center;
+		background-color: oColorsGetPaletteColor('red-tint2');
+		color: oColorsGetPaletteColor('white');
+		border-bottom: 2px solid oColorsGetPaletteColor('cold-1');
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+		z-index: 1;
 	}
 
 	.webchat-session-ended-message {
