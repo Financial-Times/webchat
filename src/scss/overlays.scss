@@ -1,11 +1,16 @@
 .webchat-overlay-text {
 	min-width: 150px;
 	max-width: 250px;
-	font-size: 14px;
-	font-weight: bold;
+	font-size: 16px;
+	font-weight: 500;
 	margin-bottom: 15px;
 }
 
 .webchat-overlay-buttons {
-	text-align: right;
+	text-align: center;
+
+	.webchat-overlay-ok,
+	.webchat-overlay-cancel {
+		min-width: 70px;
+	}
 }

@@ -1,7 +1,7 @@
 const Overlay = require('o-overlay');
 const Delegate = require('dom-delegate');
 
-function AlertOverlay (text) {
+function AlertOverlay (title, text) {
 	const overlayInstance = new Overlay("webchat_alert", {
 		html: `
 			<div class="webchat-overlay-text">${text}</div>
@@ -9,7 +9,11 @@ function AlertOverlay (text) {
 				<button type="button" class="webchat-overlay-ok o-buttons o-buttons--standout">OK</button>
 			</div>
 		`,
-		modal: false
+		modal: false,
+		heading: {
+			title: title || 'Alert',
+			shaded: true
+		}
 	});
 
 	overlayInstance.open();

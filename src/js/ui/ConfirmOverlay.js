@@ -1,7 +1,7 @@
 const Overlay = require('o-overlay');
 const Delegate = require('dom-delegate');
 
-function ConfirmOverlay (text) {
+function ConfirmOverlay (title, text) {
 	return new Promise((resolve) => {
 		const overlayInstance = new Overlay("webchat_confirm", {
 			html: `
@@ -11,7 +11,11 @@ function ConfirmOverlay (text) {
 					<button type="button" class="webchat-overlay-cancel o-buttons">Cancel</button>
 				</div>
 			`,
-			modal: true
+			modal: true,
+			heading: {
+				title: title || 'Confirmation',
+				shaded: true
+			}
 		});
 
 		overlayInstance.open();

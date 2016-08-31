@@ -88,9 +88,9 @@ function Webchat (rootEl, config) {
 
 	function unsuccessfulActionRequest (response) {
 		if (response && typeof response === 'object') {
-			self.showAlert(response.reason);
+			self.showAlert('Alert', response.reason);
 		} else {
-			self.showAlert('Action failed, unknown reason.');
+			self.showAlert('Alert', 'Action failed, unknown reason.');
 		}
 	}
 
@@ -335,7 +335,7 @@ function Webchat (rootEl, config) {
 	}
 
 	function startSession () {
-		return new ConfirmOverlay('START SESSION NOW?\n\nThe session will be started immediately (there will be no delay). Once started, there is no way to go back to the "Coming soon" state.\n\nAre you sure you want to start the session now?')
+		return new ConfirmOverlay('Start session', 'The session will be started immediately (there will be no delay). Once started, there is no way to go back to the "Coming soon" state.<br/><br/>Are you sure you want to start the session now?')
 			.then((answer) => {
 				if (answer === true) {
 					return api.session.start().catch(failedResponse).then((response) => {
@@ -353,7 +353,7 @@ function Webchat (rootEl, config) {
 	}
 
 	function endSession() {
-		return new ConfirmOverlay('End session now?')
+		return new ConfirmOverlay('End session', 'Do you want to end the session now?')
 			.then((answer) => {
 				if (answer === true) {
 					return api.session.end().catch(failedResponse).then((response) => {
@@ -454,8 +454,8 @@ function Webchat (rootEl, config) {
 
 
 
-	this.showAlert = function (message) {
-		new AlertOverlay(message);
+	this.showAlert = function (title, message) {
+		new AlertOverlay(title, message);
 	};
 
 	function initStream () {
