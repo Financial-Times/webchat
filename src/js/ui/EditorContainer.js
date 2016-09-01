@@ -104,12 +104,12 @@ function EditorContainer (webchat, actions) {
 		}
 
 		if (message.length === 0) {
-			webchat.showMessage("Blank message cannot be sent.");
+			webchat.showAlert("Blank message cannot be sent.");
 			return;
 		}
 
 		if (message.length > 4096) {
-			webchat.showMessage("Sorry, your message is too long. Please restrict messages to four thousand characters.");
+			webchat.showAlert("Sorry, your message is too long. Please restrict messages to four thousand characters.");
 			return;
 		}
 
