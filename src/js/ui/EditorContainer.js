@@ -109,7 +109,7 @@ function EditorContainer (webchat, actions) {
 		}
 
 		if (message.length > 4096) {
-			webchat.showAlert("Sorry, your message is too long. Please restrict messages to four thousand characters.");
+			webchat.showAlert("Sorry, your message is too long.");
 			return;
 		}
 
