@@ -253,25 +253,11 @@
 
 .webchat-live {
 	.msg:not(.prepub):not(.separator):not(.sysmsg):last-child {
-		font-size: 16px;
 		background-color: #fde7da;
 		border-top: 1px solid #a02d4f;
 
-		&:before {
-			content: 'NEW';
-			font-weight: bold;
-			position: absolute;
-			top: 10px;
-			right: 20px;
-			color: #9e0026;
-		}
-
 		&.price .messagebody {
 			margin-top: 20px;
-		}
-
-		.messageheader .timestamp {
-			display: none;
 		}
 	}
 }
