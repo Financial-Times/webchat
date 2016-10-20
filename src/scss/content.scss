@@ -37,6 +37,8 @@
 	border: 0;
 
 	.msg {
+		@include oGridRow();
+
 		position: relative;
 		font-size: 15px;
 		line-height: 1.4;
@@ -44,9 +46,10 @@
 		padding: 5px 8px;
 		box-sizing: border-box;
 
-		> div {
+
+		.messagebody {
+			@include oGridColspan(8);
 			background-repeat: no-repeat;
-			padding: 5px 5px 5px 20px;
 		}
 
 		p {
@@ -81,27 +84,18 @@
 		}
 
 		.messageheader {
+			@include oGridColspan(1);
+
 			.participant,
 			&.par {
 				font-weight: bold;
-				line-height: 2;
-				color: oColorsGetPaletteColor('pink');
-				padding: 4px 5px;
-				border-radius: 30px;
-				background-color: oColorsGetPaletteColor('black');
 			}
+		}
 
-			.timestamp {
-				float: right;
-				color: #a16b78;
-				font-weight: bold;
-
-				@include oGridRespondTo($until: M) {
-					float: none;
-					display: inline-block;
-					margin-left: 10px;
-				}
-			}
+		.timestamp {
+			@include oGridColspan(3);
+			color: #a16b78;
+			text-align: right;
 		}
 
 		&.blocked {
@@ -116,10 +110,8 @@
 		}
 
 		&.prepub {
-			.messageheader {
-				.timestamp {
-					display: none;
-				}
+			.timestamp {
+				display: none;
 			}
 		}
 
