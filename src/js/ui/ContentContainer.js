@@ -153,22 +153,22 @@ function ContentContainer (webchat, actions) {
 				timestampEl.parentNode.removeChild(timestampEl);
 			}
 
-			messageEl.appendChild(
-				domUtils.toDOM(
-					`<time
-						class="o-date timestamp"
-						data-o-component="o-date"
-						data-o-date-format="h:mm a"
-						datetime="${datePublished.toISOString()}"
-						title="${datePublished.toDateString()} ${datePublished.toTimeString()}"
-						aria-label="${datePublished.toDateString()} ${datePublished.toTimeString()}">
-							${initialTimestampValue || ''}
-					</time>`
-				)
-			);
-			oDate.init(messageEl);
-
-			if (messageEl.classList.contains('separator')) {
+			if (!messageEl.classList.contains('separator')) {
+				messageEl.appendChild(
+					domUtils.toDOM(
+						`<time
+							class="o-date timestamp"
+							data-o-component="o-date"
+							data-o-date-format="h:mm a"
+							datetime="${datePublished.toISOString()}"
+							title="${datePublished.toDateString()} ${datePublished.toTimeString()}"
+							aria-label="${datePublished.toDateString()} ${datePublished.toTimeString()}">
+								${initialTimestampValue || ''}
+						</time>`
+					)
+				);
+				oDate.init(messageEl);
+			} else {
 				const messageBody = messageEl.querySelector('.messagebody');
 				if (messageBody) {
 					messageBody.innerHTML =
