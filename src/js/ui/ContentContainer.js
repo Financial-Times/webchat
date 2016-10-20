@@ -145,24 +145,28 @@ function ContentContainer (webchat, actions) {
 
 		if (messageEl) {
 			const datePublished = new Date(messageEl.getAttribute('data-timestamp') * 1000);
+
 			const timestampEl = messageEl.querySelector('.timestamp');
+			let initialTimestampValue;
 			if (timestampEl) {
-				timestampEl.parentNode.replaceChild(
-					domUtils.toDOM(
-						`<time
-							class="o-date timestamp"
-							data-o-component="o-date"
-							data-o-date-format="h:mm a"
-							datetime="${datePublished.toISOString()}"
-							title="${datePublished.toDateString()} ${datePublished.toTimeString()}"
-							aria-label="${datePublished.toDateString()} ${datePublished.toTimeString()}">
-								${timestampEl.innerHTML}
-						</time>`
-					),
-					timestampEl
-				);
-				oDate.init(messageEl);
+				initialTimestampValue = timestampEl.innerHTML;
+				timestampEl.parentNode.removeChild(timestampEl);
 			}
+
+			messageEl.appendChild(
+				domUtils.toDOM(
+					`<time
+						class="o-date timestamp"
+						data-o-component="o-date"
+						data-o-date-format="h:mm a"
+						datetime="${datePublished.toISOString()}"
+						title="${datePublished.toDateString()} ${datePublished.toTimeString()}"
+						aria-label="${datePublished.toDateString()} ${datePublished.toTimeString()}">
+							${initialTimestampValue || ''}
+					</time>`
+				)
+			);
+			oDate.init(messageEl);
 
 			if (messageEl.classList.contains('separator')) {
 				const messageBody = messageEl.querySelector('.messagebody');
