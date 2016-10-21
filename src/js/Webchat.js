@@ -245,7 +245,7 @@ function Webchat (rootEl, config) {
 		const viewportHeight = domUtils.windowSize().height;
 
 		const bodyHeightBefore = document.body.clientHeight;
-		const temporaryContentHeight = Math.max(viewportHeight, bodyHeightBefore);
+		const temporaryContentHeight = Math.max(viewportHeight, bodyHeightBefore) + 1000;
 
 		self.contentContainer.getDomContainer().style.overflow = "visible";
 		self.contentContainer.getDomContainer().style.height = temporaryContentHeight + 'px';
@@ -257,8 +257,8 @@ function Webchat (rootEl, config) {
 
 		let targetHeight = viewportHeight - nonChatHeight - nonContentHeight;
 
-		if (targetHeight + nonContentHeight < 475) {
-			targetHeight = 475 - nonContentHeight;
+		if (targetHeight + nonContentHeight < 480) {
+			targetHeight = 480 - nonContentHeight;
 		}
 
 		self.contentContainer.setFixedHeight(targetHeight - 5); // to avoid the scrollbar to appear/disappear
