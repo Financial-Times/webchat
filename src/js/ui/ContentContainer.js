@@ -351,7 +351,6 @@ function ContentContainer (webchat, actions) {
 
 		contentEl.style.height = heightPx + 'px';
 		contentEl.style.overflow = "auto";
-		scrollToLast();
 		handleFade();
 	};
 

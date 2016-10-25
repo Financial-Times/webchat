@@ -228,57 +228,22 @@ function Webchat (rootEl, config) {
 	};
 
 
-	let documentHeightPollingInterval;
-	let documentHeightPollingActive = false;
-	let lastDocumentHeight;
-
-
-	function documentHeightPolling () {
-		const documentHeight = document.body.clientHeight;
-
-		if (documentHeight !== lastDocumentHeight) {
-			setFixedHeight();
-		}
-	}
-
 	function setFixedHeight () {
-		const viewportHeight = domUtils.windowSize().height;
-
-		const bodyHeightBefore = document.body.clientHeight;
-		const temporaryContentHeight = Math.max(viewportHeight, bodyHeightBefore) + 1000;
-
-		self.contentContainer.getDomContainer().style.overflow = "visible";
-		self.contentContainer.getDomContainer().style.height = temporaryContentHeight + 'px';
-
-		const bodyHeightAfter = document.body.clientHeight;
+		const contentHeight = self.contentContainer.getDomContainer().clientHeight;
 		const chatHeight = widgetEl.scrollHeight;
-		const nonChatHeight = bodyHeightAfter - chatHeight;
-		const nonContentHeight = chatHeight - temporaryContentHeight;
+		const nonContentHeight = chatHeight - contentHeight;
 
-		let targetHeight = viewportHeight - nonChatHeight - nonContentHeight;
+		let targetHeight = nonContentHeight;
 
-		if (targetHeight + nonContentHeight < 480) {
-			targetHeight = 480 - nonContentHeight;
-		}
+		targetHeight = 480 - nonContentHeight;
 
-		self.contentContainer.setFixedHeight(targetHeight - 5); // to avoid the scrollbar to appear/disappear
-
-		setTimeout(() => {
-			lastDocumentHeight = document.body.clientHeight;
-		}, 50);
-
-		if (!documentHeightPollingActive) {
-			documentHeightPollingActive = true;
-			documentHeightPollingInterval = setInterval(documentHeightPolling, 1000);
-		}
+		self.contentContainer.setFixedHeight(targetHeight);
 	}
 	this.setFixedHeight = setFixedHeight;
 
 
 	function removeFixedHeight () {
 		self.contentContainer.removeFixedHeight();
-		clearInterval(documentHeightPollingInterval);
-		documentHeightPollingActive = false;
 	}
 
 	function resize () {
