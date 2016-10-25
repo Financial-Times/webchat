@@ -209,6 +209,7 @@ function Webchat (rootEl, config) {
 
 				if (sessionConfig.fixedHeight) {
 					resize();
+					self.contentContainer.scrollToLast();
 				}
 				window.addEventListener('resize', resize);
 				document.addEventListener('o.DOMContentLoaded', resize);
@@ -225,6 +226,12 @@ function Webchat (rootEl, config) {
 
 	this.serverTime = function () {
 		return time.serverTime();
+	};
+
+	this.scrollToLast = function () {
+		if (self.contentContainer) {
+			self.contentContainer.scrollToLast();
+		}
 	};
 
 
