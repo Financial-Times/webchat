@@ -49,6 +49,18 @@
 
 		.messagebody {
 			@include oGridColspan(8);
+
+			@include oGridRespondTo(S) {
+				@include oGridColspan(9);
+			}
+
+			@include oGridRespondTo(L) {
+				@include oGridColspan(9);
+			}
+
+			@include oGridRespondTo(XL) {
+				@include oGridColspan(9);
+			}
 		}
 
 
@@ -139,6 +151,18 @@
 			@include oGridColspan(3);
 			color: #a16b78;
 			text-align: right;
+
+			@include oGridRespondTo(S) {
+				@include oGridColspan(2);
+			}
+
+			@include oGridRespondTo(L) {
+				@include oGridColspan(2);
+			}
+
+			@include oGridRespondTo(XL) {
+				@include oGridColspan(2);
+			}
 		}
 
 		&.blocked {
