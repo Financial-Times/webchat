@@ -75,10 +75,11 @@ function ContentContainer (webchat, actions) {
 
 
 	function isScrollAtTheEnd () {
+		const position = scroller.getPosition();
 		if (contentOrder === 'descending') {
-			return scroller.getPosition() === 'top';
+			return position === 'top' || position === 'noscroll';
 		} else {
-			return scroller.getPosition() === 'bottom';
+			return position === 'bottom' || position === 'noscroll';
 		}
 	}
 	function scrollToLast () {
@@ -90,6 +91,7 @@ function ContentContainer (webchat, actions) {
 			}
 		}, 50);
 	}
+	this.scrollToLast = scrollToLast;
 
 	this.addSysMessage = function (details) {
 		if (!details.customClass) {

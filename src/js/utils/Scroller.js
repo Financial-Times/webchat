@@ -88,7 +88,9 @@ function ScrollMonitor (el, callback) {
 	};
 
 	this.getPosition = function () {
-		if (getAttributeValue('scrollTop') === 0) {
+		if (getAttributeValue('scrollHeight') === getAttributeValue('clientHeight')) {
+			return 'noscroll';
+		} else if (getAttributeValue('scrollTop') === 0) {
 			return 'top';
 		} else if (getAttributeValue('scrollTop') >= getAttributeValue('scrollHeight') - getAttributeValue('clientHeight')) {
 			return 'bottom';
