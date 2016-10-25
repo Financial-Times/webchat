@@ -233,11 +233,7 @@ function Webchat (rootEl, config) {
 		const chatHeight = widgetEl.scrollHeight;
 		const nonContentHeight = chatHeight - contentHeight;
 
-		let targetHeight = nonContentHeight;
-
-		targetHeight = 480 - nonContentHeight;
-
-		self.contentContainer.setFixedHeight(targetHeight);
+		self.contentContainer.setFixedHeight(480 - nonContentHeight);
 	}
 	this.setFixedHeight = setFixedHeight;
 
