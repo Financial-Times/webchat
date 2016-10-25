@@ -51,27 +51,37 @@
 			@include oGridColspan(8);
 		}
 
+
+		&.price:before {
+			background-image: url(oAssetsResolve("src/images/icons/charticon.png", webchat));
+		}
+
+		&.sysmsg:before {
+			background-image: url(oAssetsResolve("src/images/icons/loudhailer.png", webchat));
+		}
+
 		&.price:before,
 		&.sysmsg:before {
 			@include oGridColspan(1);
 			content: '';
 
-			background-position-x: oGridGutter();
+			background-repeat: no-repeat;
+			background-position: oGridGutter() 3px;
 
 			@include oGridRespondTo(S) {
-				background-position-x: oGridGutter(S);
+				background-position: oGridGutter(S) 3px;
 			}
 
 			@include oGridRespondTo(M) {
-				background-position-x: oGridGutter(M);
+				background-position: oGridGutter(M) 3px;
 			}
 
 			@include oGridRespondTo(L) {
-				background-position-x: oGridGutter(L);
+				background-position: oGridGutter(L) 3px;
 			}
 
 			@include oGridRespondTo(XL) {
-				background-position-x: oGridGutter(XL);
+				background-position: oGridGutter(XL) 3px;
 			}
 		}
 
@@ -262,10 +272,6 @@
 	.msg:not(.prepub):not(.separator):not(.sysmsg):last-child {
 		background-color: #fde7da;
 		border-top: 1px solid #a02d4f;
-
-		&.price .messagebody {
-			margin-top: 20px;
-		}
 	}
 }
 
