@@ -17,32 +17,11 @@ function ContentContainer (webchat, actions) {
 
 
 	const contentContainerEl = webchat.getDomContainer().querySelector('.webchat-content-container');
-	const fadeTopEl = contentContainerEl.querySelector('.webchat-fade-top');
-	const fadeBottomEl = contentContainerEl.querySelector('.webchat-fade-bottom');
 
 	const contentEl = contentContainerEl.querySelector('.webchat-content');
 	const contentDelegate = new Delegate(contentEl);
 
-
-	const handleFade = function () {
-		if (fixedHeight && contentEl.scrollHeight > contentEl.clientHeight) {
-			if (scroller.getPosition() === 'top') {
-				fadeTopEl.style.display = 'none';
-				fadeBottomEl.style.display = 'block';
-			} else if (scroller.getPosition() === 'bottom') {
-				fadeTopEl.style.display = 'block';
-				fadeBottomEl.style.display = 'none';
-			} else {
-				fadeTopEl.style.display = 'block';
-				fadeBottomEl.style.display = 'block';
-			}
-		}
-	};
-
-	let fixedHeight = false;
-	const scroller = new Scroller(contentEl, function () {
-		handleFade();
-	});
+	const scroller = new Scroller(contentEl, function () {});
 
 	contentDelegate.on('click', '.msg span.block', (evt) => {
 		const blockElement = evt.target || evt.originalTarget || evt.srcElement;
@@ -349,15 +328,11 @@ function ContentContainer (webchat, actions) {
 	};
 
 	this.setFixedHeight = function (heightPx) {
-		fixedHeight = true;
-
 		contentEl.style.height = heightPx + 'px';
 		contentEl.style.overflow = "auto";
-		handleFade();
 	};
 
 	this.removeFixedHeight = function () {
-		fixedHeight = false;
 		contentEl.style.height = 'auto';
 		contentEl.style.overflow = "visible";
 	};
