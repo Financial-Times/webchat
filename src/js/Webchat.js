@@ -264,8 +264,8 @@ function Webchat (rootEl, config) {
 
 		let targetHeight = viewportHeight - nonChatHeight - nonContentHeight;
 
-		if (targetHeight + nonContentHeight < 480) {
-			targetHeight = 480 - nonContentHeight;
+		if (targetHeight + nonContentHeight < 200) {
+			targetHeight = 200 - nonContentHeight;
 		}
 
 		self.contentContainer.setFixedHeight(targetHeight - 5); // to avoid the scrollbar to appear/disappear
