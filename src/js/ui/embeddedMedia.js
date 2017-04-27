@@ -45,8 +45,7 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 
 		const videoId = brightcoveEmbed.getAttribute('data-asset-ref');
 
-		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video"
-			data-o-video-source="brightcove"
+		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video o-video--large"
 			data-o-video-placeholder="true"
 			data-o-video-id="${videoId}"></div>`;
 
@@ -66,8 +65,7 @@ function convertFTVideo (ftVideoEmbed) {
 
 		const videoId = ftVideoEmbed.getAttribute('data-asset-ref');
 
-		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video"
-			data-o-video-source="ftvideo"
+		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video o-video--large"
 			data-o-video-placeholder="true"
 			data-o-video-id="${videoId}"></div>`;
 
