@@ -24,7 +24,7 @@
 		"dom-delegate": "^2.0.3",
 		"hogan.js": "hogan#^3.0.2",
 		"o-assets": "^3.0.0",
-		"o-video": "^2.0.0",
+		"o-video": "#media-api",
 		"o-grid": "^4.0.0",
 		"o-forms": "^2.0.0",
 		"o-buttons": "^2.0.0",
