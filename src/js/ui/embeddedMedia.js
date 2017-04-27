@@ -60,6 +60,27 @@ function convertBrightcoveVideo (brightcoveEmbed) {
 	});
 }
 
+function convertFTVideo (ftVideoEmbed) {
+	return new Promise((resolve) => {
+		ftVideoEmbed.setAttribute("data-converted", 1);
+
+		const videoId = ftVideoEmbed.getAttribute('data-asset-ref');
+
+		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video"
+			data-o-video-source="brightcove"
+			data-o-video-placeholder="true"
+			data-o-video-id="${videoId}"></div>`;
+
+		ftVideoEmbed.innerHTML = replacementHtml;
+
+		setTimeout(() => {
+			oVideo.init(ftVideoEmbed);
+
+			resolve();
+		}, 100);
+	});
+}
+
 
 function convertEmbeds(container, selector, fn) {
 	const allEmbeds = container.querySelectorAll(selector);
@@ -83,7 +104,8 @@ function convertEmbeds(container, selector, fn) {
 function convertEmbeddedMedia(container) {
 	return Promise.all([
 		convertEmbeds(container, "p.embeddedtweet", convertTweet),
-		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo)
+		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='Brightcove']", convertBrightcoveVideo),
+		convertEmbeds(container, ".video-container-ftvideo [data-asset-source='FTVideo']", convertFTVideo)
 	]);
 }
 
