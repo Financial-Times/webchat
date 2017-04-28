@@ -65,7 +65,7 @@ function convertFTVideo (ftVideoEmbed) {
 
 		const videoId = ftVideoEmbed.getAttribute('data-asset-ref');
 
-		const replacementHtml = `<div class="webchat-video-brightcove" data-o-component="o-video o-video--large"
+		const replacementHtml = `<div class="webchat-video-ftvideo" data-o-component="o-video o-video--large"
 			data-o-video-placeholder="true"
 			data-o-video-id="${videoId}"></div>`;
 
