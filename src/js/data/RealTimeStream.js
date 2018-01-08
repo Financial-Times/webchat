@@ -164,7 +164,10 @@ function RealTimeStream (config) {
 	}
 
 	let pollTimer;
+	let lastPoll = new Date().getTime();
 	function poll (connNumber) {
+		lastPoll = new Date().getTime();
+
 		return config.api.poll({
 			channels: config.channel
 		}).then((response) => {
@@ -191,7 +194,7 @@ function RealTimeStream (config) {
 
 			pollTimer = setTimeout(() => {
 				poll(connNumber);
-			}, (config.pollInterval || 10) * 1000);
+			}, new Date().getTime() - lastPoll < config.pollInterval * 1000 ? config.pollInterval * 1000 - new Date().getTime() + lastPoll : 0);
 		}).catch((e) => {
 			connectionFailed(connNumber);
 
