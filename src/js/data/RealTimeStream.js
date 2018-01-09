@@ -182,12 +182,16 @@ function RealTimeStream (config) {
 						triggerEvent('msg', events[i].data);
 					} else if (events[i].event === 'editmsg') {
 						triggerEvent('editmsg', events[i].data);
+					} else if (events[i].event === 'delete') {
+						triggerEvent('delete', events[i].data);
 					} else if (events[i].event === 'block') {
 						triggerEvent('block', events[i].data);
 					} else if (events[i].event === 'end') {
 						triggerEvent('end', events[i].data);
 					} else if (events[i].event === 'startSession') {
 						triggerEvent('startSession', events[i].data);
+					} else if (events[i].event === 'postSaved') {
+						triggerEvent('postSaved', events[i].data);
 					}
 				}
 			}
