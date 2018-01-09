@@ -5,6 +5,7 @@ const Delegate = require('dom-delegate');
 const BlockOption = require('./BlockOption');
 const EditForm = require('./EditForm');
 const oDate = require('o-date');
+const ConfirmOverlay = require('./ConfirmOverlay');
 
 function ContentContainer (webchat, actions) {
 	const self = this;
@@ -272,26 +273,29 @@ function ContentContainer (webchat, actions) {
 	}
 
 	function onDelete (evt) {
-		if (!confirm('Really delete message?')) {
-			return;
-		}
+		return new ConfirmOverlay('Delete message', 'Are you sure you want to delete this message?')
+			.then((answer) => {
+				if (answer === true) {
+					const clickedButton = evt.target || evt.originalTarget || evt.srcElement;
 
-		const clickedButton = evt.target || evt.originalTarget || evt.srcElement;
+					const messageEl = domUtils.getParents(clickedButton, '.msg')[0];
+					const messageId = messageEl.getAttribute('data-mid');
 
-		const messageEl = domUtils.getParents(clickedButton, '.msg')[0];
-		const messageId = messageEl.getAttribute('data-mid');
+					messageEl.classList.add('delete-progress');
 
-		messageEl.classList.add('delete-progress');
-
-		actions.deleteMessage({
-			messageId: messageId
-		}).then((success) => {
-			if (success !== true) {
-				messageEl.classList.remove('delete-progress');
-			}
-		}).catch(() => {
-			messageEl.classList.remove('delete-progress');
-		});
+					return actions.deleteMessage({
+						messageId: messageId
+					}).then((success) => {
+						if (success !== true) {
+							messageEl.classList.remove('delete-progress');
+						}
+					}).catch(() => {
+						messageEl.classList.remove('delete-progress');
+					});
+				} else {
+					return false;
+				}
+			});
 	}
 
 	function enableParticipantOptions () {
