@@ -1,4 +1,6 @@
 .webchat-msg-editform {
+	@include oGridColspan(12);
+
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 
