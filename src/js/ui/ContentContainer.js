@@ -226,22 +226,24 @@ function ContentContainer (webchat, actions) {
 	};
 
 	function addEditDeleteOptions (el) {
-		const messageHeaders = el.querySelectorAll('.messageheader');
-		for (let i = 0; i < messageHeaders.length; i++) {
-			const messageHeader = messageHeaders[i];
+		const participantOptionsFragment = document.createDocumentFragment();
+		const participantOptionsEl = document.createElement('div');
+		participantOptionsEl.className = 'msg-action-container';
 
-			if (enableEditDelete) {
-				messageHeader.insertBefore(
-					domUtils.toDOM(
-						`<div class="participant-options">
-							<a href="javascript:void(0)" class="participant-option-edit">Edit</a>
-							<a href="javascript:void(0)" class="participant-option-delete">Delete</a>
-						</div>`
-					),
-					messageHeader.firstChild
-				);
-			}
-		}
+		const editButton = document.createElement('button');
+		editButton.innerHTML = 'Edit';
+		editButton.className = 'o-buttons o-buttons--standout msg-action-button msg-edit';
+		participantOptionsEl.appendChild(editButton);
+
+
+		const deleteButton = document.createElement('button');
+		deleteButton.innerHTML = 'Delete';
+		deleteButton.className = 'o-buttons o-buttons--standout msg-action-button msg-delete';
+		participantOptionsEl.appendChild(deleteButton);
+
+		participantOptionsFragment.appendChild(participantOptionsEl);
+
+		el.appendChild(participantOptionsFragment);
 	}
 
 
@@ -301,15 +303,15 @@ function ContentContainer (webchat, actions) {
 	function enableParticipantOptions () {
 		contentEl.classList.add('show-participant-options');
 
-		contentDelegate.on('click', '.participant-option-edit', onEdit);
-		contentDelegate.on('click', '.participant-option-delete', onDelete);
+		contentDelegate.on('click', '.msg-edit', onEdit);
+		contentDelegate.on('click', '.msg-delete', onDelete);
 	};
 
 	this.disableParticipantOptions = function () {
 		contentEl.classList.remove('show-participant-options');
 
-		contentDelegate.off('click', '.participant-option-edit', onEdit);
-		contentDelegate.off('click', '.participant-option-delete', onDelete);
+		contentDelegate.off('click', '.msg-edit', onEdit);
+		contentDelegate.off('click', '.msg-delete', onDelete);
 	};
 
 
