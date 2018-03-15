@@ -12,6 +12,7 @@ const HeaderContainer = require('./ui/HeaderContainer');
 const templates = require('./ui/templates');
 const AlertOverlay = require('./ui/AlertOverlay');
 const ConfirmOverlay = require('./ui/ConfirmOverlay');
+const FormOverlay = require('./ui/FormOverlay');
 const ConnectionStatusNotification = require('./ui/ConnectionStatusNotification');
 
 function Webchat (rootEl, config) {
@@ -95,26 +96,78 @@ function Webchat (rootEl, config) {
 		}
 	}
 
+	function missingUserInfo (firstName = '', lastName = '') {
+		const fields = [{
+			type: 'static-text',
+			label: 'We have some missing info about you. Please complete them to finish your join request.'
+		}];
 
-	function checkInvitation () {
-		let qs;
+		if (!firstName) {
+			fields.push({
+				type: 'text',
+				label: 'First name',
+				name: 'first_name',
+				value: firstName,
+				attributes: {
+					required: 'required'
+				}
+			});
+		}
+
+		if (!lastName) {
+			fields.push({
+				type: 'text',
+				label: 'Last name',
+				name: 'last_name',
+				value: lastName,
+				attributes: {
+					required: 'required'
+				}
+			});
+		}
+
+		return new FormOverlay({
+			title: 'Joining ML - missing details',
+			submitLabel: 'Save',
+			fields: fields
+		}).then(formData => {
+			if (formData) {
+				return checkInvitation(Object.assign({
+					first_name: firstName,
+					last_name: lastName
+				}, formData));
+			}
+		});
+	}
+
+
+	function checkInvitation (userDetails) {
+		let qs = {};
 		if (window.location.search) {
 			qs = queryString.parse(window.location.search);
 		}
 
 		if (qs['invitation-token']) {
-			return api.joinWithToken(qs['invitation-token'])
-				.then(() => {
-					const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+			return api.invitation.join(qs['invitation-token'], userDetails || {})
+				.then(response => {
+					if (response.success === true) {
+						const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
-					if (history.replaceState) {
-						window.history.replaceState({
-							path: newUrl
-						}, '', newUrl);
+						if (history.replaceState) {
+							window.history.replaceState({
+								path: newUrl
+							}, '', newUrl);
+						} else {
+							window.location.href = newUrl;
+
+							return false;
+						}
 					} else {
-						window.location.href = newUrl;
-
-						return false;
+						if (!response.reason && response.data && (!response.data.first_name || !response.data.last_name)) {
+							return missingUserInfo(response.data.first_name, response.data.last_name);
+						} else {
+							new AlertOverlay(response && response.reason ? response.reason : 'Failed to join.');
+						}
 					}
 				})
 				.catch(e => {
@@ -130,8 +183,8 @@ function Webchat (rootEl, config) {
 
 	this.init = function () {
 		checkInvitation()
-			.then(continue => {
-				if (continue === false) {
+			.then(shouldContinue => {
+				if (shouldContinue === false) {
 					return;
 				}
 

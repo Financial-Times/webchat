@@ -214,12 +214,13 @@ function Api (baseUrl) {
 		});
 	};
 
-	this.invitation.join = function (token) {
+	this.invitation = {};
+	this.invitation.join = function (token, userDetails = {}) {
 		const queryStr = getPageQueryString(document.location.search);
 
-		const translatedPostData = {
+		const translatedPostData = Object.assign({
 			'invitation-token': token
-		};
+		}, userDetails);
 
 		return httpRequest.post({
 			url: baseUrl,
