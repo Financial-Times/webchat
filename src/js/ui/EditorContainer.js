@@ -1,6 +1,8 @@
 const Delegate = require('dom-delegate');
 const domUtils = require('../utils/dom');
 const templates = require('./templates');
+const AlertOverlay = require('./AlertOverlay');
+const FormOverlay = require('./FormOverlay');
 
 function EditorContainer (webchat, actions) {
 	const self = this;
