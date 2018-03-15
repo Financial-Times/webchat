@@ -3,6 +3,7 @@ const domUtils = require('./utils/dom');
 const RealTimeStream = require('./data/RealTimeStream');
 const Time = require('./utils/Time');
 const httpRequest = require('./utils/httpRequest');
+const queryString = require('./utils/queryString');
 
 const EditorContainer = require('./ui/EditorContainer');
 const ContentContainer = require('./ui/ContentContainer');
@@ -95,133 +96,172 @@ function Webchat (rootEl, config) {
 	}
 
 
-	this.init = function () {
-		api.init().catch(failedResponse).then((initResponse) => {
-			if (initResponse.success !== true) {
-				unsuccessfulActionRequest(initResponse);
-				return;
-			}
+	function checkInvitation () {
+		let qs;
+		if (window.location.search) {
+			qs = queryString.parse(window.location.search);
+		}
 
-			sessionConfig = initResponse.data;
+		if (qs['invitation-token']) {
+			return api.joinWithToken(qs['invitation-token'])
+				.then(() => {
+					const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
-			if (!sessionConfig.contentOrder || ['ascending', 'descending'].indexOf(sessionConfig.contentOrder) === -1) {
-				sessionConfig.contentOrder = 'descending';
-			}
+					if (history.replaceState) {
+						window.history.replaceState({
+							path: newUrl
+						}, '', newUrl);
+					} else {
+						window.location.href = newUrl;
 
-			widgetEl.appendChild(domUtils.toDOM(templates[`container_${sessionConfig.contentOrder}`].render()));
+						return false;
+					}
+				})
+				.catch(e => {
+					console.error(e);
 
-			self.headerContainer = new HeaderContainer(self);
-			self.headerContainer.setLozenge(sessionConfig.sessionStatus);
-
-			if (sessionConfig.post.excerpt) {
-				self.headerContainer.setExcerpt(sessionConfig.post.excerpt);
-			} else {
-				self.headerContainer.setExcerpt('Live markets commentary from FT.com');
-			}
-
-			if (sessionConfig.post.title) {
-				self.headerContainer.setTitle(sessionConfig.post.title);
-			} else {
-				self.headerContainer.setTitle('Markets live');
-			}
-
-
-			self.contentContainer = new ContentContainer(self, {
-				blockMessage: blockMessage,
-				deleteMessage: deleteMessage,
-				editMessage: editMessage
-			});
-			self.editorContainer = new EditorContainer(self, {
-				sendMessage: sendMessage,
-				startSession: startSession,
-				endSession: endSession
-			});
-			self.participantContainer = new ParticipantContainer(self);
-
-			time = new Time(sessionConfig.time);
-
-			if (sessionConfig.isParticipant === true) {
-				self.editorContainer.init(sessionConfig);
-			}
-
-			sessionConfig.participants.forEach((participant) => {
-				self.participantContainer.addParticipant({
-					color: participant.color,
-					fullName: participant.displayName,
-					shortName: participant.initials,
-					displayStyle: sessionConfig.authorNameStyle
+					return;
 				});
-			});
+		}
 
-			self.contentContainer.init(sessionConfig);
+		return Promise.resolve();
+	}
 
 
-			api.catchup({
-				direction: (sessionConfig.contentOrder === "descending" ? "reverse" : "") + "chronological"
-			}).catch(failedResponse).then((catchupResponse) => {
-				if (catchupResponse.success !== true) {
-					unsuccessfulActionRequest(catchupResponse);
+	this.init = function () {
+		checkInvitation()
+			.then(continue => {
+				if (continue === false) {
+					return;
 				}
 
-				const messages = [];
-				const findMessageIndex = function (id) {
-					for (let i = 0; i < messages.length; i++) {
-						if (messages[i].mid === id) {
-							return i;
-						}
+				api.init().catch(failedResponse).then((initResponse) => {
+					if (initResponse.success !== true) {
+						unsuccessfulActionRequest(initResponse);
+						return;
 					}
 
-					return null;
-				};
-				let messageIndex;
+					sessionConfig = initResponse.data;
 
-				if (catchupResponse.data && catchupResponse.data.length) {
-					catchupResponse.data.forEach((evt) => {
-						switch (evt.event) {
-							case 'msg':
-								messages.push(evt.data);
-								break;
+					if (!sessionConfig.contentOrder || ['ascending', 'descending'].indexOf(sessionConfig.contentOrder) === -1) {
+						sessionConfig.contentOrder = 'descending';
+					}
 
-							case 'editmsg':
-								messageIndex = findMessageIndex(evt.data.mid);
-								if (messageIndex) {
-									messages[messageIndex] = evt.data;
+					widgetEl.appendChild(domUtils.toDOM(templates[`container_${sessionConfig.contentOrder}`].render()));
+
+					self.headerContainer = new HeaderContainer(self);
+					self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+
+					if (sessionConfig.post.excerpt) {
+						self.headerContainer.setExcerpt(sessionConfig.post.excerpt);
+					} else {
+						self.headerContainer.setExcerpt('Live markets commentary from FT.com');
+					}
+
+					if (sessionConfig.post.title) {
+						self.headerContainer.setTitle(sessionConfig.post.title);
+					} else {
+						self.headerContainer.setTitle('Markets live');
+					}
+
+
+					self.contentContainer = new ContentContainer(self, {
+						blockMessage: blockMessage,
+						deleteMessage: deleteMessage,
+						editMessage: editMessage
+					});
+					self.editorContainer = new EditorContainer(self, {
+						sendMessage: sendMessage,
+						startSession: startSession,
+						endSession: endSession
+					});
+					self.participantContainer = new ParticipantContainer(self);
+
+					time = new Time(sessionConfig.time);
+
+					if (sessionConfig.isParticipant === true) {
+						self.editorContainer.init(sessionConfig);
+					}
+
+					sessionConfig.participants.forEach((participant) => {
+						self.participantContainer.addParticipant({
+							color: participant.color,
+							fullName: participant.displayName,
+							shortName: participant.initials,
+							displayStyle: sessionConfig.authorNameStyle
+						});
+					});
+
+					self.contentContainer.init(sessionConfig);
+
+
+					api.catchup({
+						direction: (sessionConfig.contentOrder === "descending" ? "reverse" : "") + "chronological"
+					}).catch(failedResponse).then((catchupResponse) => {
+						if (catchupResponse.success !== true) {
+							unsuccessfulActionRequest(catchupResponse);
+						}
+
+						const messages = [];
+						const findMessageIndex = function (id) {
+							for (let i = 0; i < messages.length; i++) {
+								if (messages[i].mid === id) {
+									return i;
 								}
-								break;
+							}
 
-							case 'delete':
-								messageIndex = findMessageIndex(parseInt(evt.data.messageid, 10));
-								if (messageIndex) {
-									messages.splice(messageIndex, 1);
+							return null;
+						};
+						let messageIndex;
+
+						if (catchupResponse.data && catchupResponse.data.length) {
+							catchupResponse.data.forEach((evt) => {
+								switch (evt.event) {
+									case 'msg':
+										messages.push(evt.data);
+										break;
+
+									case 'editmsg':
+										messageIndex = findMessageIndex(evt.data.mid);
+										if (messageIndex) {
+											messages[messageIndex] = evt.data;
+										}
+										break;
+
+									case 'delete':
+										messageIndex = findMessageIndex(parseInt(evt.data.messageid, 10));
+										if (messageIndex) {
+											messages.splice(messageIndex, 1);
+										}
+										break;
+
+									case 'end':
+										onEndSession();
+										break;
 								}
-								break;
+							});
 
-							case 'end':
-								onEndSession();
-								break;
+							messages.forEach((message) => {
+								onMessage(message, true);
+							});
+						}
+
+						if (sessionConfig.fixedHeight) {
+							resize();
+							self.contentContainer.scrollToLast();
+						}
+						window.addEventListener('resize', resize);
+						document.addEventListener('o.DOMContentLoaded', resize);
+						window.addEventListener('load', resize);
+
+						if (sessionConfig.sessionStatus !== 'closed') {
+							initStream(sessionConfig);
+
+							widgetEl.classList.add('webchat-live');
 						}
 					});
-
-					messages.forEach((message) => {
-						onMessage(message, true);
-					});
-				}
-
-				if (sessionConfig.fixedHeight) {
-					resize();
-					self.contentContainer.scrollToLast();
-				}
-				window.addEventListener('resize', resize);
-				document.addEventListener('o.DOMContentLoaded', resize);
-				window.addEventListener('load', resize);
-
-				if (sessionConfig.sessionStatus !== 'closed') {
-					initStream(sessionConfig);
-
-					widgetEl.classList.add('webchat-live');
-				}
-			});
-		});
+				});
+			})
 	};
 
 	this.serverTime = function () {

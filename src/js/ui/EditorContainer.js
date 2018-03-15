@@ -49,6 +49,7 @@ function EditorContainer (webchat, actions) {
 			sendOnEnterOpt = editorDomContainer.querySelector(".opt-send-on-enter");
 			blockquoteCheck = editorDomContainer.querySelector('.opt-quote');
 			sessionControlButton = editorDomContainer.querySelector('.session-control');
+			inviteContributorButton = editorDomContainer.querySelector('.webchat--invite-participant');
 
 			// Send message on keypress or button click, disable default form submit
 			messageField.addEventListener('keypress', (e) => {
@@ -91,6 +92,9 @@ function EditorContainer (webchat, actions) {
 					keyTextField.classList.toggle('webchat-hidden');
 				});
 			}
+
+
+			inviteContributorButton.addEventListener('click', onInviteRequest);
 		}
 	};
 
@@ -155,6 +159,24 @@ function EditorContainer (webchat, actions) {
 				messageField.focus();
 			}
 		});
+	}
+
+	function onInviteRequest () {
+		if (sessionConfig.invitationToken) {
+			new FormOverlay({
+				title: 'Invitation',
+				fields: [
+					{
+						type: 'text',
+						label: 'Copy this URL and send to the invited person',
+						name: 'invitation-url',
+						value: `${window.location.protocol}//${window.location.host}${window.location.pathname}?invitation-token=${sessionConfig.invitationToken}`
+					}
+				]
+			});
+		} else {
+			new AlertOverlay('You do not have permission to invite people');
+		}
 	}
 
 

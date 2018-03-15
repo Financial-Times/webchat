@@ -36,12 +36,12 @@
 					<label for="opt-send-on-enter" class="o-forms-label">
 						Send on [enter]
 					</label>
-				
+
 					<input type="checkbox" class="check opt-quote o-forms-checkbox o-forms-checkbox--small" id="opt-quote" />
 					<label for="opt-quote" class="o-forms-label">
 						Send as quote
 					</label>
-				
+
 					{{#keyTextEnabled}}
 							<input type="checkbox" class="check key-event-check o-forms-checkbox o-forms-checkbox--small" id="key-event-check" />
 							<label for="key-event-check" class="o-forms-label">
@@ -66,4 +66,10 @@
 		</div>
 	</div>
 </form>
-
+{{#isEditor}}
+<div class="o-grid-row">
+	<div data-o-grid-colspan="12">
+		<button type="button" class="o-buttons webchat--invite-participant">Invite a contributor</button>
+	</div>
+</div>
+{{/isEditor}}

@@ -61,6 +61,10 @@ function Api (baseUrl) {
 				time: response.data.time
 			};
 
+			if (response.data.invitation_token) {
+				normalizedResponse.data.invitationToken;
+			}
+
 			if (response.data.participants && response.data.participants.length) {
 				response.data.participants.forEach((participant) => {
 					normalizedResponse.data.participants.push({
@@ -209,6 +213,24 @@ function Api (baseUrl) {
 			})
 		});
 	};
+
+	this.invitation.join = function (token) {
+		const queryStr = getPageQueryString(document.location.search);
+
+		const translatedPostData = {
+			'invitation-token': token
+		};
+
+		return httpRequest.post({
+			url: baseUrl,
+			body: translatedPostData,
+			dataType: 'json',
+			query: merge(queryStr, commonQueryParams, {
+				action: 'joinWithToken',
+				format: 'json'
+			})
+		});
+	}
 
 }
 
