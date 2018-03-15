@@ -62,7 +62,7 @@ function Api (baseUrl) {
 			};
 
 			if (response.data.invitation_token) {
-				normalizedResponse.data.invitationToken;
+				normalizedResponse.data.invitationToken = response.data.invitation_token;
 			}
 
 			if (response.data.participants && response.data.participants.length) {
