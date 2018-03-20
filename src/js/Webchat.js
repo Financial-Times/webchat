@@ -163,8 +163,8 @@ function Webchat (rootEl, config) {
 							return false;
 						}
 					} else {
-						if (!response.reason && response.data && (!response.data.first_name || !response.data.last_name)) {
-							return missingUserInfo(response.data.first_name, response.data.last_name);
+						if (!response.reason && response.data && (!response.data.firstName || !response.data.lastName)) {
+							return missingUserInfo(response.data.firstName, response.data.lastName);
 						} else {
 							new AlertOverlay(response && response.reason ? response.reason : 'Failed to join.');
 						}
