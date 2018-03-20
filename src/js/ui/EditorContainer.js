@@ -96,8 +96,9 @@ function EditorContainer (webchat, actions) {
 				});
 			}
 
-
-			inviteContributorButton.addEventListener('click', onInviteRequest);
+			if (sessionConfig.isEditor && inviteContributorButton) {
+				inviteContributorButton.addEventListener('click', onInviteRequest);
+			}
 		}
 	};
 
