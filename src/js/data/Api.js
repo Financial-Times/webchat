@@ -219,7 +219,7 @@ function Api (baseUrl) {
 		const queryStr = getPageQueryString(document.location.search);
 
 		const translatedPostData = Object.assign({
-			'invitation-token': token
+			token
 		}, userDetails);
 
 		return httpRequest.post({
