@@ -1,14 +1,14 @@
 .webchat-container {
 	.color-0 {
-		color: oColorsGetPaletteColor('claret-1');
+		color: oColorsGetPaletteColor('claret');
 	}
 
 	.color-1 {
-		color: oColorsGetPaletteColor('teal-1');
+		color: oColorsGetPaletteColor('teal-40');
 	}
 
 	.color-2 {
-		color: oColorsGetPaletteColor('claret-2');
+		color: oColorsGetPaletteColor('candy');
 	}
 
 	.color-3 {
@@ -16,23 +16,23 @@
 	}
 
 	.color-4 {
-		color: oColorsGetPaletteColor('purple-1');
+		color: oColorsGetPaletteColor('velvet');
 	}
 
 	.color-5 {
-		color: oColorsGetPaletteColor('section-red');
+		color: oColorsGetPaletteColor('crimson');
 	}
 
 	.color-6 {
-		color: oColorsGetPaletteColor('dark-blue');
+		color: oColorsGetPaletteColor('oxford-60');
 	}
 
 	.color-7 {
-		color: oColorsGetPaletteColor('section-green');
+		color: oColorsGetTint('jade', 65);
 	}
 
 	.color-8 {
-		color: oColorsGetPaletteColor('teal-2');
+		color: oColorsGetPaletteColor('teal-80');
 	}
 
 	.color-9 {
@@ -40,11 +40,11 @@
 	}
 
 	.color-10 {
-		color: oColorsGetPaletteColor('section-light-green');
+		color: oColorsGetPaletteColor('sky');
 	}
 
 	.color-11 {
-		color: oColorsGetPaletteColor('purple-tint2');
+		color: oColorsGetPaletteColor('black-50');
 	}
 
 
@@ -53,7 +53,7 @@
 	}
 
 	a {
-		color: oColorsGetPaletteColor('blue');
+		color: oColorsGetPaletteColor('oxford');
 		-webkit-font-smoothing: antialiased;
 		text-decoration: none;
 

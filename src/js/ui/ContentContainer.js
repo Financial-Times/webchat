@@ -232,13 +232,13 @@ function ContentContainer (webchat, actions) {
 
 		const editButton = document.createElement('button');
 		editButton.innerHTML = 'Edit';
-		editButton.className = 'o-buttons o-buttons--standout msg-action-button msg-edit';
+		editButton.className = 'o-buttons o-buttons--primary msg-action-button msg-edit';
 		participantOptionsEl.appendChild(editButton);
 
 
 		const deleteButton = document.createElement('button');
 		deleteButton.innerHTML = 'Delete';
-		deleteButton.className = 'o-buttons o-buttons--standout msg-action-button msg-delete';
+		deleteButton.className = 'o-buttons o-buttons--primary msg-action-button msg-delete';
 		participantOptionsEl.appendChild(deleteButton);
 
 		participantOptionsFragment.appendChild(participantOptionsEl);

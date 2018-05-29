@@ -12,7 +12,7 @@ function ConfirmOverlay (title, text) {
 			html: `
 				<div class="webchat-overlay-text">${text}</div>
 				<div class="webchat-overlay-buttons">
-					<button type="button" class="webchat-overlay-ok o-buttons o-buttons--standout">OK</button>
+					<button type="button" class="webchat-overlay-ok o-buttons o-buttons--primary">OK</button>
 					<button type="button" class="webchat-overlay-cancel o-buttons">Cancel</button>
 				</div>
 			`,

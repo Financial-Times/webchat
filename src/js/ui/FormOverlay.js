@@ -23,22 +23,22 @@ function serialize (form) {
 }
 
 function generateFormHtml (fields) {
-	let html = '<div class="o-forms">';
+	let html = '<div>';
 	if (fields && fields.length) {
 		fields.forEach(field => {
-			html += '<div class="o-forms-group">';
+			html += '<div class="o-forms">';
 
 			if (field.label) {
 				if (field.type === 'static-text') {
 					html += `<p>${field.label}</p>`;
 				} else {
-					html += `<label class="o-forms-label">${field.label}</label>`;
+					html += `<label class="o-forms__label">${field.label}</label>`;
 				}
 			}
 
 			switch (field.type) {
 				case 'text':
-					html += `<input type="text" class="o-forms-text" name="${field.name}" value="${field.value || ''}" placeholder="${field.placeholder || ''}" ${field.attributes ? Object.keys(field.attributes).map(key => `${key}="${field.attributes[key]}"`).join(' ') : ''} />`;
+					html += `<input type="text" class="o-forms__text" name="${field.name}" value="${field.value || ''}" placeholder="${field.placeholder || ''}" ${field.attributes ? Object.keys(field.attributes).map(key => `${key}="${field.attributes[key]}"`).join(' ') : ''} />`;
 					break;
 			}
 
@@ -63,7 +63,7 @@ function FormOverlay (options) {
 				<form>
 					<div class="alphaville-overlay-form-content">${generateFormHtml(fields)}</div>
 					<div class="alphaville-overlay-buttons">
-						${submitLabel ? `<button type="submit" class="alphaville-overlay-submit o-buttons o-buttons--standout">${submitLabel}</button>` : ''}
+						${submitLabel ? `<button type="submit" class="alphaville-overlay-submit o-buttons o-buttons--primary">${submitLabel}</button>` : ''}
 						<button type="button" class="alphaville-overlay-cancel o-buttons">${submitLabel ? 'Cancel' : 'Close'}</button>
 					</div>
 				</form>

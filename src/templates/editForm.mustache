@@ -2,31 +2,31 @@
 	<form>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="8">
-				<textarea class="msgtext o-forms-textarea">{{message}}</textarea>
+				<textarea class="msgtext o-forms__textarea">{{message}}</textarea>
 
 				{{#keyEventEnabled}}
-					<input class="key-text o-forms-text {{^keyText}}webchat-hidden{{/keyText}}" name="keytext" value="{{keyText}}"></input>
+					<input class="key-text o-forms__text {{^keyText}}webchat-hidden{{/keyText}}" name="keytext" value="{{keyText}}"></input>
 				{{/keyEventEnabled}}
 			</div>
 			<div data-o-grid-colspan="4">
-				<div class="o-forms-group">
+				<div class="o-forms">
 					<div class="options">
 						<button class="btn-cancel button" type="button">Cancel</button>
 						<div class="isblockquote">
-							<input type="checkbox" name="isblockquote" id="isblockquote" {{#isBlockquote}}checked{{/isBlockquote}} class="o-forms-checkbox o-forms-checkbox--small" />
-							<label for="isblockquote" class="o-forms-label">
+							<input type="checkbox" name="isblockquote" id="isblockquote" {{#isBlockquote}}checked{{/isBlockquote}} class="o-forms__checkbox o-forms__checkbox--small" />
+							<label for="isblockquote" class="o-forms__label">
 								Send as quote
 							</label>
 						</div>
 
 						{{#keyEventEnabled}}
-							<input type="checkbox" class="check key-event o-forms-checkbox o-forms-checkbox--small" name="iskeyevent" id="iskeyevent" {{#keyText}}checked{{/keyText}} />
-							<label for="iskeyevent" class="o-forms-label">
+							<input type="checkbox" class="check key-event o-forms__checkbox o-forms__checkbox--small" name="iskeyevent" id="iskeyevent" {{#keyText}}checked{{/keyText}} />
+							<label for="iskeyevent" class="o-forms__label">
 								Key event
 							</label>
 						{{/keyEventEnabled}}
 
-						<button class="btn-save button o-buttons o-buttons--uncolored" type="button">Save changes</button>
+						<button class="btn-save button o-buttons o-buttons--mono" type="button">Save changes</button>
 					</div>
 				</div>
 			</div>
