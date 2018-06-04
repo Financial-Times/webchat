@@ -41,6 +41,7 @@ function EditorContainer (webchat, actions) {
 		if (sessionStatus !== 'closed') {
 			editorDomContainer.appendChild(domUtils.toDOM(templates.editor.render({
 				isEditor: sessionConfig.isEditor,
+				invitationEnabled: sessionConfig.invitationToken,
 				sessionInProgress: sessionStatus === 'inprogress' ? true : false,
 				keyTextEnabled: sessionConfig.insertKeyText ? true : false,
 				insertKeyText: sessionConfig.insertKeyText,
