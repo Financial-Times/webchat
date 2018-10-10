@@ -76,6 +76,16 @@
 	}
 }
 
+.webchat--edit-metadata {
+	display: none;
+}
+
+.webchat--session-on {
+	.webchat--edit-metadata {
+		display: inline-block;
+	}
+}
+
 .webchat-no-cors-support {
 	.webchat-editor {
 		display: none !important;

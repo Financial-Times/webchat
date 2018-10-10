@@ -58,7 +58,8 @@ function Api (baseUrl) {
 				initialPollingWaitTime: response.data.initial_polling_wait_time,
 				pollInterval: response.data.pollInterval,
 
-				time: response.data.time
+				time: response.data.time,
+				uuid: response.data.post_uuid
 			};
 
 			if (response.data.invitation_token) {

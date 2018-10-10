@@ -67,11 +67,12 @@
 	</div>
 </form>
 {{#isEditor}}
-{{#invitationEnabled}}
 <div class="o-grid-row">
 	<div data-o-grid-colspan="12">
+		{{#invitationEnabled}}
 		<button type="button" class="o-buttons webchat--invite-participant">Invite a contributor</button>
+		{{/invitationEnabled}}
+		<a href="https://tagme.ft.com/uuid/{{uuid}}" class="o-buttons webchat--edit-metadata">Edit metadata</a>
 	</div>
 </div>
-{{/invitationEnabled}}
 {{/isEditor}}

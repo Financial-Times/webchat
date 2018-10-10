@@ -45,7 +45,8 @@ function EditorContainer (webchat, actions) {
 				sessionInProgress: sessionStatus === 'inprogress' ? true : false,
 				keyTextEnabled: sessionConfig.insertKeyText ? true : false,
 				insertKeyText: sessionConfig.insertKeyText,
-				emoticons: emoticons
+				emoticons: emoticons,
+				uuid: sessionConfig.uuid
 			})));
 
 			messageField = editorDomContainer.querySelector('textarea.new-msg');
@@ -186,12 +187,14 @@ function EditorContainer (webchat, actions) {
 
 
 	this.sessionStarted = function () {
+		editorDomContainer.classList.add('webchat--session-on');
 		sessionControlButton.innerHTML = sessionControlButton.innerHTML.replace('Start', 'End');
 		sessionStatus = 'inprogress';
 	};
 
 	this.sessionEnded = function () {
 		editorDomContainer.classList.add('webchat-hidden');
+		editorDomContainer.classList.remove('webchat--session-on');
 		sessionStatus = 'closed';
 	};
 
