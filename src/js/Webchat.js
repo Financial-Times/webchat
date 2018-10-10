@@ -307,7 +307,7 @@ function Webchat (rootEl, config) {
 						document.addEventListener('o.DOMContentLoaded', resize);
 						window.addEventListener('load', resize);
 
-						if (sessionConfig.sessionStatus !== 'closed') {
+						if (sessionConfig.sessionStatus === 'inprogress') {
 							initStream(sessionConfig);
 
 							widgetEl.classList.add('webchat-live');
@@ -549,6 +549,7 @@ function Webchat (rootEl, config) {
 		self.contentContainer.disableParticipantOptions();
 		self.editorContainer.sessionEnded();
 		self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+		widgetEl.classList.remove('webchat-live');
 
 		resize();
 	}
