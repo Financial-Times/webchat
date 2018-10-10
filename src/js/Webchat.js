@@ -521,6 +521,7 @@ function Webchat (rootEl, config) {
 
 		self.editorContainer.sessionStarted();
 		self.headerContainer.setLozenge(sessionConfig.sessionStatus);
+		widgetEl.classList.add('webchat-live');
 	}
 
 	function onEndSession () {
