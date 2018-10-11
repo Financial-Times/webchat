@@ -46,7 +46,8 @@ function EditorContainer (webchat, actions) {
 				keyTextEnabled: sessionConfig.insertKeyText ? true : false,
 				insertKeyText: sessionConfig.insertKeyText,
 				emoticons: emoticons,
-				uuid: sessionConfig.uuid
+				uuid: sessionConfig.uuid,
+				tagmeUrl: sessionConfig.tagmeUrl
 			})));
 
 			messageField = editorDomContainer.querySelector('textarea.new-msg');

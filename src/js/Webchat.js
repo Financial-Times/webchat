@@ -196,6 +196,8 @@ function Webchat (rootEl, config) {
 
 					sessionConfig = initResponse.data;
 
+					sessionConfig.tagmeUrl = config.tagmeUrl;
+
 					if (!sessionConfig.contentOrder || ['ascending', 'descending'].indexOf(sessionConfig.contentOrder) === -1) {
 						sessionConfig.contentOrder = 'descending';
 					}
