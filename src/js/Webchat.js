@@ -310,13 +310,15 @@ function Webchat (rootEl, config) {
 						window.addEventListener('load', resize);
 
 						if (sessionConfig.sessionStatus === 'inprogress') {
-							initStream(sessionConfig);
-
 							widgetEl.classList.add('webchat-live');
+						}
+
+						if (sessionConfig.sessionStatus !== 'closed') {
+							initStream(sessionConfig);
 						}
 					});
 				});
-			})
+			});
 	};
 
 	this.serverTime = function () {
