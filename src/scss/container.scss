@@ -53,10 +53,6 @@
 	}
 
 	a {
-		color: oColorsGetPaletteColor('oxford');
-		-webkit-font-smoothing: antialiased;
-		text-decoration: none;
-
 		&:hover {
 			text-decoration: underline;
 		}
