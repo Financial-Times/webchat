@@ -1,6 +1,5 @@
 /* global twttr */
-
-const oVideo = require('o-video');
+import oVideo from 'o-video';
 
 const domUtils = require('../utils/dom');
 
