@@ -1,5 +1,5 @@
 const Overlay = require('o-overlay');
-const Delegate = require('dom-delegate');
+const Delegate = require('ftdomdelegate');
 
 function serialize (form) {
 	const s = {};
@@ -26,23 +26,25 @@ function generateFormHtml (fields) {
 	let html = '<div>';
 	if (fields && fields.length) {
 		fields.forEach(field => {
-			html += '<div class="o-forms">';
 
-			if (field.label) {
-				if (field.type === 'static-text') {
-					html += `<p>${field.label}</p>`;
-				} else {
-					html += `<label class="o-forms__label">${field.label}</label>`;
-				}
+			if (field.type === 'static-text' && field.label) {
+				html += `<p>${field.label}</p>`;
 			}
 
-			switch (field.type) {
-				case 'text':
-					html += `<input type="text" class="o-forms__text" name="${field.name}" value="${field.value || ''}" placeholder="${field.placeholder || ''}" ${field.attributes ? Object.keys(field.attributes).map(key => `${key}="${field.attributes[key]}"`).join(' ') : ''} />`;
-					break;
-			}
+			if (field.type === 'text') {
+				html += `
+					<label class="o-forms-field">
+						${field.label ? `
+						<span class="o-forms-title">
+							<span class="o-forms-title__main">${field.label}</span>
+						</span>` : ''}
 
-			html += '</div>';
+						<span class="o-forms-input o-forms-input--text">
+							<input type="text" name="${field.name}" value="${field.value || ''}" placeholder="${field.placeholder || ''}" ${field.attributes ? Object.keys(field.attributes).map(key => `${key}="${field.attributes[key]}"`).join(' ') : ''} >
+						</span>
+					</label>
+				`;
+			}
 		});
 	}
 
@@ -64,7 +66,7 @@ function FormOverlay (options) {
 					<div class="alphaville-overlay-form-content">${generateFormHtml(fields)}</div>
 					<div class="alphaville-overlay-buttons">
 						${submitLabel ? `<button type="submit" class="alphaville-overlay-submit o-buttons o-buttons--primary">${submitLabel}</button>` : ''}
-						<button type="button" class="alphaville-overlay-cancel o-buttons">${submitLabel ? 'Cancel' : 'Close'}</button>
+						<button type="button" class="alphaville-overlay-cancel o-buttons o-buttons--secondary">${submitLabel ? 'Cancel' : 'Close'}</button>
 					</div>
 				</form>
 			`,

@@ -1,4 +1,4 @@
-const Delegate = require('dom-delegate');
+const Delegate = require('ftdomdelegate');
 const domUtils = require('../utils/dom');
 const templates = require('./templates');
 const AlertOverlay = require('./AlertOverlay');

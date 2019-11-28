@@ -2,31 +2,42 @@
 	<form>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="8">
-				<textarea class="msgtext o-forms__textarea">{{message}}</textarea>
+
+				<label class="o-forms-field">
+					<span class="o-forms-input o-forms-input--textarea">
+						<textarea class="msgtext" aria-label="Message">{{message}}</textarea>
+					</span>
+				</label>
 
 				{{#keyEventEnabled}}
-					<input class="key-text o-forms__text {{^keyText}}webchat-hidden{{/keyText}}" name="keytext" value="{{keyText}}"></input>
+					<label class="o-forms-field {{^keyText}}webchat-hidden{{/keyText}}">
+						<span class="o-forms-input o-forms-input--text">
+							<input class="key-text" type="text" name="keytext" value="{{keyText}}" arial-label="Key Text">
+						</span>
+					</label>
 				{{/keyEventEnabled}}
 			</div>
 			<div data-o-grid-colspan="4">
 				<div class="o-forms">
 					<div class="options">
-						<button class="btn-cancel button" type="button">Cancel</button>
-						<div class="isblockquote">
-							<input type="checkbox" name="isblockquote" id="isblockquote" {{#isBlockquote}}checked{{/isBlockquote}} class="o-forms__checkbox o-forms__checkbox--small" />
-							<label for="isblockquote" class="o-forms__label">
-								Send as quote
-							</label>
+						<button class="btn-cancel button o-buttons o-buttons--secondary o-buttons--mono" type="button">Cancel</button>
+
+						<div class="o-forms-field" role="group">
+							<span class="o-forms-input o-forms-input--checkbox">
+									<label>
+										<input type="checkbox" name="isblockquote" id="isblockquote" aria-label="Send as quote" {{#isBlockquote}}checked{{/isBlockquote}}>
+										<span class="o-forms-input__label" aria-hidden="true">Send as quote</span>
+									</label>
+									{{#keyEventEnabled}}
+									<label>
+										<input type="checkbox" name="iskeyevent" id="iskeyevent" aria-label="Key event" {{#keyText}}checked{{/keyText}}>
+										<span class="o-forms-input__label" aria-hidden="true">Key event</span>
+									</label>
+									{{/keyEventEnabled}}
+							</span>
 						</div>
 
-						{{#keyEventEnabled}}
-							<input type="checkbox" class="check key-event o-forms__checkbox o-forms__checkbox--small" name="iskeyevent" id="iskeyevent" {{#keyText}}checked{{/keyText}} />
-							<label for="iskeyevent" class="o-forms__label">
-								Key event
-							</label>
-						{{/keyEventEnabled}}
-
-						<button class="btn-save button o-buttons o-buttons--mono" type="button">Save changes</button>
+						<button class="btn-save button o-buttons o-buttons--primary o-buttons--mono" type="button">Save changes</button>
 					</div>
 				</div>
 			</div>
