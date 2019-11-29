@@ -8,9 +8,9 @@
 		width: 100%;
 		padding: 5px;
 		text-align: center;
-		background-color: oColorsGetPaletteColor('crimson');
-		color: oColorsGetPaletteColor('white');
-		border-bottom: 2px solid oColorsGetPaletteColor('black-80');
+		background-color: oColorsByName('crimson');
+		color: oColorsByName('white');
+		border-bottom: 2px solid oColorsByName('black-80');
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 		z-index: 1;
 	}
@@ -19,7 +19,7 @@
 		position: absolute;
 		top: 0;
 		padding: 10px 10%;
-		background: oColorsGetPaletteColor('wheat');
+		background: oColorsByName('wheat');
 		left: 0;
 		font-weight: 500;
 		width: 80%;
@@ -248,7 +248,7 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		font-size: 10px;
-		color: oColorsGetPaletteColor('crimson');
+		color: oColorsByName('crimson');
 	}
 
 	.video-container {

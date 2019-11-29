@@ -1,10 +1,10 @@
+import oDate from 'o-date';
+import Delegate from 'ftdomdelegate';
 const embeddedMedia = require('./embeddedMedia');
 const Scroller = require('../utils/Scroller');
 const domUtils = require('../utils/dom');
-const Delegate = require('dom-delegate');
 const BlockOption = require('./BlockOption');
 const EditForm = require('./EditForm');
-const oDate = require('o-date');
 const ConfirmOverlay = require('./ConfirmOverlay');
 
 function ContentContainer (webchat, actions) {

@@ -1,10 +1,19 @@
 <form accept-charset="utf-8">
 	<div class="o-grid-row">
 		<div data-o-grid-colspan="8">
-			<textarea class="new-msg o-forms__textarea"></textarea>
+
+			<label class="o-forms-field">
+				<span class="o-forms-input o-forms-input--textarea">
+					<textarea class="new-msg" aria-label="Message">{{message}}</textarea>
+				</span>
+			</label>
 
 			{{#keyTextEnabled}}
-				<input type="text" class="key-text webchat-hidden o-forms__text" placeholder="{{insertKeyText}}" value="" />
+				<label class="o-forms-field webchat-hidden">
+					<span class="o-forms-input o-forms-input--text">
+						<input type="text" class="key-text o-forms__text" placeholder="{{insertKeyText}}" value="" />
+					</span>
+				</label>
 			{{/keyTextEnabled}}
 
 			<div class="webchat-emoticons">
@@ -32,24 +41,27 @@
 						</div>
 					{{/isEditor}}
 
-					<input type="checkbox" class="check opt-send-on-enter o-forms__checkbox o-forms__checkbox--small" id="opt-send-on-enter" />
-					<label for="opt-send-on-enter" class="o-forms__label">
-						Send on [enter]
-					</label>
+					<div class="o-forms-field" role="group">
+						<span class="o-forms-input o-forms-input--checkbox">
+								<label>
+									<input class="opt-send-on-enter" id="opt-send-on-enter" type="checkbox" aria-label="Send on [enter]">
+									<span class="o-forms-input__label" aria-hidden="true">Send on [enter]</span>
+								</label>
+								<label>
+									<input class="opt-quote" id="opt-quote" type="checkbox" aria-label="Send as quote">
+									<span class="o-forms-input__label" aria-hidden="true">Send as quote</span>
+								</label>
 
-					<input type="checkbox" class="check opt-quote o-forms__checkbox o-forms__checkbox--small" id="opt-quote" />
-					<label for="opt-quote" class="o-forms__label">
-						Send as quote
-					</label>
+							{{#keyTextEnabled}}
+									<label>
+										<input class="key-event-check" id="key-event-check" type="checkbox" aria-label="Key event">
+										<span class="o-forms-input__label" aria-hidden="true">Key event</span>
+									</label>
+							{{/keyTextEnabled}}
+						</span>
+					</div>
 
-					{{#keyTextEnabled}}
-							<input type="checkbox" class="check key-event-check o-forms__checkbox o-forms__checkbox--small" id="key-event-check" />
-							<label for="key-event-check" class="o-forms__label">
-								Key event
-							</label>
-					{{/keyTextEnabled}}
-
-					<button type="button" class="o-buttons o-buttons--mono submit button">Send</button>
+					<button type="button" class="o-buttons o-buttons--secondary o-buttons--mono submit button">Send</button>
 
 					<div class="wiki-key">
 						<span class="highlight">*</span>bold<span class="highlight">*</span>
@@ -70,9 +82,9 @@
 <div class="o-grid-row">
 	<div data-o-grid-colspan="12">
 		{{#invitationEnabled}}
-		<button type="button" class="o-buttons webchat--invite-participant">Invite a contributor</button>
+		<button type="button" class="o-buttons o-buttons--secondary webchat--invite-participant">Invite a contributor</button>
 		{{/invitationEnabled}}
-		<a href="{{tagmeUrl}}/uuid/{{uuid}}" target="_blank" class="o-buttons webchat--edit-metadata">Edit metadata</a>
+		<a href="{{tagmeUrl}}/uuid/{{uuid}}" target="_blank" class="o-buttons o-buttons--secondary webchat--edit-metadata">Edit metadata</a>
 	</div>
 </div>
 {{/isEditor}}

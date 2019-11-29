@@ -1,5 +1,5 @@
-const Overlay = require('o-overlay');
-const Delegate = require('dom-delegate');
+import Overlay from 'o-overlay';
+import Delegate from 'ftdomdelegate';
 
 function ConfirmOverlay (title, text) {
 	if (!text) {
@@ -13,7 +13,7 @@ function ConfirmOverlay (title, text) {
 				<div class="webchat-overlay-text">${text}</div>
 				<div class="webchat-overlay-buttons">
 					<button type="button" class="webchat-overlay-ok o-buttons o-buttons--primary">OK</button>
-					<button type="button" class="webchat-overlay-cancel o-buttons">Cancel</button>
+					<button type="button" class="webchat-overlay-cancel o-buttons o-buttons--secondary">Cancel</button>
 				</div>
 			`,
 			modal: true,
